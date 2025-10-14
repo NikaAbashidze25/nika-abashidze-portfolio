@@ -6,14 +6,18 @@ import { portfolioItems, type PortfolioItem } from '@/lib/data';
 import Image from 'next/image';
 import { Play, Pause } from 'lucide-react';
 import { useState, useRef } from 'react';
+import VideoModal from '@/components/VideoModal';
 
-const categories = ['All', 'Composition', 'Guitar', 'Linear Audio'];
+const categories = ['All', 'Compositions', 'Performance', 'Sound Design'];
 
 const CompositionCard = ({ item }: { item: PortfolioItem }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const togglePlay = () => {
+  const togglePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
@@ -25,12 +29,82 @@ const CompositionCard = ({ item }: { item: PortfolioItem }) => {
   
   const handleAudioEnd = () => {
     setIsPlaying(false);
+    setCurrentTime(0);
+  };
+
+  const handleTimeUpdate = () => {
+    if(audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  }
+
+  const handleLoadedMetadata = () => {
+    if(audioRef.current) {
+      setDuration(audioRef.current.duration);
+    }
+  }
+
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (audioRef.current && duration > 0) {
+      const timeline = e.currentTarget.getBoundingClientRect();
+      const newTime = (e.clientX - timeline.left) / timeline.width * duration;
+      if(isFinite(newTime)) {
+        audioRef.current.currentTime = newTime;
+      }
+    }
   };
 
   return (
     <Card className="overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 animate-fade-in-up">
       <CardContent className="p-0">
-        <div className="relative aspect-square w-full overflow-hidden">
+        <div className="relative aspect-video w-full overflow-hidden">
+          <Image
+            src={item.thumbnailUrl}
+            alt={item.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+           <div className="absolute inset-0 flex flex-col justify-end p-4 text-white">
+             <div className="flex items-center justify-between">
+                <h3 className="text-xl font-bold">{item.title}</h3>
+                <button
+                  onClick={togglePlay}
+                  className="p-2 bg-primary text-primary-foreground rounded-full hover:bg-primary/80 transition-colors z-10"
+                  aria-label={isPlaying ? "Pause" : "Play"}
+                >
+                  {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                </button>
+             </div>
+             <div className="w-full bg-white/20 h-1.5 rounded-full mt-2 cursor-pointer" onClick={handleSeek}>
+                <div 
+                  className="bg-primary h-full rounded-full" 
+                  style={{ width: `${(currentTime / duration) * 100}%` }}
+                />
+              </div>
+          </div>
+        </div>
+      </CardContent>
+      <audio 
+        ref={audioRef} 
+        src={item.url} 
+        onEnded={handleAudioEnd} 
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+        preload="metadata" 
+      />
+    </Card>
+  );
+}
+
+const VideoCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void }) => {
+  return (
+    <Card 
+      onClick={() => onCardClick(item)}
+      className="overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 animate-fade-in-up cursor-pointer"
+    >
+      <CardContent className="p-0">
+        <div className="relative aspect-video w-full overflow-hidden">
           <Image
             src={item.thumbnailUrl}
             alt={item.title}
@@ -43,68 +117,32 @@ const CompositionCard = ({ item }: { item: PortfolioItem }) => {
           </div>
         </div>
       </CardContent>
-      <CardHeader className="flex flex-row items-center justify-between p-4">
-        <div className="flex-grow">
-          <CardTitle className="text-base">{item.title}</CardTitle>
-          <CardDescription className="text-xs mt-1 line-clamp-2">{item.description}</CardDescription>
-        </div>
-        <button
-          onClick={togglePlay}
-          className="ml-4 flex-shrink-0 p-2 bg-primary text-primary-foreground rounded-full hover:bg-primary/80 transition-colors"
-        >
-          {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-        </button>
-        <audio ref={audioRef} src={item.url} onEnded={handleAudioEnd} preload="metadata" />
-      </CardHeader>
     </Card>
   );
-}
-
-
-const VideoCard = ({ item }: { item: PortfolioItem }) => {
-  const isYoutube = item.url.includes('youtube.com');
-  
-  return (
-      <Card className="overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20 bg-card animate-fade-in-up">
-        <CardContent className="p-0">
-          <div className="aspect-video w-full overflow-hidden">
-            {isYoutube ? (
-              <iframe
-                src={item.url}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-                title={item.title}
-              ></iframe>
-            ) : (
-              <video controls className="w-full h-full object-cover" poster={item.thumbnailUrl}>
-                <source src={item.url} type={item.url.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
-                Your browser does not support the video tag.
-              </video>
-            )}
-          </div>
-        </CardContent>
-        <CardHeader>
-          <CardTitle>{item.title}</CardTitle>
-          <CardDescription>{item.description}</CardDescription>
-        </CardHeader>
-      </Card>
-  )
 };
 
-const PortfolioGrid = ({ items, type }: { items: PortfolioItem[], type: 'audio' | 'video' }) => (
+const PortfolioGrid = ({ items, onCardClick }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void }) => (
   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-    {items.map((item, index) => (
-       type === 'audio' ? <CompositionCard key={item.id} item={item} /> : <VideoCard key={item.id} item={item} />
+    {items.map((item) => (
+       <VideoCard key={item.id} item={item} onCardClick={onCardClick} />
     ))}
   </div>
 );
 
 export default function Portfolio() {
+  const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
+
   const compositions = portfolioItems.filter(i => i.category === 'Composition');
   const guitars = portfolioItems.filter(i => i.category === 'Guitar');
   const linearAudios = portfolioItems.filter(i => i.category === 'Linear Audio');
+
+  const openModal = (item: PortfolioItem) => {
+    setSelectedVideo(item);
+  };
+
+  const closeModal = () => {
+    setSelectedVideo(null);
+  };
 
   return (
     <section id="portfolio" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
@@ -127,27 +165,40 @@ export default function Portfolio() {
           <TabsContent value="All">
             <div className="space-y-16">
                <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Compositions</h3>
-               <PortfolioGrid items={compositions} type="audio" />
+               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+                  {compositions.map((item) => <CompositionCard key={item.id} item={item} />)}
+               </div>
+
                <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
-               <PortfolioGrid items={guitars} type="video" />
+               <PortfolioGrid items={guitars} onCardClick={openModal} />
+               
                <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Sound Design</h3>
-               <PortfolioGrid items={linearAudios} type="video" />
+               <PortfolioGrid items={linearAudios} onCardClick={openModal} />
             </div>
           </TabsContent>
 
-          <TabsContent value="Composition">
-            <PortfolioGrid items={compositions} type="audio" />
+          <TabsContent value="Compositions">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+              {compositions.map((item) => <CompositionCard key={item.id} item={item} />)}
+            </div>
           </TabsContent>
 
-          <TabsContent value="Guitar">
-            <PortfolioGrid items={guitars} type="video" />
+          <TabsContent value="Performance">
+            <PortfolioGrid items={guitars} onCardClick={openModal} />
           </TabsContent>
 
-          <TabsContent value="Linear Audio">
-            <PortfolioGrid items={linearAudios} type="video" />
+          <TabsContent value="Sound Design">
+            <PortfolioGrid items={linearAudios} onCardClick={openModal} />
           </TabsContent>
         </Tabs>
       </div>
+      {selectedVideo && (
+        <VideoModal
+          isOpen={!!selectedVideo}
+          onClose={closeModal}
+          item={selectedVideo}
+        />
+      )}
     </section>
   );
 }

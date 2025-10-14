@@ -70,14 +70,24 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
     audio.removeEventListener('pause', () => setIsPlaying(false));
   }, [handleTimeUpdate, handleLoadedMetadata, handleAudioEnd]);
 
-  const setAudioElement = useCallback((newAudio: HTMLAudioElement) => {
+  const setAudioElement = useCallback((newAudio: HTMLAudioElement | null) => {
     if (audioRef.current) {
         audioRef.current.pause();
         removeAudioListeners(audioRef.current);
+        audioRef.current.src = ""; // Detach the source
+        audioRef.current.load();
     }
-    audioRef.current = newAudio;
-    setAudioListeners(newAudio);
+
+    if (newAudio) {
+      audioRef.current = newAudio;
+      setAudioListeners(newAudio);
+      setCurrentTime(0);
+      setDuration(0);
+    } else {
+      audioRef.current = null;
+    }
   }, [setAudioListeners, removeAudioListeners]);
+
 
   const playAudio = useCallback((audio: HTMLAudioElement) => {
     audio.play().catch(e => console.error("Audio play failed:", e));
@@ -92,10 +102,11 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
   const getAudioElement = useCallback(() => audioRef.current, []);
 
   useEffect(() => {
+      const currentAudio = audioRef.current;
       return () => {
-          if (audioRef.current) {
-              audioRef.current.pause();
-              removeAudioListeners(audioRef.current);
+          if (currentAudio) {
+              currentAudio.pause();
+              removeAudioListeners(currentAudio);
           }
       }
   }, [removeAudioListeners]);

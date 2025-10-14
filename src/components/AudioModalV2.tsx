@@ -48,8 +48,13 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
         setAudioElement(newAudio);
         setCurrentlyPlaying(item);
         playAudio(newAudio);
+    } else if (isOpen && item && isCurrentTrack) {
+        const audio = getAudioElement();
+        if (audio && !isPlaying) {
+            playAudio(audio);
+        }
     }
-  }, [isOpen, item, isCurrentTrack, setAudioElement, setCurrentlyPlaying, playAudio, getAudioElement]);
+  }, [isOpen, item, isCurrentTrack, setAudioElement, setCurrentlyPlaying, playAudio, getAudioElement, isPlaying]);
 
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();

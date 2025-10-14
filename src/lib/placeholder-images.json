@@ -1,3 +1,16 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "A dark, atmospheric shot of a music production studio with mixing equipment.",
+      "imageUrl": "https://picsum.photos/seed/sonic1/1920/1080",
+      "imageHint": "audio studio"
+    },
+    {
+      "id": "portrait-nika",
+      "description": "A professional and friendly portrait of Nika Abashidze in a studio environment.",
+      "imageUrl": "https://picsum.photos/seed/sonic2/600/600",
+      "imageHint": "professional portrait"
+    }
+  ]
 }

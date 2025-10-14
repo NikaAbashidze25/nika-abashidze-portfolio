@@ -18,12 +18,12 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
-        <Link href="#home" className="mr-6 flex items-center space-x-2">
+      <div className="container flex h-14 items-center justify-between">
+        <Link href="#home" className="flex items-center space-x-2">
           <Music className="h-6 w-6 text-accent" />
           <span className="font-bold">Nika Abashidze</span>
         </Link>
-        <nav className="hidden flex-1 items-center space-x-6 text-sm font-medium md:flex">
+        <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -34,7 +34,7 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <div className="flex flex-1 items-center justify-end md:hidden">
+        <div className="flex items-center md:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">

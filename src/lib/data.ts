@@ -71,7 +71,7 @@ export const portfolioItems: PortfolioItem[] = [
     longDescription: 'A live performance of an original intricate fingerstyle guitar piece, recorded in a single take to capture the raw emotion of the music.',
     roleDescription: 'As the sole performer and composer of this piece, my focus was on delivering a technically clean yet emotionally resonant performance. I also managed the recording and mixing process.',
     type: 'video',
-    url: 'https://www.youtube.com/watch?v=7lk_tFkkTT8',
+    url: 'https://www.youtube.com/embed/7lk_tFkkTT8',
     thumbnailUrl: '/images/Tango.jpg'
   },
   {

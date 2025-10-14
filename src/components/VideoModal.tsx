@@ -16,7 +16,7 @@ interface VideoModalProps {
 
 export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
   if (!isOpen || !item) return null;
-  const isYoutube = item.url.includes('youtube.com');
+  const isYoutube = item.url.includes('youtube.com/embed');
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

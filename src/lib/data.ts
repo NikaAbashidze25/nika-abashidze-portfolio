@@ -21,7 +21,6 @@ export type PortfolioItem = {
   type: 'audio' | 'video';
   url: string;
   thumbnailUrl: string;
-  backgroundUrl?: string;
 };
 
 export const portfolioItems: PortfolioItem[] = [
@@ -33,7 +32,6 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'audio',
     url: '/audio/cinematic-trailer-score.mp3',
     thumbnailUrl: 'https://picsum.photos/seed/trailer-score/600/400',
-    backgroundUrl: 'https://picsum.photos/seed/trailer-score-bg/1200/600',
   },
   {
     id: 4,
@@ -43,7 +41,6 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'audio',
     url: '/audio/game-theme.mp3',
     thumbnailUrl: 'https://picsum.photos/seed/game-theme/600/400',
-    backgroundUrl: 'https://picsum.photos/seed/game-theme-bg/1200/600',
   },
   {
     id: 2,
@@ -68,8 +65,8 @@ export const portfolioItems: PortfolioItem[] = [
     title: 'Commercial Audio for "Nova"',
     category: 'Linear Audio',
     description: 'Sound design and audio mixing for a tech product commercial. The sound enhances the sleek and futuristic feel of the product.',
-    type: 'audio',
-    url: '/audio/nova-commercial.mp3',
+    type: 'video',
+    url: 'https://www.youtube.com/embed/your-video-id-nova', // Placeholder
     thumbnailUrl: 'https://picsum.photos/seed/nova-commercial/600/400'
   },
   {

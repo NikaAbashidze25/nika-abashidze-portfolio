@@ -4,36 +4,84 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { portfolioItems, type PortfolioItem } from '@/lib/data';
 import Image from 'next/image';
-import CompositionPlayer from './CompositionPlayer';
+import { Play, Pause } from 'lucide-react';
+import { useState, useRef } from 'react';
 
 const categories = ['All', 'Composition', 'Guitar', 'Linear Audio'];
 
-const PortfolioGrid = ({ items }: { items: PortfolioItem[] }) => (
-  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-    {items.map((item, index) => (
-      <Card key={item.id} className="overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20 bg-card animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
+const CompositionCard = ({ item }: { item: PortfolioItem }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const togglePlay = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+  
+  const handleAudioEnd = () => {
+    setIsPlaying(false);
+  };
+
+  return (
+    <Card className="overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 animate-fade-in-up">
+      <CardContent className="p-0">
+        <div className="relative aspect-square w-full overflow-hidden">
+          <Image
+            src={item.thumbnailUrl}
+            alt={item.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-0 flex items-end p-4">
+             <h3 className="text-xl font-bold text-white">{item.title}</h3>
+          </div>
+        </div>
+      </CardContent>
+      <CardHeader className="flex flex-row items-center justify-between p-4">
+        <div className="flex-grow">
+          <CardTitle className="text-base">{item.title}</CardTitle>
+          <CardDescription className="text-xs mt-1 line-clamp-2">{item.description}</CardDescription>
+        </div>
+        <button
+          onClick={togglePlay}
+          className="ml-4 flex-shrink-0 p-2 bg-primary text-primary-foreground rounded-full hover:bg-primary/80 transition-colors"
+        >
+          {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+        </button>
+        <audio ref={audioRef} src={item.url} onEnded={handleAudioEnd} preload="metadata" />
+      </CardHeader>
+    </Card>
+  );
+}
+
+
+const VideoCard = ({ item }: { item: PortfolioItem }) => {
+  const isYoutube = item.url.includes('youtube.com');
+  
+  return (
+      <Card className="overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20 bg-card animate-fade-in-up">
         <CardContent className="p-0">
           <div className="aspect-video w-full overflow-hidden">
-            {item.type === 'video' ? (
+            {isYoutube ? (
+              <iframe
+                src={item.url}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+                title={item.title}
+              ></iframe>
+            ) : (
               <video controls className="w-full h-full object-cover" poster={item.thumbnailUrl}>
-                <source src={item.url} type="video/mp4" />
+                <source src={item.url} type={item.url.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
                 Your browser does not support the video tag.
               </video>
-            ) : (
-              <div className="relative w-full h-full">
-                <Image
-                  src={item.thumbnailUrl}
-                  alt={item.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-2 bg-black/50">
-                  <audio controls className="w-full">
-                    <source src={item.url} type="audio/mpeg" />
-                    Your browser does not support the audio element.
-                  </audio>
-                </div>
-              </div>
             )}
           </div>
         </CardContent>
@@ -42,13 +90,21 @@ const PortfolioGrid = ({ items }: { items: PortfolioItem[] }) => (
           <CardDescription>{item.description}</CardDescription>
         </CardHeader>
       </Card>
+  )
+};
+
+const PortfolioGrid = ({ items, type }: { items: PortfolioItem[], type: 'audio' | 'video' }) => (
+  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+    {items.map((item, index) => (
+       type === 'audio' ? <CompositionCard key={item.id} item={item} /> : <VideoCard key={item.id} item={item} />
     ))}
   </div>
 );
 
 export default function Portfolio() {
   const compositions = portfolioItems.filter(i => i.category === 'Composition');
-  const otherWorks = portfolioItems.filter(i => i.category !== 'Composition');
+  const guitars = portfolioItems.filter(i => i.category === 'Guitar');
+  const linearAudios = portfolioItems.filter(i => i.category === 'Linear Audio');
 
   return (
     <section id="portfolio" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
@@ -70,29 +126,23 @@ export default function Portfolio() {
           
           <TabsContent value="All">
             <div className="space-y-16">
-              <div className="space-y-8">
-                {compositions.map(item => (
-                  <CompositionPlayer key={item.id} item={item} />
-                ))}
-              </div>
-              <PortfolioGrid items={otherWorks} />
+               <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Compositions</h3>
+               <PortfolioGrid items={compositions} type="audio" />
+               <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance & Sound Design</h3>
+               <PortfolioGrid items={[...guitars, ...linearAudios]} type="video" />
             </div>
           </TabsContent>
 
           <TabsContent value="Composition">
-            <div className="space-y-8 mt-8">
-              {compositions.map(item => (
-                <CompositionPlayer key={item.id} item={item} />
-              ))}
-            </div>
+            <PortfolioGrid items={compositions} type="audio" />
           </TabsContent>
 
           <TabsContent value="Guitar">
-            <PortfolioGrid items={portfolioItems.filter(i => i.category === 'Guitar')} />
+            <PortfolioGrid items={guitars} type="video" />
           </TabsContent>
 
           <TabsContent value="Linear Audio">
-            <PortfolioGrid items={portfolioItems.filter(i => i.category === 'Linear Audio')} />
+            <PortfolioGrid items={linearAudios} type="video" />
           </TabsContent>
         </Tabs>
       </div>

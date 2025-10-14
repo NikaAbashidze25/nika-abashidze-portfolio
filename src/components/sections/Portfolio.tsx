@@ -37,7 +37,10 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
   return (
     <Card 
       onClick={() => onCardClick(item)}
-      className="overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 animate-fade-in-up cursor-pointer"
+      className={cn(
+        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent animate-fade-in-up cursor-pointer",
+        isThisTrackPlaying ? "border-primary shadow-2xl shadow-primary/20" : "hover:border-primary hover:shadow-2xl hover:shadow-primary/20"
+      )}
     >
       <CardContent className="p-0">
         <div className="relative aspect-video w-full overflow-hidden">
@@ -52,14 +55,12 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <h3 className="text-xl font-bold">{item.title}</h3>
-                  {isThisTrackPlaying && (
-                    <div className="flex items-end gap-1 h-4">
-                      <span className="w-1 bg-primary animate-[wave] [animation-delay:-1.2s] [animation-duration:0.8s]"></span>
-                      <span className="w-1 bg-primary animate-[wave] [animation-delay:-1s]"></span>
-                      <span className="w-1 bg-primary animate-[wave] [animation-delay:-0.8s] [animation-duration:0.9s]"></span>
-                      <span className="w-1 bg-primary animate-[wave] [animation-delay:-0.6s] [animation-duration:0.7s]"></span>
-                    </div>
-                  )}
+                  <div className="flex items-end gap-1 h-4">
+                    <span className={cn("w-1 bg-primary transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1.2s] [animation-duration:0.8s]" : "h-1")}></span>
+                    <span className={cn("w-1 bg-primary transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1s]" : "h-1")}></span>
+                    <span className={cn("w-1 bg-primary transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.8s] [animation-duration:0.9s]" : "h-1")}></span>
+                    <span className={cn("w-1 bg-primary transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.6s] [animation-duration:0.7s]" : "h-1")}></span>
+                  </div>
                 </div>
                 {item.url && (
                     <button

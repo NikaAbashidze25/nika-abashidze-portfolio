@@ -4,14 +4,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { portfolioItems, type PortfolioItem } from '@/lib/data';
 import Image from 'next/image';
 import { Play, Pause } from 'lucide-react';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import VideoModal from '@/components/VideoModal';
 import AudioModalV2 from '@/components/AudioModalV2';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { AudioPlayerContext, AudioPlayerProvider } from '@/context/AudioPlayerContext';
 
-const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void }) => {
+const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void, isVisible: boolean }) => {
   const { currentlyPlaying, isPlaying, playAudio, pauseAudio, setCurrentlyPlaying, getAudioElement, setAudioElement } = useContext(AudioPlayerContext);
 
   const isCurrentTrack = currentlyPlaying?.id === item.id;
@@ -41,8 +41,9 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
     <Card 
       onClick={() => onCardClick(item)}
       className={cn(
-        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent animate-fade-in-up cursor-pointer",
-        isThisTrackPlaying ? "border-primary shadow-2xl shadow-primary/20" : "hover:border-primary hover:shadow-2xl hover:shadow-primary/20"
+        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent cursor-pointer",
+        isThisTrackPlaying ? "border-primary shadow-2xl shadow-primary/20" : "hover:border-primary hover:shadow-2xl hover:shadow-primary/20",
+        isVisible ? "animate-fade-in-up" : "opacity-0"
       )}
     >
       <CardContent className="p-0">
@@ -87,11 +88,14 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
   );
 }
 
-const VideoCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void }) => {
+const VideoCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void, isVisible: boolean }) => {
   return (
     <Card 
       onClick={() => onCardClick(item)}
-      className="overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 animate-fade-in-up cursor-pointer"
+      className={cn(
+        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 cursor-pointer",
+        isVisible ? "animate-fade-in-up" : "opacity-0"
+      )}
     >
       <CardContent className="p-0">
         <div className="relative aspect-video w-full overflow-hidden">
@@ -114,15 +118,46 @@ const VideoCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (i
   );
 };
 
-const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void, type: 'audio' | 'video' }) => (
-  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-    {items.map((item, index) => (
-      <div key={item.id} style={{ animationDelay: `${index * 100}ms` }} className="animate-fade-in-up opacity-0 fill-mode-forwards">
-        {type === 'audio' ? <CompositionCard item={item} onCardClick={onCardClick} /> : <VideoCard item={item} onCardClick={onCardClick} />}
-      </div>
-    ))}
-  </div>
-);
+const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void, type: 'audio' | 'video' }) => {
+  const [visibleItems, setVisibleItems] = useState(new Set());
+  const observer = useRef<IntersectionObserver>();
+
+  useEffect(() => {
+    observer.current = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setVisibleItems(prev => new Set(prev).add(entry.target.getAttribute('data-id')));
+          observer.current?.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    return () => observer.current?.disconnect();
+  }, []);
+
+  return (
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+      {items.map((item, index) => {
+        const isVisible = visibleItems.has(String(item.id));
+        return (
+          <div 
+            key={item.id} 
+            ref={el => {
+                if (el && !visibleItems.has(String(item.id))) {
+                    observer.current?.observe(el);
+                }
+            }}
+            data-id={item.id}
+            style={{ animationDelay: `${index * 100}ms` }} 
+            className="fill-mode-forwards"
+          >
+            {type === 'audio' ? <CompositionCard item={item} onCardClick={onCardClick} isVisible={isVisible} /> : <VideoCard item={item} onCardClick={onCardClick} isVisible={isVisible} />}
+          </div>
+        )
+      })}
+    </div>
+  );
+};
 
 type FilterType = 'All' | 'Compositions' | 'Performance' | 'Sound Design';
 
@@ -157,11 +192,35 @@ const PortfolioInner = () => {
     setSelectedAudio(null);
   };
 
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
+
   return (
-    <section id="portfolio" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+    <section id="portfolio" ref={sectionRef} className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2 animate-fade-in-up">
+          <div className={cn("space-y-2", hasAnimated && "animate-fade-in-up")}>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">My Work</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               A selection of my projects, showcasing my skills in composition, performance, and sound design.
@@ -169,7 +228,7 @@ const PortfolioInner = () => {
           </div>
         </div>
 
-        <div className="flex justify-center space-x-2 md:space-x-4 mt-8 animate-fade-in-up [animation-delay:0.1s]">
+        <div className={cn("flex justify-center space-x-2 md:space-x-4 mt-8", hasAnimated && "animate-fade-in-up [animation-delay:0.1s]")}>
           {filters.map((filter) => (
             <Button
               key={filter}
@@ -187,21 +246,21 @@ const PortfolioInner = () => {
 
         <div className="space-y-16 mt-12">
             {(activeFilter === 'All' || activeFilter === 'Compositions') && (
-              <div className="animate-fade-in-up [animation-delay:0.2s]">
+              <div>
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Compositions</h3>
                  <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" />
               </div>
             )}
 
             {(activeFilter === 'All' || activeFilter === 'Performance') && (
-              <div className="animate-fade-in-up [animation-delay:0.3s]">
+              <div>
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
                  <PortfolioGrid items={guitars} onCardClick={openVideoModal} type="video" />
               </div>
             )}
             
             {(activeFilter === 'All' || activeFilter === 'Sound Design') && (
-              <div className="animate-fade-in-up [animation-delay:0.4s]">
+              <div>
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Sound Design</h3>
                  <PortfolioGrid items={linearAudios} onCardClick={openVideoModal} type="video" />
               </div>

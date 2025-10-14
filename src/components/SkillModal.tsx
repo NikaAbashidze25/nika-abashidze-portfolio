@@ -4,6 +4,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import type { Skill } from "@/components/sections/About";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
@@ -27,6 +28,7 @@ export default function SkillModal({ isOpen, onClose, skill }: SkillModalProps) 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl h-[90vh] flex flex-col md:flex-row p-0 gap-0">
+        <DialogTitle className="sr-only">{skill.title}</DialogTitle>
           <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black flex items-center justify-center relative">
             {image && (
                 <Image

@@ -3,6 +3,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import type { PortfolioItem } from "@/lib/data";
 import { X, ExternalLink } from "lucide-react";
@@ -20,6 +21,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl h-[90vh] flex flex-col md:flex-row p-0 gap-0">
+        <DialogTitle className="sr-only">{item.title}</DialogTitle>
           <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black flex items-center justify-center">
              {isYoutube ? (
                 <iframe

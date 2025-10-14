@@ -2,15 +2,45 @@
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "A close-up of a beautiful acoustic guitar, with warm, moody lighting.",
-      "imageUrl": "https://picsum.photos/seed/guitar1/1920/1080",
-      "imageHint": "acoustic guitar"
+      "description": "A dark and moody shot of a grand piano on a stage, ready for a performance.",
+      "imageUrl": "https://picsum.photos/seed/piano1/1920/1080",
+      "imageHint": "grand piano"
     },
     {
       "id": "portrait-nika",
       "description": "A professional and friendly portrait of a composer in a creative studio.",
       "imageUrl": "https://picsum.photos/seed/composer2/600/600",
       "imageHint": "composer portrait"
+    },
+    {
+      "id": "compositions-image",
+      "description": "Sheet music spread across a wooden desk with a fountain pen.",
+      "imageUrl": "https://picsum.photos/seed/sheetmusic/400/400",
+      "imageHint": "sheet music"
+    },
+    {
+      "id": "guitar-image",
+      "description": "A close-up of fingers playing a chord on a steel-string acoustic guitar.",
+      "imageUrl": "https://picsum.photos/seed/guitarfrets/400/400",
+      "imageHint": "guitar frets"
+    },
+    {
+      "id": "animations-audio-image",
+      "description": "A vintage microphone in a recording studio, with sound baffles in the background.",
+      "imageUrl": "https://picsum.photos/seed/vintagemics/400/400",
+      "imageHint": "vintage microphone"
+    },
+    {
+      "id": "sound-design-image",
+      "description": "A sound mixing console with many faders and knobs, lit in a dark room.",
+      "imageUrl": "https://picsum.photos/seed/mixingdesk/400/400",
+      "imageHint": "mixing console"
+    },
+    {
+      "id": "acapella-image",
+      "description": "A choir singing in a grand hall with beautiful acoustics.",
+      "imageUrl": "https://picsum.photos/seed/choirhall/400/400",
+      "imageHint": "choir singing"
     }
   ]
 }

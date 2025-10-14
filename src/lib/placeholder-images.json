@@ -2,15 +2,15 @@
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "A dark, atmospheric shot of a music production studio with mixing equipment.",
-      "imageUrl": "https://picsum.photos/seed/sonic1/1920/1080",
-      "imageHint": "audio studio"
+      "description": "A close-up of a beautiful acoustic guitar, with warm, moody lighting.",
+      "imageUrl": "https://picsum.photos/seed/guitar1/1920/1080",
+      "imageHint": "acoustic guitar"
     },
     {
       "id": "portrait-nika",
-      "description": "A professional and friendly portrait of Nika Abashidze in a studio environment.",
-      "imageUrl": "https://picsum.photos/seed/sonic2/600/600",
-      "imageHint": "professional portrait"
+      "description": "A professional and friendly portrait of a composer in a creative studio.",
+      "imageUrl": "https://picsum.photos/seed/composer2/600/600",
+      "imageHint": "composer portrait"
     }
   ]
 }

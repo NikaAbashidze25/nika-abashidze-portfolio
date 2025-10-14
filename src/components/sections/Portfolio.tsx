@@ -7,7 +7,7 @@ import { portfolioItems } from '@/lib/data';
 const categories = ['All', 'Composition', 'Guitar', 'Sound Design'];
 
 const PortfolioGrid = ({ items }: { items: typeof portfolioItems }) => (
-  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8 animate-in fade-in-0 duration-500">
+  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
     {items.map(item => (
       <Card key={item.id} className="overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20 bg-card">
         <CardContent className="p-0">

@@ -85,7 +85,7 @@ export default function About() {
                             <div className="relative aspect-square w-full overflow-hidden">
                               {image && <Image src={image.imageUrl} alt={image.description} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
                             </div>
-                            <div className="p-4 bg-card">
+                            <div className="p-4 bg-background">
                               <h3 className="text-lg font-bold">{skill.title}</h3>
                               <p className="text-sm text-muted-foreground mt-1">{skill.description}</p>
                             </div>
@@ -106,7 +106,7 @@ export default function About() {
                             <div className="relative aspect-square w-full overflow-hidden">
                               {image && <Image src={image.imageUrl} alt={image.description} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
                             </div>
-                            <div className="p-4 bg-card">
+                            <div className="p-4 bg-background">
                               <h3 className="text-lg font-bold">{skill.title}</h3>
                               <p className="text-sm text-muted-foreground mt-1">{skill.description}</p>
                             </div>

@@ -96,4 +96,15 @@ export const portfolioItems: PortfolioItem[] = [
     url: 'https://www.youtube.com/embed/p_jpE0Vp9iA',
     thumbnailUrl: 'https://picsum.photos/seed/guitar-improv/600/400'
   },
+  {
+    id: 7,
+    title: 'Nika Abashidze - Vazha',
+    category: 'Guitar',
+    description: 'A captivating original guitar performance.',
+    longDescription: 'A live performance of the original composition "Vazha", showcasing a blend of intricate fingerstyle and melodic phrasing.',
+    roleDescription: 'Composer and performer of the piece. Responsible for the composition, arrangement, and performance.',
+    type: 'video',
+    url: 'https://www.youtube.com/embed/7lk_tFkkTT8',
+    thumbnailUrl: 'https://picsum.photos/seed/vazha-guitar/600/400'
+  }
 ];

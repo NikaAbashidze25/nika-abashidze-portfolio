@@ -76,10 +76,19 @@ export default function About() {
                   {skills.slice(0, 3).map((skill, index) => {
                       const image = getImageForSkill(skill.id);
                       return (
-                          <div key={skill.title} className="flex flex-col items-start space-y-2 animate-fade-in-up cursor-pointer group" style={{animationDelay: `${0.4 + index * 0.1}s`}} onClick={() => openSkillModal(skill)}>
-                              {image && <Image src={image.imageUrl} alt={image.description} width={400} height={400} className="rounded-lg object-cover aspect-square transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
-                              <h3 className="text-lg font-bold pt-2">{skill.title}</h3>
-                              <p className="text-sm text-muted-foreground">{skill.description}</p>
+                          <div 
+                              key={skill.title} 
+                              className="group animate-fade-in-up cursor-pointer overflow-hidden rounded-lg border-2 border-transparent transition-all duration-300 hover:border-primary hover:shadow-2xl hover:shadow-primary/20" 
+                              style={{animationDelay: `${0.4 + index * 0.1}s`}} 
+                              onClick={() => openSkillModal(skill)}
+                          >
+                            <div className="relative aspect-square w-full overflow-hidden">
+                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
+                            </div>
+                            <div className="p-4 bg-card">
+                              <h3 className="text-lg font-bold">{skill.title}</h3>
+                              <p className="text-sm text-muted-foreground mt-1">{skill.description}</p>
+                            </div>
                           </div>
                       )
                   })}
@@ -88,10 +97,19 @@ export default function About() {
                   {skills.slice(3).map((skill, index) => {
                       const image = getImageForSkill(skill.id);
                       return (
-                          <div key={skill.title} className="flex flex-col items-start space-y-2 animate-fade-in-up cursor-pointer group" style={{animationDelay: `${0.7 + index * 0.1}s`}} onClick={() => openSkillModal(skill)}>
-                              {image && <Image src={image.imageUrl} alt={image.description} width={400} height={400} className="rounded-lg object-cover aspect-square transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
-                              <h3 className="text-lg font-bold pt-2">{skill.title}</h3>
-                              <p className="text-sm text-muted-foreground">{skill.description}</p>
+                          <div 
+                              key={skill.title} 
+                              className="group animate-fade-in-up cursor-pointer overflow-hidden rounded-lg border-2 border-transparent transition-all duration-300 hover:border-primary hover:shadow-2xl hover:shadow-primary/20" 
+                              style={{animationDelay: `${0.7 + index * 0.1}s`}} 
+                              onClick={() => openSkillModal(skill)}
+                          >
+                            <div className="relative aspect-square w-full overflow-hidden">
+                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
+                            </div>
+                            <div className="p-4 bg-card">
+                              <h3 className="text-lg font-bold">{skill.title}</h3>
+                              <p className="text-sm text-muted-foreground mt-1">{skill.description}</p>
+                            </div>
                           </div>
                       )
                   })}

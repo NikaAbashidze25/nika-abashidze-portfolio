@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "Musical notes floating in a vibrant blue sky.",
-      "imageUrl": "https://picsum.photos/seed/sky-music/1920/1080",
-      "imageHint": "blue music"
+      "description": "A beautiful blue landscape.",
+      "imageUrl": "https://picsum.photos/seed/blue-landscape/1920/1080",
+      "imageHint": "blue landscape"
     },
     {
       "id": "portrait-nika",

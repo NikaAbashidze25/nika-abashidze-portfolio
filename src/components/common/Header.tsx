@@ -20,9 +20,9 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
         <Link href="#home" className="flex items-center space-x-2">
-          <span className="font-bold">Nika Abashidze</span>
+          <span className="text-lg font-bold">Nika Abashidze</span>
         </Link>
-        <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
+        <nav className="hidden items-center space-x-6 text-base font-medium md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}

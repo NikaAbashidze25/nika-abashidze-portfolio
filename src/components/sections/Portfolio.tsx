@@ -2,7 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { portfolioItems } from '@/lib/data';
+import { portfolioItems, type PortfolioItem } from '@/lib/data';
+import Image from 'next/image';
 
 const categories = ['All', 'Composition', 'Guitar', 'Linear Audio'];
 
@@ -12,14 +13,27 @@ const PortfolioGrid = ({ items }: { items: typeof portfolioItems }) => (
       <Card key={item.id} className="overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20 bg-card animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
         <CardContent className="p-0">
           <div className="aspect-video w-full overflow-hidden">
-            <iframe
-              className="w-full h-full"
-              src={`https://www.youtube.com/embed/${item.youtubeId}`}
-              title={item.title}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            {item.type === 'video' ? (
+              <video controls className="w-full h-full object-cover" poster={item.thumbnailUrl}>
+                <source src={item.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <div className="relative w-full h-full">
+                <Image
+                  src={item.thumbnailUrl}
+                  alt={item.title}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-2 bg-black/50">
+                  <audio controls className="w-full">
+                    <source src={item.url} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                  </audio>
+                </div>
+              </div>
+            )}
           </div>
         </CardContent>
         <CardHeader>

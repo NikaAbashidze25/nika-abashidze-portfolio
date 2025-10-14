@@ -99,13 +99,14 @@ export default {
           },
         },
         wave: {
+          '0%, 100%': { height: '25%' },
           '50%': { height: '100%' },
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
+        'fade-in-up': 'fade-in-up 0.5s ease-out',
         'wave': 'wave 1.2s linear infinite',
       },
     },

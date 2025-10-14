@@ -23,6 +23,9 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
       pauseAudio();
     } else {
       if (!isCurrentTrack && item.url) {
+        const audio = getAudioElement();
+        if(audio) audio.pause();
+        
         const newAudio = new Audio(item.url);
         setAudioElement(newAudio);
         setCurrentlyPlaying(item);
@@ -51,26 +54,31 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
             className="object-cover transition-transform duration-500 group-hover:scale-110"
           />
            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-           <div className="absolute inset-0 flex flex-col justify-end p-4 text-white">
-             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <h3 className="text-xl font-bold">{item.title}</h3>
-                  <div className="flex items-end gap-1 h-4">
-                    <span className={cn("w-1 bg-primary transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1.2s] [animation-duration:0.8s]" : "h-1")}></span>
-                    <span className={cn("w-1 bg-primary transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1s]" : "h-1")}></span>
-                    <span className={cn("w-1 bg-primary transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.8s] [animation-duration:0.9s]" : "h-1")}></span>
-                    <span className={cn("w-1 bg-primary transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.6s] [animation-duration:0.7s]" : "h-1")}></span>
-                  </div>
+           <div className="absolute inset-x-0 bottom-0 p-4">
+             <div className="flex items-center justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                    <h3 className="text-xl font-bold text-white truncate">{item.title}</h3>
                 </div>
-                {item.url && (
-                    <button
-                        onClick={togglePlay}
-                        className="p-2 bg-primary text-primary-foreground rounded-full z-10"
-                        aria-label={isThisTrackPlaying ? "Pause" : "Play"}
-                        >
-                        {isThisTrackPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-                    </button>
-                )}
+                <div className="flex items-center gap-3">
+                    <div className="flex items-end gap-1 h-4 w-16">
+                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1.2s] [animation-duration:0.8s]" : "h-1")}></span>
+                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1s]" : "h-1")}></span>
+                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.8s] [animation-duration:0.9s]" : "h-1")}></span>
+                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.6s] [animation-duration:0.7s]" : "h-1")}></span>
+                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.4s] [animation-duration:0.8s]" : "h-1")}></span>
+                         <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.2s] [animation-duration:0.6s]" : "h-1")}></span>
+                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0s] [animation-duration:0.9s]" : "h-1")}></span>
+                    </div>
+                    {item.url && (
+                        <button
+                            onClick={togglePlay}
+                            className="p-2 bg-primary text-primary-foreground rounded-full z-10 flex-shrink-0"
+                            aria-label={isThisTrackPlaying ? "Pause" : "Play"}
+                            >
+                            {isThisTrackPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                        </button>
+                    )}
+                </div>
              </div>
           </div>
         </div>
@@ -108,8 +116,10 @@ const VideoCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (i
 
 const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void, type: 'audio' | 'video' }) => (
   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-    {items.map((item) => (
-      type === 'audio' ? <CompositionCard key={item.id} item={item} onCardClick={onCardClick} /> : <VideoCard key={item.id} item={item} onCardClick={onCardClick} />
+    {items.map((item, index) => (
+      <div key={item.id} style={{ animationDelay: `${index * 100}ms` }} className="animate-fade-in-up opacity-0 fill-mode-forwards">
+        {type === 'audio' ? <CompositionCard item={item} onCardClick={onCardClick} /> : <VideoCard item={item} onCardClick={onCardClick} />}
+      </div>
     ))}
   </div>
 );
@@ -121,7 +131,7 @@ const PortfolioInner = () => {
   const [selectedAudio, setSelectedAudio] = useState<PortfolioItem | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterType>('All');
   
-  const { pauseAudio } = useContext(AudioPlayerContext);
+  const { pauseAudio, getAudioElement } = useContext(AudioPlayerContext);
 
   const compositions = portfolioItems.filter(i => i.type === 'audio');
   const guitars = portfolioItems.filter(i => i.category === 'Guitar');
@@ -130,7 +140,8 @@ const PortfolioInner = () => {
   const filters: FilterType[] = ['All', 'Compositions', 'Performance', 'Sound Design'];
 
   const openVideoModal = (item: PortfolioItem) => {
-    pauseAudio();
+    const audio = getAudioElement();
+    if(audio && !audio.paused) pauseAudio();
     setSelectedVideo(item);
   };
 
@@ -174,23 +185,23 @@ const PortfolioInner = () => {
           ))}
         </div>
 
-        <div className="space-y-16 mt-12 animate-fade-in-up [animation-delay:0.2s]">
+        <div className="space-y-16 mt-12">
             {(activeFilter === 'All' || activeFilter === 'Compositions') && (
-              <div>
+              <div className="animate-fade-in-up [animation-delay:0.2s]">
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Compositions</h3>
                  <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" />
               </div>
             )}
 
             {(activeFilter === 'All' || activeFilter === 'Performance') && (
-              <div>
+              <div className="animate-fade-in-up [animation-delay:0.3s]">
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
                  <PortfolioGrid items={guitars} onCardClick={openVideoModal} type="video" />
               </div>
             )}
             
             {(activeFilter === 'All' || activeFilter === 'Sound Design') && (
-              <div>
+              <div className="animate-fade-in-up [animation-delay:0.4s]">
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Sound Design</h3>
                  <PortfolioGrid items={linearAudios} onCardClick={openVideoModal} type="video" />
               </div>
@@ -217,6 +228,7 @@ const PortfolioInner = () => {
     </section>
   );
 }
+
 
 export default function Portfolio() {
     return (

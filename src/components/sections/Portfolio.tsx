@@ -128,8 +128,10 @@ export default function Portfolio() {
             <div className="space-y-16">
                <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Compositions</h3>
                <PortfolioGrid items={compositions} type="audio" />
-               <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance & Sound Design</h3>
-               <PortfolioGrid items={[...guitars, ...linearAudios]} type="video" />
+               <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
+               <PortfolioGrid items={guitars} type="video" />
+               <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Sound Design</h3>
+               <PortfolioGrid items={linearAudios} type="video" />
             </div>
           </TabsContent>
 

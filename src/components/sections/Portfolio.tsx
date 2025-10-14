@@ -9,7 +9,7 @@ import VideoModal from '@/components/VideoModal';
 import AudioModalV2 from '@/components/AudioModalV2';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { AudioPlayerContext, AudioPlayerProvider } from '@/context/AudioPlayerContext';
+import { AudioPlayerContext } from '@/context/AudioPlayerContext';
 
 const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void, isVisible: boolean }) => {
   const { currentlyPlaying, isPlaying, playAudio, pauseAudio, setCurrentlyPlaying, getAudioElement, setAudioElement } = useContext(AudioPlayerContext);
@@ -58,10 +58,10 @@ const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem
            <div className="absolute inset-x-0 bottom-0 p-4">
              <div className="flex items-center justify-between gap-4">
                 <div className="flex-1 min-w-0">
-                    <h3 className="text-xl font-bold text-white truncate">{item.title}</h3>
+                    <h3 className="text-lg md:text-xl font-bold text-white truncate">{item.title}</h3>
                 </div>
                 <div className="flex items-center gap-3">
-                    <div className="flex items-end gap-1 h-4 w-16">
+                    <div className="flex items-end gap-1 h-4">
                         <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1.2s] [animation-duration:0.8s]" : "h-1")}></span>
                         <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1s]" : "h-1")}></span>
                         <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.8s] [animation-duration:0.9s]" : "h-1")}></span>
@@ -110,7 +110,7 @@ const VideoCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCa
              <Play className="h-12 w-12 text-white" />
           </div>
           <div className="absolute inset-0 flex items-end p-4">
-             <h3 className="text-xl font-bold text-white">{item.title}</h3>
+             <h3 className="text-lg md:text-xl font-bold text-white">{item.title}</h3>
           </div>
         </div>
       </CardContent>
@@ -291,8 +291,6 @@ const PortfolioInner = () => {
 
 export default function Portfolio() {
     return (
-        <AudioPlayerProvider>
-            <PortfolioInner />
-        </AudioPlayerProvider>
+        <PortfolioInner />
     )
 }

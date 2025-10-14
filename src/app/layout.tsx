@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
+import { AudioPlayerProvider } from '@/context/AudioPlayerContext';
 
 export const metadata: Metadata = {
   title: 'Sonic Canvas | Nika Abashidze',
@@ -20,7 +21,9 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased bg-background text-foreground">
-        {children}
+        <AudioPlayerProvider>
+            {children}
+        </AudioPlayerProvider>
         <Toaster />
       </body>
     </html>

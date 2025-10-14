@@ -38,7 +38,7 @@ export const portfolioItems: PortfolioItem[] = [
     longDescription: 'This score was composed for a hypothetical movie trailer, designed to build tension and excitement. It features a full orchestral arrangement combined with modern electronic textures and heavy percussion to create a powerful and epic feel.',
     roleDescription: 'As the composer, I was responsible for the entire creation of the piece, from the initial melodic concepts to the final orchestration and mixing. The goal was to produce a track that could stand on its own while also supporting a strong visual narrative.',
     type: 'audio',
-    url: '/audio/cinematic-trailer-score.mp3',
+    url: '/audio/Tron Alike Portfolio.wav',
     thumbnailUrl: 'https://picsum.photos/seed/trailer-score/600/400',
   },
   {

@@ -4,53 +4,34 @@ import { Card, CardContent } from '@/components/ui/card';
 import { portfolioItems, type PortfolioItem } from '@/lib/data';
 import Image from 'next/image';
 import { Play, Pause } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import VideoModal from '@/components/VideoModal';
-import AudioModal from '@/components/AudioModal';
+import AudioModalV2 from '@/components/AudioModalV2';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { AudioPlayerContext, AudioPlayerProvider } from '@/context/AudioPlayerContext';
 
 const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [activeAudio, setActiveAudio] = useState<HTMLAudioElement | null>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const { currentlyPlaying, isPlaying, playAudio, pauseAudio, setCurrentlyPlaying, getAudioElement, setAudioElement } = useContext(AudioPlayerContext);
 
-  useEffect(() => {
-    const handleAudioPlay = (e: Event) => {
-      if (activeAudio && activeAudio !== e.target) {
-        activeAudio.pause();
-      }
-      setActiveAudio(e.target as HTMLAudioElement);
-    };
-  
-    document.addEventListener('play', handleAudioPlay, true);
-  
-    return () => {
-      document.removeEventListener('play', handleAudioPlay, true);
-    };
-  }, [activeAudio]);
+  const isCurrentTrack = currentlyPlaying?.id === item.id;
+  const isThisTrackPlaying = isCurrentTrack && isPlaying;
 
   const togglePlay = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (!audioRef.current) return;
-    
-    if (audioRef.current.readyState < 2 && item.url) {
-        console.warn("Audio not ready to play.");
-        return;
-    }
-
-    if (isPlaying) {
-      audioRef.current.pause();
+    if (isThisTrackPlaying) {
+      pauseAudio();
     } else {
-      if(item.url) {
-        audioRef.current.play().catch(err => console.error("Audio play failed:", err));
+      if (!isCurrentTrack && item.url) {
+        const newAudio = new Audio(item.url);
+        setAudioElement(newAudio);
+        setCurrentlyPlaying(item);
+        playAudio(newAudio);
+      } else {
+         const audio = getAudioElement();
+         if(audio) playAudio(audio);
       }
     }
-    setIsPlaying(!isPlaying);
-  };
-  
-  const handleAudioEnd = () => {
-    setIsPlaying(false);
   };
 
   return (
@@ -69,28 +50,29 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
            <div className="absolute inset-0 flex flex-col justify-end p-4 text-white">
              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold">{item.title}</h3>
+                <div className="flex items-center gap-3">
+                  <h3 className="text-xl font-bold">{item.title}</h3>
+                  {isThisTrackPlaying && (
+                    <div className="flex items-end gap-1 h-4">
+                      <span className="w-1 bg-primary animate-[wave] [animation-delay:-1.2s] [animation-duration:0.8s]"></span>
+                      <span className="w-1 bg-primary animate-[wave] [animation-delay:-1s]"></span>
+                      <span className="w-1 bg-primary animate-[wave] [animation-delay:-0.8s] [animation-duration:0.9s]"></span>
+                      <span className="w-1 bg-primary animate-[wave] [animation-delay:-0.6s] [animation-duration:0.7s]"></span>
+                    </div>
+                  )}
+                </div>
                 {item.url && (
                     <button
                         onClick={togglePlay}
                         className="p-2 bg-primary text-primary-foreground rounded-full z-10"
-                        aria-label={isPlaying ? "Pause" : "Play"}
+                        aria-label={isThisTrackPlaying ? "Pause" : "Play"}
                         >
-                        {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                        {isThisTrackPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
                     </button>
                 )}
              </div>
           </div>
         </div>
-        {item.url && <audio 
-          ref={audioRef} 
-          src={item.url} 
-          onEnded={handleAudioEnd} 
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          className="hidden"
-          preload="metadata"
-        />}
       </CardContent>
     </Card>
   );
@@ -133,10 +115,12 @@ const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], o
 
 type FilterType = 'All' | 'Compositions' | 'Performance' | 'Sound Design';
 
-export default function Portfolio() {
+const PortfolioInner = () => {
   const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
   const [selectedAudio, setSelectedAudio] = useState<PortfolioItem | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterType>('All');
+  
+  const { pauseAudio } = useContext(AudioPlayerContext);
 
   const compositions = portfolioItems.filter(i => i.type === 'audio');
   const guitars = portfolioItems.filter(i => i.category === 'Guitar');
@@ -145,6 +129,7 @@ export default function Portfolio() {
   const filters: FilterType[] = ['All', 'Compositions', 'Performance', 'Sound Design'];
 
   const openVideoModal = (item: PortfolioItem) => {
+    pauseAudio();
     setSelectedVideo(item);
   };
 
@@ -159,7 +144,6 @@ export default function Portfolio() {
   const closeAudioModal = () => {
     setSelectedAudio(null);
   };
-
 
   return (
     <section id="portfolio" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
@@ -223,7 +207,7 @@ export default function Portfolio() {
       )}
       
       {selectedAudio && (
-        <AudioModal
+        <AudioModalV2
           isOpen={!!selectedAudio}
           onClose={closeAudioModal}
           item={selectedAudio}
@@ -231,4 +215,12 @@ export default function Portfolio() {
       )}
     </section>
   );
+}
+
+export default function Portfolio() {
+    return (
+        <AudioPlayerProvider>
+            <PortfolioInner />
+        </AudioPlayerProvider>
+    )
 }

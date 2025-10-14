@@ -7,8 +7,9 @@ import {
 } from "@/components/ui/dialog";
 import type { PortfolioItem } from "@/lib/data";
 import Image from "next/image";
-import { X, Play, Pause, ExternalLink } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { Play, Pause, ExternalLink } from "lucide-react";
+import { useState, useRef, useEffect, useContext } from "react";
+import { AudioPlayerContext } from "@/context/AudioPlayerContext";
 
 interface AudioModalProps {
   isOpen: boolean;
@@ -16,57 +17,56 @@ interface AudioModalProps {
   item: PortfolioItem;
 }
 
+const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+};
+
+
 export default function AudioModal({ isOpen, onClose, item }: AudioModalProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const { 
+    currentlyPlaying,
+    isPlaying, 
+    playAudio, 
+    pauseAudio, 
+    setCurrentlyPlaying, 
+    getAudioElement,
+    setAudioElement,
+    currentTime,
+    duration
+  } = useContext(AudioPlayerContext);
+
+  const isCurrentTrack = currentlyPlaying?.id === item?.id;
 
   useEffect(() => {
-    if (!isOpen) {
-      if(audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-      setIsPlaying(false);
-      setCurrentTime(0);
+    if (isOpen && item && !isCurrentTrack) {
+        const newAudio = new Audio(item.url);
+        setAudioElement(newAudio);
+        setCurrentlyPlaying(item);
+        playAudio(newAudio);
     }
-  }, [isOpen]);
+  }, [isOpen, item, isCurrentTrack, setAudioElement, setCurrentlyPlaying, playAudio]);
 
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (!audioRef.current) return;
+    const audio = getAudioElement();
+    if (!audio) return;
+
     if (isPlaying) {
-      audioRef.current.pause();
+      pauseAudio();
     } else {
-      audioRef.current.play();
+      playAudio(audio);
     }
-    setIsPlaying(!isPlaying);
   };
-  
-  const handleAudioEnd = () => {
-    setIsPlaying(false);
-    setCurrentTime(0);
-  };
-
-  const handleTimeUpdate = () => {
-    if(audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
-    }
-  }
-
-  const handleLoadedMetadata = () => {
-    if(audioRef.current) {
-      setDuration(audioRef.current.duration);
-    }
-  }
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (audioRef.current && duration > 0) {
+    const audio = getAudioElement();
+    if (audio && duration > 0) {
       const timeline = e.currentTarget.getBoundingClientRect();
       const newTime = (e.clientX - timeline.left) / timeline.width * duration;
       if(isFinite(newTime)) {
-        audioRef.current.currentTime = newTime;
+        audio.currentTime = newTime;
       }
     }
   };
@@ -95,19 +95,23 @@ export default function AudioModal({ isOpen, onClose, item }: AudioModalProps) {
               )}
 
             <div className="my-6">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
                     <button
                         onClick={togglePlay}
-                        className="p-3 bg-primary text-primary-foreground rounded-full hover:bg-primary/80 transition-colors z-10"
+                        className="p-3 bg-primary text-primary-foreground rounded-full hover:bg-primary/80 transition-colors z-10 flex-shrink-0"
                         aria-label={isPlaying ? "Pause" : "Play"}
                         >
                         {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
                     </button>
-                    <div className="w-full bg-muted h-2 rounded-full ml-4 cursor-pointer" onClick={handleSeek}>
-                        <div 
-                        className="bg-primary h-full rounded-full" 
-                        style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
-                        />
+                    <div className="w-full flex items-center gap-2">
+                        <span className="text-xs text-muted-foreground w-10">{formatTime(currentTime)}</span>
+                        <div className="w-full bg-muted h-2 rounded-full cursor-pointer" onClick={handleSeek}>
+                            <div 
+                            className="bg-primary h-full rounded-full" 
+                            style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
+                            />
+                        </div>
+                        <span className="text-xs text-muted-foreground w-10">{formatTime(duration)}</span>
                     </div>
                 </div>
             </div>
@@ -121,14 +125,6 @@ export default function AudioModal({ isOpen, onClose, item }: AudioModalProps) {
                   </div>
               )}
           </div>
-          <audio 
-            ref={audioRef} 
-            src={item.url} 
-            onEnded={handleAudioEnd} 
-            onTimeUpdate={handleTimeUpdate}
-            onLoadedMetadata={handleLoadedMetadata}
-            preload="metadata" 
-          />
       </DialogContent>
     </Dialog>
   );

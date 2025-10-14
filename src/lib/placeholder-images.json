@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "A beautiful blue landscape.",
-      "imageUrl": "https://picsum.photos/seed/blue-landscape/1920/1080",
-      "imageHint": "blue landscape"
+      "description": "A vibrant and abstract representation of musical score.",
+      "imageUrl": "https://picsum.photos/seed/musical-score/1920/1080",
+      "imageHint": "musical score"
     },
     {
       "id": "portrait-nika",

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 
 const navLinks = [
   { href: '#home', label: 'Home' },
@@ -42,6 +42,9 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[240px] pr-0">
+              <SheetHeader>
+                <SheetTitle className="sr-only">Mobile Navigation</SheetTitle>
+              </SheetHeader>
               <Link href="#home" className="flex items-center space-x-2 px-4">
                 <span className="font-bold">Nika Abashidze</span>
               </Link>

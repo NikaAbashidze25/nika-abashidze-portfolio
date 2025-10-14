@@ -32,10 +32,16 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
     e.stopPropagation();
     if (!audioRef.current) return;
     
+    // This check is to prevent playback if the audio source is not ready
+    if (audioRef.current.readyState < 2) {
+        console.warn("Audio not ready to play.");
+        return;
+    }
+
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      audioRef.current.play().catch(err => console.error("Audio play failed:", err));
     }
     setIsPlaying(!isPlaying);
   };

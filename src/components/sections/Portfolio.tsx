@@ -118,7 +118,7 @@ const VideoCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCa
   );
 };
 
-const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void, type: 'audio' | 'video' }) => {
+const PortfolioGrid = ({ items, onCardClick, type, hasAnimated }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void, type: 'audio' | 'video', hasAnimated: boolean }) => {
   const [visibleItems, setVisibleItems] = useState(new Set());
   const observer = useRef<IntersectionObserver>();
 
@@ -138,12 +138,12 @@ const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], o
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
       {items.map((item, index) => {
-        const isVisible = visibleItems.has(String(item.id));
+        const isVisible = hasAnimated || visibleItems.has(String(item.id));
         return (
           <div 
             key={item.id} 
             ref={el => {
-                if (el && !visibleItems.has(String(item.id))) {
+                if (el && !hasAnimated && !visibleItems.has(String(item.id))) {
                     observer.current?.observe(el);
                 }
             }}
@@ -248,21 +248,21 @@ const PortfolioInner = () => {
             {(activeFilter === 'All' || activeFilter === 'Compositions') && (
               <div>
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Compositions</h3>
-                 <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" />
+                 <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" hasAnimated={hasAnimated} />
               </div>
             )}
 
             {(activeFilter === 'All' || activeFilter === 'Performance') && (
               <div>
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
-                 <PortfolioGrid items={guitars} onCardClick={openVideoModal} type="video" />
+                 <PortfolioGrid items={guitars} onCardClick={openVideoModal} type="video" hasAnimated={hasAnimated} />
               </div>
             )}
             
             {(activeFilter === 'All' || activeFilter === 'Sound Design') && (
               <div>
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Sound Design</h3>
-                 <PortfolioGrid items={linearAudios} onCardClick={openVideoModal} type="video" />
+                 <PortfolioGrid items={linearAudios} onCardClick={openVideoModal} type="video" hasAnimated={hasAnimated} />
               </div>
             )}
         </div>

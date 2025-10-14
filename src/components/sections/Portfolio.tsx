@@ -1,61 +1,20 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent } from '@/components/ui/card';
 import { portfolioItems, type PortfolioItem } from '@/lib/data';
 import Image from 'next/image';
 import { Play, Pause } from 'lucide-react';
 import { useState, useRef } from 'react';
 import VideoModal from '@/components/VideoModal';
+import AudioModal from '@/components/AudioModal';
 
-const categories = ['All', 'Compositions', 'Performance', 'Sound Design'];
-
-const CompositionCard = ({ item }: { item: PortfolioItem }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  const togglePlay = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-  
-  const handleAudioEnd = () => {
-    setIsPlaying(false);
-    setCurrentTime(0);
-  };
-
-  const handleTimeUpdate = () => {
-    if(audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
-    }
-  }
-
-  const handleLoadedMetadata = () => {
-    if(audioRef.current) {
-      setDuration(audioRef.current.duration);
-    }
-  }
-
-  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (audioRef.current && duration > 0) {
-      const timeline = e.currentTarget.getBoundingClientRect();
-      const newTime = (e.clientX - timeline.left) / timeline.width * duration;
-      if(isFinite(newTime)) {
-        audioRef.current.currentTime = newTime;
-      }
-    }
-  };
+const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void }) => {
 
   return (
-    <Card className="overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 animate-fade-in-up">
+    <Card 
+      onClick={() => onCardClick(item)}
+      className="overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 animate-fade-in-up cursor-pointer"
+    >
       <CardContent className="p-0">
         <div className="relative aspect-video w-full overflow-hidden">
           <Image
@@ -68,31 +27,16 @@ const CompositionCard = ({ item }: { item: PortfolioItem }) => {
            <div className="absolute inset-0 flex flex-col justify-end p-4 text-white">
              <div className="flex items-center justify-between">
                 <h3 className="text-xl font-bold">{item.title}</h3>
-                <button
-                  onClick={togglePlay}
-                  className="p-2 bg-primary text-primary-foreground rounded-full hover:bg-primary/80 transition-colors z-10"
-                  aria-label={isPlaying ? "Pause" : "Play"}
+                <div
+                  className="p-2 bg-primary text-primary-foreground rounded-full z-10"
+                  aria-label={"Play"}
                 >
-                  {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-                </button>
+                  <Play className="h-5 w-5" />
+                </div>
              </div>
-             <div className="w-full bg-white/20 h-1.5 rounded-full mt-2 cursor-pointer" onClick={handleSeek}>
-                <div 
-                  className="bg-primary h-full rounded-full" 
-                  style={{ width: `${(currentTime / duration) * 100}%` }}
-                />
-              </div>
           </div>
         </div>
       </CardContent>
-      <audio 
-        ref={audioRef} 
-        src={item.url} 
-        onEnded={handleAudioEnd} 
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        preload="metadata" 
-      />
     </Card>
   );
 }
@@ -112,6 +56,9 @@ const VideoCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (i
             className="object-cover transition-transform duration-500 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
+             <Play className="h-12 w-12 text-white" />
+          </div>
           <div className="absolute inset-0 flex items-end p-4">
              <h3 className="text-xl font-bold text-white">{item.title}</h3>
           </div>
@@ -121,28 +68,38 @@ const VideoCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (i
   );
 };
 
-const PortfolioGrid = ({ items, onCardClick }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void }) => (
+const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void, type: 'audio' | 'video' }) => (
   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
     {items.map((item) => (
-       <VideoCard key={item.id} item={item} onCardClick={onCardClick} />
+      type === 'audio' ? <CompositionCard key={item.id} item={item} onCardClick={onCardClick} /> : <VideoCard key={item.id} item={item} onCardClick={onCardClick} />
     ))}
   </div>
 );
 
 export default function Portfolio() {
   const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
+  const [selectedAudio, setSelectedAudio] = useState<PortfolioItem | null>(null);
 
-  const compositions = portfolioItems.filter(i => i.category === 'Composition');
+  const compositions = portfolioItems.filter(i => i.type === 'audio');
   const guitars = portfolioItems.filter(i => i.category === 'Guitar');
   const linearAudios = portfolioItems.filter(i => i.category === 'Linear Audio');
 
-  const openModal = (item: PortfolioItem) => {
+  const openVideoModal = (item: PortfolioItem) => {
     setSelectedVideo(item);
   };
 
-  const closeModal = () => {
+  const closeVideoModal = () => {
     setSelectedVideo(null);
   };
+  
+  const openAudioModal = (item: PortfolioItem) => {
+    setSelectedAudio(item);
+  };
+
+  const closeAudioModal = () => {
+    setSelectedAudio(null);
+  };
+
 
   return (
     <section id="portfolio" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
@@ -155,48 +112,39 @@ export default function Portfolio() {
             </p>
           </div>
         </div>
-        <Tabs defaultValue="All" className="mt-12 animate-fade-in-up [animation-delay:0.2s]">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mx-auto max-w-lg">
-            {categories.map(category => (
-              <TabsTrigger key={category} value={category}>{category}</TabsTrigger>
-            ))}
-          </TabsList>
-          
-          <TabsContent value="All">
-            <div className="space-y-16">
+
+        <div className="space-y-16 mt-12 animate-fade-in-up [animation-delay:0.2s]">
+            <div>
                <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Compositions</h3>
-               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-                  {compositions.map((item) => <CompositionCard key={item.id} item={item} />)}
-               </div>
+               <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" />
+            </div>
 
+            <div>
                <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
-               <PortfolioGrid items={guitars} onCardClick={openModal} />
-               
+               <PortfolioGrid items={guitars} onCardClick={openVideoModal} type="video" />
+            </div>
+            
+            <div>
                <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Sound Design</h3>
-               <PortfolioGrid items={linearAudios} onCardClick={openModal} />
+               <PortfolioGrid items={linearAudios} onCardClick={openVideoModal} type="video" />
             </div>
-          </TabsContent>
+        </div>
 
-          <TabsContent value="Compositions">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-              {compositions.map((item) => <CompositionCard key={item.id} item={item} />)}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="Performance">
-            <PortfolioGrid items={guitars} onCardClick={openModal} />
-          </TabsContent>
-
-          <TabsContent value="Sound Design">
-            <PortfolioGrid items={linearAudios} onCardClick={openModal} />
-          </TabsContent>
-        </Tabs>
       </div>
+
       {selectedVideo && (
         <VideoModal
           isOpen={!!selectedVideo}
-          onClose={closeModal}
+          onClose={closeVideoModal}
           item={selectedVideo}
+        />
+      )}
+      
+      {selectedAudio && (
+        <AudioModal
+          isOpen={!!selectedAudio}
+          onClose={closeAudioModal}
+          item={selectedAudio}
         />
       )}
     </section>

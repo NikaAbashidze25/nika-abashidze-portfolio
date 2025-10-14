@@ -21,6 +21,7 @@ export type PortfolioItem = {
   type: 'audio' | 'video';
   url: string;
   thumbnailUrl: string;
+  backgroundUrl?: string;
 };
 
 export const portfolioItems: PortfolioItem[] = [
@@ -28,10 +29,21 @@ export const portfolioItems: PortfolioItem[] = [
     id: 1,
     title: 'Cinematic Trailer Score',
     category: 'Composition',
-    description: 'Original composition for a fictional movie trailer, blending orchestral and electronic elements to create a dramatic and immersive soundscape.',
+    description: 'Orchestral and electronic elements blend to create a dramatic, immersive soundscape.',
     type: 'audio',
     url: '/audio/cinematic-trailer-score.mp3',
-    thumbnailUrl: 'https://picsum.photos/seed/trailer-score/600/400'
+    thumbnailUrl: 'https://picsum.photos/seed/trailer-score/600/400',
+    backgroundUrl: 'https://picsum.photos/seed/trailer-score-bg/1200/600',
+  },
+  {
+    id: 4,
+    title: 'Video Game Main Theme',
+    category: 'Composition',
+    description: 'An evolving theme for an indie adventure game, incorporating adaptive audio techniques.',
+    type: 'audio',
+    url: '/audio/game-theme.mp3',
+    thumbnailUrl: 'https://picsum.photos/seed/game-theme/600/400',
+    backgroundUrl: 'https://picsum.photos/seed/game-theme-bg/1200/600',
   },
   {
     id: 2,
@@ -50,15 +62,6 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'video',
     url: '/video/solitude.mp4',
     thumbnailUrl: 'https://picsum.photos/seed/acoustic-session/600/400'
-  },
-  {
-    id: 4,
-    title: 'Video Game Main Theme',
-    category: 'Composition',
-    description: 'Main theme for an indie adventure game. The music evolves with the player\'s journey, incorporating adaptive audio techniques.',
-    type: 'audio',
-    url: '/audio/game-theme.mp3',
-    thumbnailUrl: 'https://picsum.photos/seed/game-theme/600/400'
   },
   {
     id: 5,

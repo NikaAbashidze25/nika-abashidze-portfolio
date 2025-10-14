@@ -4,10 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { portfolioItems, type PortfolioItem } from '@/lib/data';
 import Image from 'next/image';
+import CompositionPlayer from './CompositionPlayer';
 
 const categories = ['All', 'Composition', 'Guitar', 'Linear Audio'];
 
-const PortfolioGrid = ({ items }: { items: typeof portfolioItems }) => (
+const PortfolioGrid = ({ items }: { items: PortfolioItem[] }) => (
   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
     {items.map((item, index) => (
       <Card key={item.id} className="overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20 bg-card animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
@@ -46,6 +47,9 @@ const PortfolioGrid = ({ items }: { items: typeof portfolioItems }) => (
 );
 
 export default function Portfolio() {
+  const compositions = portfolioItems.filter(i => i.category === 'Composition');
+  const otherWorks = portfolioItems.filter(i => i.category !== 'Composition');
+
   return (
     <section id="portfolio" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
       <div className="container px-4 md:px-6">
@@ -65,14 +69,28 @@ export default function Portfolio() {
           </TabsList>
           
           <TabsContent value="All">
-            <PortfolioGrid items={portfolioItems} />
+            <div className="space-y-16">
+              <div className="space-y-8">
+                {compositions.map(item => (
+                  <CompositionPlayer key={item.id} item={item} />
+                ))}
+              </div>
+              <PortfolioGrid items={otherWorks} />
+            </div>
           </TabsContent>
+
           <TabsContent value="Composition">
-            <PortfolioGrid items={portfolioItems.filter(i => i.category === 'Composition')} />
+            <div className="space-y-8 mt-8">
+              {compositions.map(item => (
+                <CompositionPlayer key={item.id} item={item} />
+              ))}
+            </div>
           </TabsContent>
+
           <TabsContent value="Guitar">
             <PortfolioGrid items={portfolioItems.filter(i => i.category === 'Guitar')} />
           </TabsContent>
+
           <TabsContent value="Linear Audio">
             <PortfolioGrid items={portfolioItems.filter(i => i.category === 'Linear Audio')} />
           </TabsContent>

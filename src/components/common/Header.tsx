@@ -4,7 +4,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 
 const navLinks = [
   { href: '#home', label: 'Home' },
@@ -18,11 +24,14 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center justify-between">
-        <Link href="#home" className="flex items-center space-x-2">
-          <span className="text-lg font-bold">Nika Abashidze</span>
-        </Link>
-        <nav className="hidden items-center space-x-6 text-base font-medium md:flex">
+      <div className="container flex h-14 items-center">
+        <div className="flex-1 flex justify-start">
+          <Link href="#home" className="flex items-center space-x-2">
+            <span className="text-lg font-bold">Nika Abashidze</span>
+          </Link>
+        </div>
+        
+        <nav className="hidden flex-2 justify-center items-center space-x-6 text-base font-medium md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -33,7 +42,8 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <div className="flex items-center md:hidden">
+
+        <div className="flex flex-1 justify-end md:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">

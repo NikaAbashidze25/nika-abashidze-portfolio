@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, Music } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
@@ -20,7 +20,6 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
         <Link href="#home" className="flex items-center space-x-2">
-          <Music className="h-6 w-6 text-accent" />
           <span className="font-bold">Nika Abashidze</span>
         </Link>
         <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
@@ -44,7 +43,6 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right" className="w-[240px] pr-0">
               <Link href="#home" className="flex items-center space-x-2 px-4">
-                <Music className="h-6 w-6 text-accent" />
                 <span className="font-bold">Nika Abashidze</span>
               </Link>
               <div className="mt-8 flex flex-col space-y-2">

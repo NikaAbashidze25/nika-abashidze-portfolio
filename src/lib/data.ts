@@ -31,7 +31,7 @@ export const portfolioItems: PortfolioItem[] = [
     description: 'Orchestral and electronic elements blend to create a dramatic, immersive soundscape.',
     type: 'audio',
     url: '/audio/cinematic-trailer-score.mp3',
-    thumbnailUrl: 'https://picsum.photos/seed/trailer-score/600/400',
+    thumbnailUrl: 'https://picsum.photos/seed/trailer-score/600/600',
   },
   {
     id: 4,
@@ -40,7 +40,7 @@ export const portfolioItems: PortfolioItem[] = [
     description: 'An evolving theme for an indie adventure game, incorporating adaptive audio techniques.',
     type: 'audio',
     url: '/audio/game-theme.mp3',
-    thumbnailUrl: 'https://picsum.photos/seed/game-theme/600/400',
+    thumbnailUrl: 'https://picsum.photos/seed/game-theme/600/600',
   },
   {
     id: 2,
@@ -48,7 +48,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: 'Linear Audio',
     description: 'Complete sound design, foley, and mixing for an animated short. The goal was to bring the minimalist visuals to life with rich audio textures.',
     type: 'video',
-    url: '/video/the-wanderer.mp4',
+    url: 'https://www.youtube.com/embed/L3n1f4oI3_8',
     thumbnailUrl: 'https://picsum.photos/seed/wanderer-anim/600/400'
   },
   {
@@ -57,7 +57,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: 'Guitar',
     description: 'A live performance of an original intricate fingerstyle guitar piece, recorded in a single take to capture the raw emotion of the music.',
     type: 'video',
-    url: '/video/solitude.mp4',
+    url: 'https://www.youtube.com/embed/wX5yP2hT8gU',
     thumbnailUrl: 'https://picsum.photos/seed/acoustic-session/600/400'
   },
   {
@@ -66,7 +66,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: 'Linear Audio',
     description: 'Sound design and audio mixing for a tech product commercial. The sound enhances the sleek and futuristic feel of the product.',
     type: 'video',
-    url: 'https://www.youtube.com/embed/your-video-id-nova', // Placeholder
+    url: 'https://www.youtube.com/embed/G524_4V1yRg',
     thumbnailUrl: 'https://picsum.photos/seed/nova-commercial/600/400'
   },
   {
@@ -75,7 +75,7 @@ export const portfolioItems: PortfolioItem[] = [
     category: 'Guitar',
     description: 'An improvised electric guitar solo over a custom backing track, showcasing technical proficiency and melodic creativity in a rock-fusion style.',
     type: 'video',
-    url: '/video/guitar-improvisation.mp4',
+    url: 'https://www.youtube.com/embed/p_jpE0Vp9iA',
     thumbnailUrl: 'https://picsum.photos/seed/guitar-improv/600/400'
   },
 ];

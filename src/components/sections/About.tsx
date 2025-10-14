@@ -45,17 +45,17 @@ export default function About() {
       <div className="container px-4 md:px-6">
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16 items-center">
             <div className="space-y-4 lg:col-span-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">About Me</h2>
-              <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl animate-fade-in-up [animation-delay:0.2s]">About Me</h2>
+              <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed animate-fade-in-up [animation-delay:0.3s]">
                 I am a passionate composer, guitarist, and sound designer with a love for telling stories through audio. My work focuses on creating immersive soundscapes that elevate animations, multimedia projects, and musical pieces to new emotional heights. I also had the pleasure of being part of my university's acapella group.
               </p>
             </div>
             <div className="lg:col-span-3">
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {skills.slice(0, 3).map((skill) => {
+                  {skills.slice(0, 3).map((skill, index) => {
                       const image = getImageForSkill(skill.id);
                       return (
-                          <div key={skill.title} className="flex flex-col items-start space-y-2">
+                          <div key={skill.title} className="flex flex-col items-start space-y-2 animate-fade-in-up" style={{animationDelay: `${0.4 + index * 0.1}s`}}>
                               {image && <Image src={image.imageUrl} alt={image.description} width={400} height={400} className="rounded-lg object-cover aspect-square" data-ai-hint={image.imageHint} />}
                               <h3 className="text-lg font-bold pt-2">{skill.title}</h3>
                               <p className="text-sm text-muted-foreground">{skill.description}</p>
@@ -64,10 +64,10 @@ export default function About() {
                   })}
               </div>
               <div className="grid sm:grid-cols-2 gap-4 mt-4">
-                  {skills.slice(3).map((skill) => {
+                  {skills.slice(3).map((skill, index) => {
                       const image = getImageForSkill(skill.id);
                       return (
-                          <div key={skill.title} className="flex flex-col items-start space-y-2">
+                          <div key={skill.title} className="flex flex-col items-start space-y-2 animate-fade-in-up" style={{animationDelay: `${0.7 + index * 0.1}s`}}>
                               {image && <Image src={image.imageUrl} alt={image.description} width={400} height={400} className="rounded-lg object-cover aspect-square" data-ai-hint={image.imageHint} />}
                               <h3 className="text-lg font-bold pt-2">{skill.title}</h3>
                               <p className="text-sm text-muted-foreground">{skill.description}</p>

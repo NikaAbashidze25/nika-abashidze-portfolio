@@ -8,8 +8,8 @@ const categories = ['All', 'Composition', 'Guitar', 'Linear Audio'];
 
 const PortfolioGrid = ({ items }: { items: typeof portfolioItems }) => (
   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-    {items.map(item => (
-      <Card key={item.id} className="overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20 bg-card">
+    {items.map((item, index) => (
+      <Card key={item.id} className="overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/20 bg-card animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
         <CardContent className="p-0">
           <div className="aspect-video w-full overflow-hidden">
             <iframe
@@ -36,14 +36,14 @@ export default function Portfolio() {
     <section id="portfolio" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
+          <div className="space-y-2 animate-fade-in-up">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">My Work</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               A selection of my projects, showcasing my skills in composition, performance, and sound design.
             </p>
           </div>
         </div>
-        <Tabs defaultValue="All" className="mt-12">
+        <Tabs defaultValue="All" className="mt-12 animate-fade-in-up [animation-delay:0.2s]">
           <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mx-auto max-w-lg">
             {categories.map(category => (
               <TabsTrigger key={category} value={category}>{category}</TabsTrigger>

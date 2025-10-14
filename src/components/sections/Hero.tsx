@@ -20,7 +20,7 @@ export default function Hero() {
         />
       )}
       <div className="absolute inset-0 bg-black/60" />
-      <div className="relative z-10 flex flex-col items-center px-4">
+      <div className="relative z-10 flex flex-col items-center px-4 animate-fade-in-up">
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
           Hello, I’m Nika Abashidze
         </h1>

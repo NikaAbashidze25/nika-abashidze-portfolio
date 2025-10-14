@@ -4,11 +4,45 @@ import { Card, CardContent } from '@/components/ui/card';
 import { portfolioItems, type PortfolioItem } from '@/lib/data';
 import Image from 'next/image';
 import { Play, Pause } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import VideoModal from '@/components/VideoModal';
 import AudioModal from '@/components/AudioModal';
 
 const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [activeAudio, setActiveAudio] = useState<HTMLAudioElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const handleAudioPlay = (e: Event) => {
+      if (activeAudio && activeAudio !== e.target) {
+        activeAudio.pause();
+      }
+      setActiveAudio(e.target as HTMLAudioElement);
+    };
+  
+    document.addEventListener('play', handleAudioPlay, true);
+  
+    return () => {
+      document.removeEventListener('play', handleAudioPlay, true);
+    };
+  }, [activeAudio]);
+
+  const togglePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!audioRef.current) return;
+    
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+  
+  const handleAudioEnd = () => {
+    setIsPlaying(false);
+  };
 
   return (
     <Card 
@@ -27,15 +61,25 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
            <div className="absolute inset-0 flex flex-col justify-end p-4 text-white">
              <div className="flex items-center justify-between">
                 <h3 className="text-xl font-bold">{item.title}</h3>
-                <div
+                <button
+                  onClick={togglePlay}
                   className="p-2 bg-primary text-primary-foreground rounded-full z-10"
-                  aria-label={"Play"}
+                  aria-label={isPlaying ? "Pause" : "Play"}
                 >
-                  <Play className="h-5 w-5" />
-                </div>
+                  {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                </button>
              </div>
           </div>
         </div>
+        <audio 
+          ref={audioRef} 
+          src={item.url} 
+          onEnded={handleAudioEnd} 
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          className="hidden"
+          preload="metadata"
+        />
       </CardContent>
     </Card>
   );
@@ -53,7 +97,7 @@ const VideoCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (i
             src={item.thumbnailUrl}
             alt={item.title}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            className="object-cover transition-all duration-500 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
           <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">

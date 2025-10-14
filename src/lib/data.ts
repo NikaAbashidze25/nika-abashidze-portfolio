@@ -65,14 +65,14 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 3,
-    title: 'Acoustic Session: "Solitude"',
+    title: 'Tango En Skai - Roland Dyens (Nika Abashidze)',
     category: 'Guitar',
     description: 'A live performance of an original intricate fingerstyle guitar piece.',
     longDescription: 'A live performance of an original intricate fingerstyle guitar piece, recorded in a single take to capture the raw emotion of the music.',
     roleDescription: 'As the sole performer and composer of this piece, my focus was on delivering a technically clean yet emotionally resonant performance. I also managed the recording and mixing process.',
     type: 'video',
-    url: 'https://www.youtube.com/embed/wX5yP2hT8gU',
-    thumbnailUrl: 'https://picsum.photos/seed/acoustic-session/600/400'
+    url: 'https://www.youtube.com/watch?v=7lk_tFkkTT8',
+    thumbnailUrl: '/images/Tango.jpg'
   },
   {
     id: 5,

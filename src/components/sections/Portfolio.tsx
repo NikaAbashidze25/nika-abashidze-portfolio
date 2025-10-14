@@ -7,6 +7,8 @@ import { Play, Pause } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import VideoModal from '@/components/VideoModal';
 import AudioModal from '@/components/AudioModal';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,8 +34,7 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
     e.stopPropagation();
     if (!audioRef.current) return;
     
-    // This check is to prevent playback if the audio source is not ready
-    if (audioRef.current.readyState < 2) {
+    if (audioRef.current.readyState < 2 && item.url) {
         console.warn("Audio not ready to play.");
         return;
     }
@@ -41,7 +42,9 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play().catch(err => console.error("Audio play failed:", err));
+      if(item.url) {
+        audioRef.current.play().catch(err => console.error("Audio play failed:", err));
+      }
     }
     setIsPlaying(!isPlaying);
   };
@@ -67,17 +70,19 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
            <div className="absolute inset-0 flex flex-col justify-end p-4 text-white">
              <div className="flex items-center justify-between">
                 <h3 className="text-xl font-bold">{item.title}</h3>
-                <button
-                  onClick={togglePlay}
-                  className="p-2 bg-primary text-primary-foreground rounded-full z-10"
-                  aria-label={isPlaying ? "Pause" : "Play"}
-                >
-                  {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-                </button>
+                {item.url && (
+                    <button
+                        onClick={togglePlay}
+                        className="p-2 bg-primary text-primary-foreground rounded-full z-10"
+                        aria-label={isPlaying ? "Pause" : "Play"}
+                        >
+                        {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                    </button>
+                )}
              </div>
           </div>
         </div>
-        <audio 
+        {item.url && <audio 
           ref={audioRef} 
           src={item.url} 
           onEnded={handleAudioEnd} 
@@ -85,7 +90,7 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
           onPause={() => setIsPlaying(false)}
           className="hidden"
           preload="metadata"
-        />
+        />}
       </CardContent>
     </Card>
   );
@@ -126,13 +131,18 @@ const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], o
   </div>
 );
 
+type FilterType = 'All' | 'Compositions' | 'Performance' | 'Sound Design';
+
 export default function Portfolio() {
   const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
   const [selectedAudio, setSelectedAudio] = useState<PortfolioItem | null>(null);
+  const [activeFilter, setActiveFilter] = useState<FilterType>('All');
 
   const compositions = portfolioItems.filter(i => i.type === 'audio');
   const guitars = portfolioItems.filter(i => i.category === 'Guitar');
   const linearAudios = portfolioItems.filter(i => i.category === 'Linear Audio');
+  
+  const filters: FilterType[] = ['All', 'Compositions', 'Performance', 'Sound Design'];
 
   const openVideoModal = (item: PortfolioItem) => {
     setSelectedVideo(item);
@@ -163,21 +173,43 @@ export default function Portfolio() {
           </div>
         </div>
 
-        <div className="space-y-16 mt-12 animate-fade-in-up [animation-delay:0.2s]">
-            <div>
-               <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Compositions</h3>
-               <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" />
-            </div>
+        <div className="flex justify-center space-x-2 md:space-x-4 mt-8 animate-fade-in-up [animation-delay:0.1s]">
+          {filters.map((filter) => (
+            <Button
+              key={filter}
+              variant={activeFilter === filter ? 'default' : 'outline'}
+              onClick={() => setActiveFilter(filter)}
+              className={cn(
+                  "transition-all duration-200",
+                  activeFilter === filter && "bg-primary text-primary-foreground"
+              )}
+            >
+              {filter}
+            </Button>
+          ))}
+        </div>
 
-            <div>
-               <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
-               <PortfolioGrid items={guitars} onCardClick={openVideoModal} type="video" />
-            </div>
+        <div className="space-y-16 mt-12 animate-fade-in-up [animation-delay:0.2s]">
+            {(activeFilter === 'All' || activeFilter === 'Compositions') && (
+              <div>
+                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Compositions</h3>
+                 <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" />
+              </div>
+            )}
+
+            {(activeFilter === 'All' || activeFilter === 'Performance') && (
+              <div>
+                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
+                 <PortfolioGrid items={guitars} onCardClick={openVideoModal} type="video" />
+              </div>
+            )}
             
-            <div>
-               <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Sound Design</h3>
-               <PortfolioGrid items={linearAudios} onCardClick={openVideoModal} type="video" />
-            </div>
+            {(activeFilter === 'All' || activeFilter === 'Sound Design') && (
+              <div>
+                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Sound Design</h3>
+                 <PortfolioGrid items={linearAudios} onCardClick={openVideoModal} type="video" />
+              </div>
+            )}
         </div>
 
       </div>

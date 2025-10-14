@@ -30,7 +30,7 @@ const skills: Skill[] = [
   },
   {
     id: 'acapella-image',
-    title: 'University Acapella',
+    title: 'University Capella',
     description: 'Arranging and performing complex vocal pieces as a member of a premier university ensemble.',
   },
 ];

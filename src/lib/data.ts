@@ -16,7 +16,7 @@ export const socialLinks: SocialLink[] = [
 type PortfolioItem = {
   id: number;
   title: string;
-  category: 'Composition' | 'Guitar' | 'Sound Design';
+  category: 'Composition' | 'Guitar' | 'Linear Audio';
   description: string;
   youtubeId: string;
 };
@@ -32,7 +32,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: 2,
     title: 'Animated Short "The Wanderer"',
-    category: 'Sound Design',
+    category: 'Linear Audio',
     description: 'Complete sound design, foley, and mixing for an animated short. The goal was to bring the minimalist visuals to life with rich audio textures.',
     youtubeId: '3-yI-q_1L9I',
   },
@@ -53,7 +53,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: 5,
     title: 'Commercial Audio for "Nova"',
-    category: 'Sound Design',
+    category: 'Linear Audio',
     description: 'Sound design and audio mixing for a tech product commercial. The sound enhances the sleek and futuristic feel of the product.',
     youtubeId: '8aGhZQkoFbQ',
   },

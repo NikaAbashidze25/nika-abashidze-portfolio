@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { portfolioItems } from '@/lib/data';
 
-const categories = ['All', 'Composition', 'Guitar', 'Sound Design'];
+const categories = ['All', 'Composition', 'Guitar', 'Linear Audio'];
 
 const PortfolioGrid = ({ items }: { items: typeof portfolioItems }) => (
   <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
@@ -59,8 +59,8 @@ export default function Portfolio() {
           <TabsContent value="Guitar">
             <PortfolioGrid items={portfolioItems.filter(i => i.category === 'Guitar')} />
           </TabsContent>
-          <TabsContent value="Sound Design">
-            <PortfolioGrid items={portfolioItems.filter(i => i.category === 'Sound Design')} />
+          <TabsContent value="Linear Audio">
+            <PortfolioGrid items={portfolioItems.filter(i => i.category === 'Linear Audio')} />
           </TabsContent>
         </Tabs>
       </div>

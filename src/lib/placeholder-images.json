@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "A dark and moody shot of a grand piano on a stage, ready for a performance.",
-      "imageUrl": "https://picsum.photos/seed/piano1/1920/1080",
-      "imageHint": "grand piano"
+      "description": "Musical notes floating in a vibrant blue sky.",
+      "imageUrl": "https://picsum.photos/seed/sky-music/1920/1080",
+      "imageHint": "blue music"
     },
     {
       "id": "portrait-nika",

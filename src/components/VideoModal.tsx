@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { PortfolioItem } from "@/lib/data";
-import { X, ExternalLink, Play } from "lucide-react";
+import { ExternalLink, Play } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
@@ -75,6 +75,17 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
               )}
 
               {item.longDescription && <p className="text-base text-foreground mb-6">{item.longDescription}</p>}
+              
+              {item.descriptionImage && (
+                <div className="relative aspect-video w-full overflow-hidden rounded-md my-6">
+                    <Image
+                        src={item.descriptionImage}
+                        alt={item.title}
+                        fill
+                        className="object-cover"
+                    />
+                </div>
+              )}
 
               {item.roleDescription && (
                   <div>

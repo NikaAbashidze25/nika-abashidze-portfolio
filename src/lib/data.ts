@@ -20,6 +20,7 @@ export type PortfolioItem = {
   description: string;
   longDescription?: string;
   roleDescription?: string;
+  descriptionImage?: string;
   externalLink?: {
     label: string;
     url:string;
@@ -76,6 +77,7 @@ export const portfolioItems: PortfolioItem[] = [
     url: 'https://www.youtube.com/embed/7lk_tFkkTT8',
     thumbnailUrl: '/images/Tango.jpg',
     posterUrl: '/images/Tango.jpg',
+    descriptionImage: 'https://picsum.photos/seed/tango-description/600/400',
   },
   {
     id: 5,

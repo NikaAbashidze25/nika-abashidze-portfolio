@@ -124,6 +124,17 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
             </div>
 
               {item.longDescription && <p className="text-base text-foreground mb-6">{item.longDescription}</p>}
+              
+              {item.descriptionImage && (
+                <div className="relative aspect-video w-full overflow-hidden rounded-md my-6">
+                    <Image
+                        src={item.descriptionImage}
+                        alt={item.title}
+                        fill
+                        className="object-cover"
+                    />
+                </div>
+              )}
 
               {item.roleDescription && (
                   <div>

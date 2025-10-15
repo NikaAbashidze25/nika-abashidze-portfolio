@@ -27,6 +27,7 @@ export type PortfolioItem = {
   type: 'audio' | 'video';
   url: string;
   thumbnailUrl: string;
+  posterUrl?: string;
 };
 
 export const portfolioItems: PortfolioItem[] = [
@@ -61,7 +62,8 @@ export const portfolioItems: PortfolioItem[] = [
     roleDescription: 'For this project, I handled all aspects of the audio post-production, from foley recording and sound effect creation to the final mix and master.',
     type: 'video',
     url: 'https://www.youtube.com/embed/ck0yTk5Mk98', 
-    thumbnailUrl: '/images/ThumbnailElephant.png'
+    thumbnailUrl: '/images/ThumbnailElephant.png',
+    posterUrl: '/images/ThumbnailElephant.png'
   },
   {
     id: 3,
@@ -72,7 +74,8 @@ export const portfolioItems: PortfolioItem[] = [
     roleDescription: 'As the sole performer and composer of this piece, my focus was on delivering a technically clean yet emotionally resonant performance. I also managed the recording and mixing process.',
     type: 'video',
     url: 'https://www.youtube.com/embed/7lk_tFkkTT8',
-    thumbnailUrl: '/images/Tango.jpg'
+    thumbnailUrl: '/images/Tango.jpg',
+    posterUrl: '/images/Tango.jpg',
   },
   {
     id: 5,
@@ -83,7 +86,8 @@ export const portfolioItems: PortfolioItem[] = [
     roleDescription: 'My role was to create a soundscape that matched the product\'s brand identity. This involved sound design, selecting and editing music, and mixing all audio elements to broadcast standards.',
     type: 'video',
     url: 'https://www.youtube.com/embed/G524_4V1yRg',
-    thumbnailUrl: 'https://picsum.photos/seed/nova-commercial/600/400'
+    thumbnailUrl: 'https://picsum.photos/seed/nova-commercial/600/400',
+    posterUrl: 'https://picsum.photos/seed/nova-commercial/1280/720',
   },
   {
     id: 6,
@@ -94,7 +98,8 @@ export const portfolioItems: PortfolioItem[] = [
     roleDescription: 'In this piece, I composed the backing track and performed the improvised lead guitar part. It\'s a demonstration of my ability to create compelling melodies and navigate complex harmonic structures in real-time.',
     type: 'video',
     url: 'https://www.youtube.com/embed/p_jpE0Vp9iA',
-    thumbnailUrl: 'https://picsum.photos/seed/guitar-improv/600/400'
+    thumbnailUrl: 'https://picsum.photos/seed/guitar-improv/600/400',
+    posterUrl: 'https://picsum.photos/seed/guitar-improv/1280/720',
   },
   {
     id: 7,
@@ -105,6 +110,7 @@ export const portfolioItems: PortfolioItem[] = [
     roleDescription: 'Composer and performer of the piece. Responsible for the composition, arrangement, and performance.',
     type: 'video',
     url: 'https://www.youtube.com/embed/7lk_tFkkTT8',
-    thumbnailUrl: 'https://picsum.photos/seed/vazha-guitar/600/400'
+    thumbnailUrl: 'https://picsum.photos/seed/vazha-guitar/600/400',
+    posterUrl: 'https://picsum.photos/seed/vazha-guitar/1280/720',
   }
 ];

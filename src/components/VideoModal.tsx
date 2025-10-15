@@ -6,7 +6,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { PortfolioItem } from "@/lib/data";
-import { X, ExternalLink } from "lucide-react";
+import { X, ExternalLink, Play } from "lucide-react";
+import Image from "next/image";
+import { useState, useEffect } from "react";
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -15,29 +17,54 @@ interface VideoModalProps {
 }
 
 export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setShowVideo(false);
+    }
+  }, [isOpen]);
+  
   if (!isOpen || !item) return null;
+  
   const isYoutube = item.url.includes('youtube.com/embed');
+  const videoUrl = isYoutube ? `${item.url}?autoplay=1` : item.url;
+  const poster = item.posterUrl || item.thumbnailUrl;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl h-[90vh] flex flex-col md:flex-row p-0 gap-0">
         <DialogTitle className="sr-only">{item.title}</DialogTitle>
-          <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black flex items-center justify-center">
-             {isYoutube ? (
-                <iframe
-                    src={item.url}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-full"
-                    title={item.title}
-                ></iframe>
+          <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black flex items-center justify-center relative">
+             {showVideo ? (
+                isYoutube ? (
+                  <iframe
+                      src={videoUrl}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="w-full h-full"
+                      title={item.title}
+                  ></iframe>
                 ) : (
-                <video controls className="w-full h-full object-cover" poster={item.thumbnailUrl}>
-                    <source src={item.url} type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-            )}
+                  <video controls autoPlay className="w-full h-full object-cover" poster={poster}>
+                      <source src={item.url} type="video/mp4" />
+                      Your browser does not support the video tag.
+                  </video>
+                )
+             ) : (
+                <div className="w-full h-full relative group cursor-pointer" onClick={() => setShowVideo(true)}>
+                    <Image
+                        src={poster}
+                        alt={item.title}
+                        fill
+                        className="object-cover"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 transition-opacity duration-300">
+                        <Play className="h-16 w-16 text-white/80 group-hover:text-white transition-colors" />
+                    </div>
+                </div>
+             )}
           </div>
           <div className="w-full md:w-1/3 h-1/2 md:h-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-6 overflow-y-auto">
               <h2 className="text-2xl font-bold mb-2">{item.title}</h2>

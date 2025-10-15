@@ -22,7 +22,7 @@ export type PortfolioItem = {
   roleDescription?: string;
   externalLink?: {
     label: string;
-    url: string;
+    url:string;
   };
   type: 'audio' | 'video';
   url: string;
@@ -60,8 +60,8 @@ export const portfolioItems: PortfolioItem[] = [
     longDescription: 'Complete sound design, foley, and mixing for an animated short. The goal was to bring the minimalist visuals to life with rich audio textures.',
     roleDescription: 'For this project, I handled all aspects of the audio post-production, from foley recording and sound effect creation to the final mix and master.',
     type: 'video',
-    url: 'https://www.youtube.com/embed/L3n1f4oI3_8',
-    thumbnailUrl: 'https://picsum.photos/seed/wanderer-anim/600/400'
+    url: 'https://www.youtube.com/embed/G524_4V1yRg', // Placeholder, replace with your actual YouTube embed link
+    thumbnailUrl: '/images/CrocodileSmoking.png'
   },
   {
     id: 3,

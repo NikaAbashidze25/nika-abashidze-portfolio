@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -33,7 +34,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl h-[90vh] flex flex-col md:flex-row p-0 gap-0">
+      <DialogContent className="max-w-6xl w-[95vw] h-[90vh] flex flex-col md:flex-row p-0 gap-0">
         <DialogTitle className="sr-only">{item.title}</DialogTitle>
           <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black flex items-center justify-center relative">
              {showVideo ? (
@@ -77,7 +78,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
               {item.longDescription && <p className="text-base text-foreground mb-6">{item.longDescription}</p>}
               
               {item.descriptionImage && (
-                <div className="relative aspect-video w-full overflow-hidden rounded-md my-6">
+                <div className="relative aspect-[9/12] w-full overflow-hidden rounded-md my-6">
                     <Image
                         src={item.descriptionImage}
                         alt={item.title}

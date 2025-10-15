@@ -77,7 +77,7 @@ export const portfolioItems: PortfolioItem[] = [
     url: 'https://www.youtube.com/embed/7lk_tFkkTT8',
     thumbnailUrl: '/images/Tango.jpg',
     posterUrl: '/images/Tango.jpg',
-    descriptionImage: 'https://picsum.photos/seed/tango-description/600/400',
+    descriptionImage: '/images/GuitarConcertPoster.png',
   },
   {
     id: 5,

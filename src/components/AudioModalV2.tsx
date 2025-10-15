@@ -40,21 +40,21 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
   const isCurrentTrack = currentlyPlaying?.id === item?.id;
 
   useEffect(() => {
-    if (isOpen && item && !isCurrentTrack) {
-        const audio = getAudioElement();
+    const audio = getAudioElement();
+    if (isOpen && item && (!isCurrentTrack || !audio)) {
         if(audio) audio.pause();
-
+        
         const newAudio = new Audio(item.url);
         setAudioElement(newAudio);
         setCurrentlyPlaying(item);
         playAudio(newAudio);
-    } else if (isOpen && item && isCurrentTrack) {
-        const audio = getAudioElement();
-        if (audio && !isPlaying) {
+    } else if (isOpen && item && isCurrentTrack && audio) {
+        if (!isPlaying) {
             playAudio(audio);
         }
     }
   }, [isOpen, item, isCurrentTrack, setAudioElement, setCurrentlyPlaying, playAudio, getAudioElement, isPlaying]);
+
 
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -83,7 +83,7 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl h-[90vh] flex flex-col md:flex-row p-0 gap-0">
+      <DialogContent className="max-w-6xl w-[95vw] h-[90vh] flex flex-col md:flex-row p-0 gap-0">
           <DialogTitle className="sr-only">{item.title}</DialogTitle>
           <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black flex items-center justify-center relative">
             <Image
@@ -126,7 +126,7 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
               {item.longDescription && <p className="text-base text-foreground mb-6">{item.longDescription}</p>}
               
               {item.descriptionImage && (
-                <div className="relative aspect-video w-full overflow-hidden rounded-md my-6">
+                <div className="relative aspect-[9/12] w-full overflow-hidden rounded-md my-6">
                     <Image
                         src={item.descriptionImage}
                         alt={item.title}

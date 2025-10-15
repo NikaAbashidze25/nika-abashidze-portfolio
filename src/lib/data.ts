@@ -60,7 +60,7 @@ export const portfolioItems: PortfolioItem[] = [
     longDescription: 'Complete sound design, foley, and mixing for an animated short. The goal was to bring the minimalist visuals to life with rich audio textures.',
     roleDescription: 'For this project, I handled all aspects of the audio post-production, from foley recording and sound effect creation to the final mix and master.',
     type: 'video',
-    url: 'https://youtu.be/ck0yTk5Mk98', 
+    url: 'https://www.youtube.com/embed/ck0yTk5Mk98', 
     thumbnailUrl: '/images/ThumbnailElephant.png'
   },
   {

@@ -54,14 +54,14 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 2,
-    title: 'Animated Short "The Wanderer"',
+    title: 'Audio Post Production Practice - Short Animation #1',
     category: 'Linear Audio',
     description: 'Complete sound design, foley, and mixing for an animated short.',
     longDescription: 'Complete sound design, foley, and mixing for an animated short. The goal was to bring the minimalist visuals to life with rich audio textures.',
     roleDescription: 'For this project, I handled all aspects of the audio post-production, from foley recording and sound effect creation to the final mix and master.',
     type: 'video',
-    url: 'https://www.youtube.com/embed/G524_4V1yRg', // Placeholder, replace with your actual YouTube embed link
-    thumbnailUrl: '/images/CrocodileSmoking.png'
+    url: 'https://youtu.be/ck0yTk5Mk98', 
+    thumbnailUrl: '/images/ThumbnailElephant.png'
   },
   {
     id: 3,

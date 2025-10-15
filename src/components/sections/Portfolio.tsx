@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Card, CardContent } from '@/components/ui/card';
@@ -22,8 +23,8 @@ const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem
     if (isThisTrackPlaying) {
       pauseAudio();
     } else {
+      const audio = getAudioElement();
       if (!isCurrentTrack && item.url) {
-        const audio = getAudioElement();
         if(audio) audio.pause();
         
         const newAudio = new Audio(item.url);
@@ -31,7 +32,6 @@ const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem
         setCurrentlyPlaying(item);
         playAudio(newAudio);
       } else {
-         const audio = getAudioElement();
          if(audio) playAudio(audio);
       }
     }
@@ -41,46 +41,44 @@ const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem
     <Card 
       onClick={() => onCardClick(item)}
       className={cn(
-        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent cursor-pointer",
+        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent cursor-pointer flex flex-col",
         isThisTrackPlaying ? "border-primary shadow-2xl shadow-primary/20" : "hover:border-primary hover:shadow-2xl hover:shadow-primary/20",
         isVisible ? "animate-fade-in-up" : "opacity-0"
       )}
     >
-      <CardContent className="p-0">
-        <div className="relative aspect-video w-full overflow-hidden">
-          <Image
-            src={item.thumbnailUrl}
-            alt={item.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-           <div className="absolute inset-x-0 bottom-0 p-4">
-             <div className="flex items-center justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                    <h3 className="text-base sm:text-lg font-bold text-white truncate">{item.title}</h3>
-                </div>
-                <div className="flex items-center gap-3">
-                    <div className="flex items-end gap-1 h-4">
-                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1.2s] [animation-duration:0.8s]" : "h-1")}></span>
-                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1s]" : "h-1")}></span>
-                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.8s] [animation-duration:0.9s]" : "h-1")}></span>
-                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.6s] [animation-duration:0.7s]" : "h-1")}></span>
-                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.4s] [animation-duration:0.8s]" : "h-1")}></span>
-                         <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.2s] [animation-duration:0.6s]" : "h-1")}></span>
-                        <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0s] [animation-duration:0.9s]" : "h-1")}></span>
-                    </div>
-                    {item.url && (
-                        <button
-                            onClick={togglePlay}
-                            className="p-2 bg-primary text-primary-foreground rounded-full z-10 flex-shrink-0"
-                            aria-label={isThisTrackPlaying ? "Pause" : "Play"}
-                            >
-                            {isThisTrackPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-                        </button>
-                    )}
-                </div>
-             </div>
+      <div className="relative aspect-video w-full overflow-hidden">
+        <Image
+          src={item.thumbnailUrl}
+          alt={item.title}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+      </div>
+      <CardContent className="p-4 bg-background flex-grow flex flex-col">
+        <div className="flex-grow">
+          <h3 className="text-base font-bold text-foreground truncate">{item.title}</h3>
+          <p className="text-sm text-muted-foreground mt-1 h-10">{item.description}</p>
+        </div>
+        <div className="flex items-center justify-between gap-4 mt-4">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            {item.url && (
+                <button
+                    onClick={togglePlay}
+                    className="p-2 bg-primary text-primary-foreground rounded-full z-10 flex-shrink-0 hover:bg-primary/80 transition-colors"
+                    aria-label={isThisTrackPlaying ? "Pause" : "Play"}
+                    >
+                    {isThisTrackPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+                </button>
+            )}
+            <div className="flex items-end gap-1 h-4 w-full">
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1.2s] [animation-duration:0.8s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.8s] [animation-duration:0.9s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.6s] [animation-duration:0.7s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.4s] [animation-duration:0.8s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.2s] [animation-duration:0.6s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0s] [animation-duration:0.9s]" : "h-1")}></span>
+            </div>
           </div>
         </div>
       </CardContent>
@@ -93,26 +91,24 @@ const VideoCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCa
     <Card 
       onClick={() => onCardClick(item)}
       className={cn(
-        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 cursor-pointer",
+        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 cursor-pointer flex flex-col",
         isVisible ? "animate-fade-in-up" : "opacity-0"
       )}
     >
-      <CardContent className="p-0">
-        <div className="relative aspect-video w-full overflow-hidden">
-          <Image
-            src={item.thumbnailUrl}
-            alt={item.title}
-            fill
-            className="object-cover transition-all duration-500 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-          <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
-             <Play className="h-12 w-12 text-white" />
-          </div>
-          <div className="absolute inset-0 flex items-end p-4">
-             <h3 className="text-base sm:text-lg font-bold text-white">{item.title}</h3>
-          </div>
+      <div className="relative aspect-video w-full overflow-hidden">
+        <Image
+          src={item.thumbnailUrl}
+          alt={item.title}
+          fill
+          className="object-cover transition-all duration-500 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+           <Play className="h-12 w-12 text-white" />
         </div>
+      </div>
+      <CardContent className="p-4 bg-background flex-grow">
+          <h3 className="text-base font-bold text-foreground truncate">{item.title}</h3>
+          <p className="text-sm text-muted-foreground mt-1 h-10">{item.description}</p>
       </CardContent>
     </Card>
   );
@@ -294,3 +290,5 @@ export default function Portfolio() {
         <PortfolioInner />
     )
 }
+
+    

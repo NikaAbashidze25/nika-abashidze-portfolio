@@ -8,10 +8,9 @@ interface AudioPlayerContextType {
   currentlyPlaying: PortfolioItem | null;
   setCurrentlyPlaying: (item: PortfolioItem | null) => void;
   isPlaying: boolean;
-  playAudio: (audio: HTMLAudioElement) => void;
+  playAudio: (item: PortfolioItem) => void;
   pauseAudio: () => void;
   getAudioElement: () => HTMLAudioElement | null;
-  setAudioElement: (audio: HTMLAudioElement) => void;
   currentTime: number;
   duration: number;
 }
@@ -23,7 +22,6 @@ export const AudioPlayerContext = createContext<AudioPlayerContextType>({
   playAudio: () => {},
   pauseAudio: () => {},
   getAudioElement: () => null,
-  setAudioElement: () => {},
   currentTime: 0,
   duration: 0,
 });
@@ -70,28 +68,39 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
     audio.removeEventListener('pause', () => setIsPlaying(false));
   }, [handleTimeUpdate, handleLoadedMetadata, handleAudioEnd]);
 
-  const setAudioElement = useCallback((newAudio: HTMLAudioElement | null) => {
-    if (audioRef.current) {
+  const playAudio = useCallback((item: PortfolioItem) => {
+    if (!item.url) return;
+
+    if (currentlyPlaying?.id === item.id && audioRef.current) {
+      audioRef.current.play().catch(e => console.error("Audio play failed:", e));
+    } else {
+      if (audioRef.current) {
         audioRef.current.pause();
         removeAudioListeners(audioRef.current);
-        audioRef.current.src = ""; // Detach the source
-        audioRef.current.load();
-    }
-
-    if (newAudio) {
+      }
+      
+      const newAudio = new Audio(item.url);
       audioRef.current = newAudio;
-      setAudioListeners(newAudio);
-      setCurrentTime(0);
-      setDuration(0);
-    } else {
-      audioRef.current = null;
+      setAudioElement(newAudio);
+      setCurrentlyPlaying(item);
+      newAudio.play().catch(e => console.error("Audio play failed:", e));
     }
-  }, [setAudioListeners, removeAudioListeners]);
+  }, [currentlyPlaying, removeAudioListeners]);
 
+  const setAudioElement = useCallback((newAudio: HTMLAudioElement) => {
+    if (audioRef.current && audioRef.current !== newAudio) {
+      audioRef.current.pause();
+      removeAudioListeners(audioRef.current);
+      audioRef.current.src = ""; // Detach the source
+      audioRef.current.load();
+    }
+    
+    audioRef.current = newAudio;
+    setAudioListeners(newAudio);
+    setCurrentTime(0);
+    setDuration(0);
+  }, [removeAudioListeners, setAudioListeners]);
 
-  const playAudio = useCallback((audio: HTMLAudioElement) => {
-    audio.play().catch(e => console.error("Audio play failed:", e));
-  }, []);
 
   const pauseAudio = useCallback(() => {
     if (audioRef.current) {
@@ -119,7 +128,6 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
     playAudio,
     pauseAudio,
     getAudioElement,
-    setAudioElement,
     currentTime,
     duration,
   };

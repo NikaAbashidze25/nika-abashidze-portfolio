@@ -30,9 +30,7 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
     isPlaying, 
     playAudio, 
     pauseAudio, 
-    setCurrentlyPlaying, 
     getAudioElement,
-    setAudioElement,
     currentTime,
     duration
   } = useContext(AudioPlayerContext);
@@ -42,18 +40,9 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
   useEffect(() => {
     const audio = getAudioElement();
     if (isOpen && item && (!isCurrentTrack || !audio)) {
-        if(audio) audio.pause();
-        
-        const newAudio = new Audio(item.url);
-        setAudioElement(newAudio);
-        setCurrentlyPlaying(item);
-        playAudio(newAudio);
-    } else if (isOpen && item && isCurrentTrack && audio) {
-        if (!isPlaying) {
-            playAudio(audio);
-        }
+        playAudio(item);
     }
-  }, [isOpen, item, isCurrentTrack, setAudioElement, setCurrentlyPlaying, playAudio, getAudioElement, isPlaying]);
+  }, [isOpen, item, isCurrentTrack, playAudio, getAudioElement]);
 
 
   const togglePlay = (e?: React.MouseEvent) => {
@@ -64,7 +53,9 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
     if (isPlaying) {
       pauseAudio();
     } else {
-      playAudio(audio);
+      if(currentlyPlaying) {
+        playAudio(currentlyPlaying);
+      }
     }
   };
 
@@ -83,9 +74,9 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl w-[95vw] h-[90vh] flex flex-col md:flex-row p-0 gap-0">
+      <DialogContent className="max-w-4xl w-[95vw] h-auto max-h-[90vh] flex flex-col p-0 gap-0">
           <DialogTitle className="sr-only">{item.title}</DialogTitle>
-          <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black flex items-center justify-center relative">
+          <div className="w-full aspect-video bg-black flex items-center justify-center relative flex-shrink-0">
             <Image
                 src={item.thumbnailUrl}
                 alt={item.title}
@@ -93,7 +84,7 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
                 className="object-cover"
             />
           </div>
-          <div className="w-full md:w-1/3 h-1/2 md:h-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-6 overflow-y-auto">
+          <div className="w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-6 overflow-y-auto">
               <h2 className="text-2xl font-bold mb-2">{item.title}</h2>
               {item.externalLink && (
                   <a href={item.externalLink.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center mb-4">

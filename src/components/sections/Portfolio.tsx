@@ -9,7 +9,7 @@ import { useState, useContext, useEffect, useRef } from 'react';
 import VideoModal from '@/components/VideoModal';
 import AudioModalV2 from '@/components/AudioModalV2';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn, resolveImageUrl } from '@/lib/utils';
 import { AudioPlayerContext } from '@/context/AudioPlayerContext';
 
 const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void, isVisible: boolean }) => {
@@ -38,7 +38,7 @@ const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem
     >
       <div className="relative aspect-video w-full overflow-hidden">
         <Image
-          src={item.thumbnailUrl}
+          src={resolveImageUrl(item.thumbnailUrl)}
           alt={item.title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -87,7 +87,7 @@ const VideoCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCa
     >
       <div className="relative aspect-video w-full overflow-hidden">
         <Image
-          src={item.thumbnailUrl}
+          src={resolveImageUrl(item.thumbnailUrl)}
           alt={item.title}
           fill
           className="object-cover transition-all duration-500 group-hover:scale-110"

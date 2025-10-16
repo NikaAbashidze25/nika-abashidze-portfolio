@@ -9,6 +9,7 @@ import {
 import type { Skill } from "@/components/sections/About";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import Image from "next/image";
+import { resolveImageUrl } from "@/lib/utils";
 
 interface SkillModalProps {
   isOpen: boolean;
@@ -32,7 +33,7 @@ export default function SkillModal({ isOpen, onClose, skill }: SkillModalProps) 
           <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black flex items-center justify-center relative">
             {image && (
                 <Image
-                    src={image.imageUrl}
+                    src={resolveImageUrl(image.imageUrl)}
                     alt={image.description}
                     fill
                     className="object-cover"

@@ -35,7 +35,17 @@ export function convertToEmbedUrl(url: string): string | null {
     return url;
   }
   
-  // Return null if it's not a recognizable YouTube URL
+  // Return the original URL if it's not a recognizable YouTube URL
   // This allows the component to fallback to a regular <video> tag
-  return null;
+  return url;
+}
+
+export function resolveImageUrl(url: string | undefined | null): string {
+    if (!url) return '';
+    // If it's a full URL or an absolute path, return it as is.
+    if (url.startsWith('http') || url.startsWith('/')) {
+        return url;
+    }
+    // Otherwise, assume it's a local image in the public/images directory.
+    return `/images/${url}`;
 }

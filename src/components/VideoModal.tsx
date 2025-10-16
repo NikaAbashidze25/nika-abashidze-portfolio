@@ -10,7 +10,7 @@ import type { PortfolioItem } from "@/lib/data";
 import { ExternalLink, Play } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { convertToEmbedUrl } from "@/lib/utils";
+import { convertToEmbedUrl, resolveImageUrl } from "@/lib/utils";
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -31,8 +31,8 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
   
   const embedUrl = convertToEmbedUrl(item.url);
   const videoUrl = embedUrl ? `${embedUrl}?autoplay=1` : item.url;
-  const isYoutube = !!embedUrl;
-  const poster = item.posterUrl || item.thumbnailUrl;
+  const isYoutube = videoUrl.includes('youtube.com/embed');
+  const poster = item.thumbnailUrl;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -50,7 +50,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
                       title={item.title}
                   ></iframe>
                 ) : (
-                  <video controls autoPlay className="w-full h-full object-contain" poster={poster}>
+                  <video controls autoPlay className="w-full h-full object-contain" poster={resolveImageUrl(poster)}>
                       <source src={item.url} type="video/mp4" />
                       Your browser does not support the video tag.
                   </video>
@@ -58,7 +58,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
              ) : (
                 <div className="w-full h-full relative group cursor-pointer" onClick={() => setShowVideo(true)}>
                     <Image
-                        src={poster}
+                        src={resolveImageUrl(poster)}
                         alt={item.title}
                         fill
                         className="object-cover"
@@ -82,7 +82,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
               {item.descriptionImage && (
                 <div className="relative aspect-[9/12] w-full overflow-hidden rounded-md my-6">
                     <Image
-                        src={item.descriptionImage}
+                        src={resolveImageUrl(item.descriptionImage)}
                         alt={item.title}
                         fill
                         className="object-cover"

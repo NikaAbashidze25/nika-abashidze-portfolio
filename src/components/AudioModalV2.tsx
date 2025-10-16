@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Play, Pause, ExternalLink } from "lucide-react";
 import { useContext, useEffect } from "react";
 import { AudioPlayerContext } from "@/context/AudioPlayerContext";
+import { resolveImageUrl } from "@/lib/utils";
 
 interface AudioModalV2Props {
   isOpen: boolean;
@@ -74,11 +75,11 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-[95vw] h-auto max-h-[90vh] flex flex-col p-0 gap-0">
+      <DialogContent className="w-[95vw] max-w-4xl h-auto max-h-[90vh] flex flex-col p-0 gap-0">
           <DialogTitle className="sr-only">{item.title}</DialogTitle>
           <div className="w-full aspect-video bg-black flex items-center justify-center relative flex-shrink-0">
             <Image
-                src={item.thumbnailUrl}
+                src={resolveImageUrl(item.thumbnailUrl)}
                 alt={item.title}
                 fill
                 className="object-cover"
@@ -119,7 +120,7 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
               {item.descriptionImage && (
                 <div className="relative aspect-[9/12] w-full overflow-hidden rounded-md my-6">
                     <Image
-                        src={item.descriptionImage}
+                        src={resolveImageUrl(item.descriptionImage)}
                         alt={item.title}
                         fill
                         className="object-cover"

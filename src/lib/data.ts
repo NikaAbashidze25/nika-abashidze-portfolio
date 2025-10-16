@@ -62,7 +62,7 @@ export const portfolioItems: PortfolioItem[] = [
     longDescription: 'Complete sound design, foley, and mixing for an animated short. The goal was to bring the minimalist visuals to life with rich audio textures.',
     roleDescription: 'For this project, I handled all aspects of the audio post-production, from foley recording and sound effect creation to the final mix and master.',
     type: 'video',
-    url: 'https://www.youtube.com/embed/ck0yTk5Mk98', 
+    url: 'https://www.youtube.com/watch?v=kW0Paxotqyo', 
     thumbnailUrl: '/images/ThumbnailElephant.png',
   },
   {
@@ -96,8 +96,8 @@ export const portfolioItems: PortfolioItem[] = [
     longDescription: 'An improvised electric guitar solo over a custom backing track, showcasing technical proficiency and melodic creativity in a rock-fusion style.',
     roleDescription: 'In this piece, I composed the backing track and performed the improvised lead guitar part. It\'s a demonstration of my ability to create compelling melodies and navigate complex harmonic structures in real-time.',
     type: 'video',
-    url: 'https://www.youtube.com/embed/p_jpE0Vp9iA',
-    thumbnailUrl: 'https://picsum.photos/seed/guitar-improv/600/400',
+    url: 'https://www.youtube.com/watch?v=kU4sPPl3LBw',
+    thumbnailUrl: 'Weiss.png',
   },
   {
     id: 7,

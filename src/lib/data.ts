@@ -81,15 +81,15 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 5,
-    title: 'Commercial Audio for "Nova"',
+    title: 'Audio Post Production Practice - Short Animation #2',
     category: 'Linear Audio',
     description: 'Sound design and audio mixing for a tech product commercial.',
     longDescription: 'Sound design and audio mixing for a tech product commercial. The sound enhances the sleek and futuristic feel of the product, aligning with its modern aesthetic.',
     roleDescription: 'My role was to create a soundscape that matched the product\'s brand identity. This involved sound design, selecting and editing music, and mixing all audio elements to broadcast standards.',
     type: 'video',
     url: 'https://www.youtube.com/embed/G524_4V1yRg',
-    thumbnailUrl: 'https://picsum.photos/seed/nova-commercial/600/400',
-    posterUrl: 'https://picsum.photos/seed/nova-commercial/1280/720',
+    thumbnailUrl: '/images/Bird.png',
+    posterUrl: '/images/Bird.png',
   },
   {
     id: 6,

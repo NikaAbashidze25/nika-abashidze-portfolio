@@ -56,7 +56,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 2,
-    title: 'Audio Post Production Practice - Short Animation #1',
+    title: 'Audio Post Production Practice #1 - Animation Project',
     category: 'Linear Audio',
     description: 'Complete sound design, foley, and mixing for an animated short.',
     longDescription: 'Complete sound design, foley, and mixing for an animated short. The goal was to bring the minimalist visuals to life with rich audio textures.',
@@ -79,7 +79,7 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 5,
-    title: 'Audio Post Production Practice - Short Animation #2',
+    title: 'Audio Post Production Practice #2 - Short Animation',
     category: 'Linear Audio',
     description: 'Sound design and audio mixing for a tech product commercial.',
     longDescription: 'Sound design and audio mixing for a tech product commercial. The sound enhances the sleek and futuristic feel of the product, aligning with its modern aesthetic.',
@@ -90,14 +90,14 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 6,
-    title: 'Electric Guitar Improvisation',
+    title: 'S.L.Weiss - Fantasie',
     category: 'Guitar',
     description: 'An improvised electric guitar solo over a custom backing track.',
     longDescription: 'An improvised electric guitar solo over a custom backing track, showcasing technical proficiency and melodic creativity in a rock-fusion style.',
     roleDescription: 'In this piece, I composed the backing track and performed the improvised lead guitar part. It\'s a demonstration of my ability to create compelling melodies and navigate complex harmonic structures in real-time.',
     type: 'video',
     url: 'https://www.youtube.com/watch?v=kU4sPPl3LBw',
-    thumbnailUrl: 'Weiss.png',
+    thumbnailUrl: 'Weiss.jpg',
   },
   {
     id: 7,

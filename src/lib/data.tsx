@@ -114,7 +114,7 @@ export const portfolioItems: PortfolioItem[] = [
     roleDescription: 'My role was to create a soundscape that matched the product\'s brand identity. This involved sound design, selecting and editing music, and mixing all audio elements to broadcast standards.',
     type: 'video',
     url: 'https://www.youtube.com/embed/wjtb69nZfTM',
-    thumbnailUrl: 'Bird.png',
+    thumbnailUrl: '/images/Bird.png',
   },
   {
     id: 6,
@@ -125,7 +125,7 @@ export const portfolioItems: PortfolioItem[] = [
     roleDescription: 'In this piece, I composed the backing track and performed the improvised lead guitar part. It\'s a demonstration of my ability to create compelling melodies and navigate complex harmonic structures in real-time.',
     type: 'video',
     url: 'https://www.youtube.com/watch?v=kU4sPPl3LBw',
-    thumbnailUrl: 'Weiss.png',
+    thumbnailUrl: '/images/Weiss.png',
   },
   {
     id: 7,

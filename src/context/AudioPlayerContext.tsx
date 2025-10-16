@@ -6,7 +6,6 @@ import { PortfolioItem } from '@/lib/data.tsx';
 
 interface AudioPlayerContextType {
   currentlyPlaying: PortfolioItem | null;
-  setCurrentlyPlaying: (item: PortfolioItem | null) => void;
   isPlaying: boolean;
   playAudio: (item: PortfolioItem) => void;
   pauseAudio: () => void;
@@ -17,7 +16,6 @@ interface AudioPlayerContextType {
 
 export const AudioPlayerContext = createContext<AudioPlayerContextType>({
   currentlyPlaying: null,
-  setCurrentlyPlaying: () => {},
   isPlaying: false,
   playAudio: () => {},
   pauseAudio: () => {},
@@ -33,40 +31,58 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const handleTimeUpdate = useCallback(() => {
+  const setAudioElement = useCallback((newAudio: HTMLAudioElement | null) => {
+    if (audioRef.current) {
+      audioRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+      audioRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audioRef.current.removeEventListener('ended', handleAudioEnd);
+      audioRef.current.removeEventListener('play', onPlay);
+      audioRef.current.removeEventListener('pause', onPause);
+      if (!newAudio || newAudio !== audioRef.current) {
+        audioRef.current.pause();
+      }
+    }
+
+    audioRef.current = newAudio;
+
+    if (newAudio) {
+      newAudio.addEventListener('timeupdate', handleTimeUpdate);
+      newAudio.addEventListener('loadedmetadata', handleLoadedMetadata);
+      newAudio.addEventListener('ended', handleAudioEnd);
+      newAudio.addEventListener('play', onPlay);
+      newAudio.addEventListener('pause', onPause);
+      setDuration(newAudio.duration || 0);
+      setCurrentTime(newAudio.currentTime || 0);
+    } else {
+      setDuration(0);
+      setCurrentTime(0);
+      setIsPlaying(false);
+      setCurrentlyPlaying(null);
+    }
+  }, []);
+
+  const onPlay = () => setIsPlaying(true);
+  const onPause = () => setIsPlaying(false);
+
+  const handleTimeUpdate = () => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime);
     }
-  }, []);
+  };
 
-  const handleLoadedMetadata = useCallback(() => {
+  const handleLoadedMetadata = () => {
     if (audioRef.current) {
       setDuration(audioRef.current.duration);
     }
-  }, []);
+  };
   
-  const handleAudioEnd = useCallback(() => {
+  const handleAudioEnd = () => {
     setIsPlaying(false);
     if(audioRef.current) {
         audioRef.current.currentTime = 0;
+        setCurrentTime(0);
     }
-  }, []);
-
-  const setAudioListeners = useCallback((audio: HTMLAudioElement) => {
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-    audio.addEventListener('ended', handleAudioEnd);
-    audio.addEventListener('play', () => setIsPlaying(true));
-    audio.addEventListener('pause', () => setIsPlaying(false));
-  }, [handleTimeUpdate, handleLoadedMetadata, handleAudioEnd]);
-
-  const removeAudioListeners = useCallback((audio: HTMLAudioElement) => {
-    audio.removeEventListener('timeupdate', handleTimeUpdate);
-    audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-    audio.removeEventListener('ended', handleAudioEnd);
-    audio.removeEventListener('play', () => setIsPlaying(true));
-    audio.removeEventListener('pause', () => setIsPlaying(false));
-  }, [handleTimeUpdate, handleLoadedMetadata, handleAudioEnd]);
+  };
 
   const playAudio = useCallback((item: PortfolioItem) => {
     if (!item.url) return;
@@ -76,30 +92,14 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
     } else {
       if (audioRef.current) {
         audioRef.current.pause();
-        removeAudioListeners(audioRef.current);
       }
       
       const newAudio = new Audio(item.url);
-      audioRef.current = newAudio;
       setAudioElement(newAudio);
       setCurrentlyPlaying(item);
       newAudio.play().catch(e => console.error("Audio play failed:", e));
     }
-  }, [currentlyPlaying, removeAudioListeners]);
-
-  const setAudioElement = useCallback((newAudio: HTMLAudioElement) => {
-    if (audioRef.current && audioRef.current !== newAudio) {
-      audioRef.current.pause();
-      removeAudioListeners(audioRef.current);
-      audioRef.current.src = ""; // Detach the source
-      audioRef.current.load();
-    }
-    
-    audioRef.current = newAudio;
-    setAudioListeners(newAudio);
-    setCurrentTime(0);
-    setDuration(0);
-  }, [removeAudioListeners, setAudioListeners]);
+  }, [currentlyPlaying, setAudioElement]);
 
 
   const pauseAudio = useCallback(() => {
@@ -114,16 +114,15 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
       const currentAudio = audioRef.current;
       return () => {
           if (currentAudio) {
-              currentAudio.pause();
-              removeAudioListeners(currentAudio);
+            currentAudio.pause();
+            setAudioElement(null);
           }
       }
-  }, [removeAudioListeners]);
+  }, [setAudioElement]);
 
 
   const value = {
     currentlyPlaying,
-    setCurrentlyPlaying,
     isPlaying,
     playAudio,
     pauseAudio,

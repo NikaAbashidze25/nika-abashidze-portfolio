@@ -1,7 +1,6 @@
 
 "use client";
 
-import { socialLinks } from '@/lib/data.tsx';
 import { Mail, Phone, Copy, Check } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { useState } from 'react';
@@ -79,24 +78,6 @@ export default function Contact() {
                  {copied === 'Phone' ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
               </div>
             </a>
-          </div>
-
-          <div className="w-full max-w-md pt-8">
-             <h3 className="text-xl font-semibold text-foreground mb-4">Or find me on social media</h3>
-             <div className="flex justify-center space-x-6">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground transition-transform duration-300 hover:scale-110"
-                  aria-label={link.name}
-                >
-                  <link.icon className="h-10 w-10" />
-                </a>
-              ))}
-            </div>
           </div>
           
         </div>

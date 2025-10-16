@@ -64,7 +64,6 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'video',
     url: 'https://www.youtube.com/embed/ck0yTk5Mk98', 
     thumbnailUrl: '/images/ThumbnailElephant.png',
-    posterUrl: '/images/ThumbnailElephant.png'
   },
   {
     id: 3,
@@ -76,7 +75,6 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'video',
     url: 'https://www.youtube.com/embed/7lk_tFkkTT8',
     thumbnailUrl: '/images/Tango.jpg',
-    posterUrl: '/images/Tango.jpg',
     descriptionImage: '/images/GuitarConcertPoster.png',
   },
   {
@@ -87,9 +85,8 @@ export const portfolioItems: PortfolioItem[] = [
     longDescription: 'Sound design and audio mixing for a tech product commercial. The sound enhances the sleek and futuristic feel of the product, aligning with its modern aesthetic.',
     roleDescription: 'My role was to create a soundscape that matched the product\'s brand identity. This involved sound design, selecting and editing music, and mixing all audio elements to broadcast standards.',
     type: 'video',
-    url: 'https://www.youtube.com/embed/G524_4V1yRg',
+    url: 'https://www.youtube.com/embed/wjtb69nZfTM',
     thumbnailUrl: '/images/Bird.png',
-    posterUrl: '/images/Bird.png',
   },
   {
     id: 6,
@@ -101,7 +98,6 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'video',
     url: 'https://www.youtube.com/embed/p_jpE0Vp9iA',
     thumbnailUrl: 'https://picsum.photos/seed/guitar-improv/600/400',
-    posterUrl: 'https://picsum.photos/seed/guitar-improv/1280/720',
   },
   {
     id: 7,
@@ -113,6 +109,5 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'video',
     url: 'https://www.youtube.com/embed/7lk_tFkkTT8',
     thumbnailUrl: 'https://picsum.photos/seed/vazha-guitar/600/400',
-    posterUrl: 'https://picsum.photos/seed/vazha-guitar/1280/720',
   }
 ];

@@ -137,5 +137,27 @@ export const portfolioItems: PortfolioItem[] = [
     type: 'video',
     url: 'https://www.youtube.com/embed/7lk_tFkkTT8',
     thumbnailUrl: 'https://picsum.photos/seed/vazha-guitar/600/400',
+  },
+  {
+    id: 8,
+    title: 'Sound Design for Sci-Fi Short',
+    category: 'Linear Audio',
+    description: 'Crafting futuristic sounds for an otherworldly experience.',
+    longDescription: 'This project involved creating a complete sonic landscape for a short sci-fi animation. From alien creature vocalizations to the hum of advanced technology and atmospheric effects, every sound was custom-designed to build an immersive and believable world.',
+    roleDescription: 'I was responsible for all sound design, foley, and the final audio mix. The challenge was to create unique sounds that felt both alien and emotionally resonant, enhancing the film\'s narrative and visual storytelling.',
+    type: 'video',
+    url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    thumbnailUrl: 'https://picsum.photos/seed/sound-design-1/600/400'
+  },
+  {
+    id: 9,
+    title: 'Audio for Product Commercial',
+    category: 'Linear Audio',
+    description: 'Dynamic sound design to make a product launch impactful.',
+    longDescription: 'This commercial required crisp, impactful, and modern sound design to highlight the features of a new tech gadget. The audio needed to be punchy, clear, and perfectly synchronized with the fast-paced visuals to create an exciting product reveal.',
+    roleDescription: 'I designed all sound effects, from subtle UI clicks to whooshes and impacts, and performed the final mix to broadcast standards. The goal was to make the product feel satisfying and cutting-edge through sound.',
+    type: 'video',
+    url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+    thumbnailUrl: 'https://picsum.photos/seed/sound-design-2/600/400'
   }
 ];

@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
-import type { PortfolioItem } from "@/lib/data";
+import type { PortfolioItem } from "@/lib/data.tsx";
 import { ExternalLink, Play } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";

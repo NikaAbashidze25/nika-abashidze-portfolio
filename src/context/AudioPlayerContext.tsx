@@ -2,7 +2,7 @@
 "use client";
 
 import { createContext, useState, useRef, useEffect, useCallback, ReactNode } from 'react';
-import { PortfolioItem } from '@/lib/data';
+import { PortfolioItem } from '@/lib/data.tsx';
 
 interface AudioPlayerContextType {
   currentlyPlaying: PortfolioItem | null;

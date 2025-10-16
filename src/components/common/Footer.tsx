@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { socialLinks } from '@/lib/data';
+import { socialLinks } from '@/lib/data.tsx';
 
 export default function Footer() {
   return (
@@ -17,7 +17,7 @@ export default function Footer() {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-accent"
+              className="text-muted-foreground transition-transform duration-300 hover:scale-110"
               aria-label={link.name}
             >
               <link.icon className="h-5 w-5" />

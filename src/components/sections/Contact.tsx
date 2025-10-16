@@ -1,10 +1,10 @@
 
-import { socialLinks } from '@/lib/data';
+import { socialLinks } from '@/lib/data.tsx';
 import { Mail, Phone } from 'lucide-react';
 
 export default function Contact() {
   return (
-    <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-background">
+    <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center space-y-8 text-center">
           <div className="space-y-3">
@@ -13,36 +13,48 @@ export default function Contact() {
               Have a project in mind or want to connect? Feel free to reach out. I'm always open to discussing new opportunities.
             </p>
           </div>
-          <div className="flex flex-col items-center space-y-4">
+
+          <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 pt-8">
             <a
               href="mailto:n.abashidze25@gmail.com"
-              className="inline-flex items-center text-lg font-medium text-accent hover:underline"
+              className="group flex flex-col items-center justify-center p-6 bg-background rounded-lg shadow-md hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-300"
             >
-              <Mail className="mr-2 h-5 w-5" />
-              n.abashidze25@gmail.com
+              <div className="p-4 bg-primary/10 rounded-full mb-4">
+                  <Mail className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground">Email</h3>
+              <p className="text-muted-foreground group-hover:text-primary transition-colors">n.abashidze25@gmail.com</p>
             </a>
             <a
               href="tel:+995568481313"
-              className="inline-flex items-center text-lg font-medium text-accent hover:underline"
+              className="group flex flex-col items-center justify-center p-6 bg-background rounded-lg shadow-md hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-300"
             >
-              <Phone className="mr-2 h-5 w-5" />
-              568 481 313
+              <div className="p-4 bg-primary/10 rounded-full mb-4">
+                <Phone className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground">Phone</h3>
+              <p className="text-muted-foreground group-hover:text-primary transition-colors">+995 568 481 313</p>
             </a>
-            <div className="flex space-x-4 pt-4">
+          </div>
+
+          <div className="w-full max-w-md pt-8">
+             <h3 className="text-xl font-semibold text-foreground mb-4">Or find me on social media</h3>
+             <div className="flex justify-center space-x-6">
               {socialLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-accent"
+                  className="text-muted-foreground transition-transform duration-300 hover:scale-110"
                   aria-label={link.name}
                 >
-                  <link.icon className="h-6 w-6" />
+                  <link.icon className="h-10 w-10" />
                 </a>
               ))}
             </div>
           </div>
+          
         </div>
       </div>
     </section>

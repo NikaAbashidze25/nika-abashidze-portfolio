@@ -2,7 +2,7 @@
 "use client";
 
 import { Card, CardContent } from '@/components/ui/card';
-import { portfolioItems, type PortfolioItem } from '@/lib/data';
+import { portfolioItems, type PortfolioItem } from '@/lib/data.tsx';
 import Image from 'next/image';
 import { Play, Pause } from 'lucide-react';
 import { useState, useContext, useEffect, useRef } from 'react';

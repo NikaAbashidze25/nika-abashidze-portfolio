@@ -15,7 +15,7 @@ export type Skill = {
 };
 
 const skills: Skill[] = [
-    {
+  {
     id: 'compositions-image',
     title: 'Producing Music',
     description: 'Crafting original scores for film, games, and media that tell a story and evoke emotion.',

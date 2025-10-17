@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { cn, resolveImageUrl } from '@/lib/utils';
 import { AudioPlayerContext } from '@/context/AudioPlayerContext';
 
-const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void, isVisible: boolean }) => {
+const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void }) => {
   const { currentlyPlaying, isPlaying, playAudio, pauseAudio } = useContext(AudioPlayerContext);
 
   const isCurrentTrack = currentlyPlaying?.id === item.id;
@@ -33,7 +33,6 @@ const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem
       className={cn(
         "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent cursor-pointer flex flex-col",
         isThisTrackPlaying ? "border-primary shadow-2xl shadow-primary/20" : "hover:border-primary hover:shadow-2xl hover:shadow-primary/20",
-        isVisible ? "animate-fade-in-up" : "opacity-0"
       )}
     >
       <div className="relative aspect-video w-full overflow-hidden">
@@ -76,14 +75,11 @@ const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem
   );
 }
 
-const VideoCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void, isVisible: boolean }) => {
+const VideoCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (item: PortfolioItem) => void }) => {
   return (
     <Card 
       onClick={() => onCardClick(item)}
-      className={cn(
-        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 cursor-pointer flex flex-col",
-        isVisible ? "animate-fade-in-up" : "opacity-0"
-      )}
+      className="overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 cursor-pointer flex flex-col"
     >
       <div className="relative aspect-video w-full overflow-hidden">
         <Image
@@ -104,48 +100,14 @@ const VideoCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCa
   );
 };
 
-const PortfolioGrid = ({ items, onCardClick, type, hasAnimated }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void, type: 'audio' | 'video', hasAnimated: boolean }) => {
-  const [visibleItems, setVisibleItems] = useState(new Set());
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setVisibleItems(prev => new Set(prev).add(entry.target.getAttribute('data-id')));
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    observerRef.current = observer;
-  
-    return () => {
-      observerRef.current?.disconnect();
-    };
-  }, []);
-
-  const setItemRef = (el: HTMLDivElement | null) => {
-    if (el && observerRef.current && !visibleItems.has(el.getAttribute('data-id'))) {
-      observerRef.current?.observe(el);
-    }
-  };
-
+const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void, type: 'audio' | 'video' }) => {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8 md:gap-6">
-      {items.map((item, index) => {
-        const isVisible = hasAnimated || visibleItems.has(String(item.id));
-        return (
-          <div 
-            key={item.id} 
-            ref={setItemRef}
-            data-id={item.id}
-            style={{ animationDelay: `${index * 100}ms` }} 
-            className="fill-mode-forwards"
-          >
-            {type === 'audio' ? <CompositionCard item={item} onCardClick={onCardClick} isVisible={isVisible} /> : <VideoCard item={item} onCardClick={onCardClick} isVisible={isVisible} />}
-          </div>
-        )
-      })}
+      {items.map((item) => (
+        <div key={item.id}>
+          {type === 'audio' ? <CompositionCard item={item} onCardClick={onCardClick} /> : <VideoCard item={item} onCardClick={onCardClick} />}
+        </div>
+      ))}
     </div>
   );
 };
@@ -183,42 +145,11 @@ const PortfolioInner = () => {
     setSelectedAudio(null);
   };
 
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-    ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
-        setHasAnimated(true);
-        }
-    },
-    { threshold: 0.1 }
-    );
-
-    const currentSectionRef = sectionRef.current;
-    
-    // Delay observer setup to prevent scroll jump on load
-    const timer = setTimeout(() => {
-        if (currentSectionRef) {
-            observer.observe(currentSectionRef);
-        }
-    }, 500);
-
-    return () => {
-        clearTimeout(timer);
-        if (currentSectionRef) {
-            observer.unobserve(currentSectionRef);
-        }
-    };
-}, [hasAnimated]);
-
-
   return (
-    <section id="portfolio" ref={sectionRef} className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
+    <section id="portfolio" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className={cn("space-y-2", hasAnimated && "animate-fade-in-up")}>
+          <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">My Work</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               A selection of my projects, showcasing my skills in composition, performance, and sound design.
@@ -226,7 +157,7 @@ const PortfolioInner = () => {
           </div>
         </div>
 
-        <div className={cn("flex justify-center flex-wrap gap-2 md:gap-4 mt-8", hasAnimated && "animate-fade-in-up [animation-delay:0.1s]")}>
+        <div className="flex justify-center flex-wrap gap-2 md:gap-4 mt-8">
           {filters.map((filter) => (
             <Button
               key={filter}
@@ -246,21 +177,21 @@ const PortfolioInner = () => {
             {(activeFilter === 'All' || activeFilter === 'Compositions') && (
               <div>
                  <h3 className="text-2xl font-bold tracking-tighter text-center border-b pb-4">Compositions</h3>
-                 <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" hasAnimated={hasAnimated} />
+                 <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" />
               </div>
             )}
 
             {(activeFilter === 'All' || activeFilter === 'Performance') && (
               <div>
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
-                 <PortfolioGrid items={guitars} onCardClick={openVideoModal} type="video" hasAnimated={hasAnimated} />
+                 <PortfolioGrid items={guitars} onCardClick={openVideoModal} type="video" />
               </div>
             )}
             
             {(activeFilter === 'All' || activeFilter === 'Sound Design') && (
               <div>
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Sound Design</h3>
-                 <PortfolioGrid items={linearAudios} onCardClick={openVideoModal} type="video" hasAnimated={hasAnimated} />
+                 <PortfolioGrid items={linearAudios} onCardClick={openVideoModal} type="video" />
               </div>
             )}
         </div>
@@ -292,5 +223,3 @@ export default function Portfolio() {
         <PortfolioInner />
     )
 }
-
-    

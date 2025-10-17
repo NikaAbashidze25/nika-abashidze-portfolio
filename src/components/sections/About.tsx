@@ -21,16 +21,16 @@ const skills: Skill[] = [
     longDescription: 'From sweeping orchestral arrangements to subtle electronic textures, my compositions are built to serve the narrative. I specialize in creating memorable themes and adaptive scores that respond to on-screen action, enhancing the emotional impact of any project.'
   },
   {
-    id: 'guitar-image',
-    title: 'Classical Guitar',
-    description: 'More than 11 years of Experience playing the Classical Guitar (2012 - Present) ',
-    longDescription: 'As a session guitarist, I offer a wide palette of tones and techniques. Whether a project needs intricate fingerstyle melodies, soulful electric solos, or heavy rock riffs, I bring a deep understanding of harmony and a commitment to finding the perfect part.'
-  },
-  {
     id: 'animations-audio-image',
     title: 'Audio Design for Animations & Games',
     description: 'Enhancing visual narratives with perfectly synchronized sound design and music.',
     longDescription: 'I bring animations and videos to life by creating a complete audio experience. This includes custom sound design, foley, and musical scoring that is perfectly timed to the visuals, adding a layer of professionalism and immersion.'
+  },
+  {
+    id: 'guitar-image',
+    title: 'Classical Guitar',
+    description: 'More than 11 years of Experience playing the Classical Guitar (2012 - Present) ',
+    longDescription: 'As a session guitarist, I offer a wide palette of tones and techniques. Whether a project needs intricate fingerstyle melodies, soulful electric solos, or heavy rock riffs, I bring a deep understanding of harmony and a commitment to finding the perfect part.'
   },
   {
     id: 'acapella-image',
@@ -85,7 +85,7 @@ export default function About() {
                               onClick={() => openSkillModal(skill)}
                           >
                             <div className="relative aspect-square w-full overflow-hidden bg-black/10">
-                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-contain transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
+                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-contain transition-transform duration-500 group-hover:scale-105 filter grayscale group-hover:filter-none" data-ai-hint={image.imageHint} />}
                             </div>
                             <div className="p-4 bg-background">
                               <h3 className="text-lg font-bold">{skill.title}</h3>

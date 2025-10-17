@@ -106,20 +106,26 @@ const VideoCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCa
 
 const PortfolioGrid = ({ items, onCardClick, type, hasAnimated }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void, type: 'audio' | 'video', hasAnimated: boolean }) => {
   const [visibleItems, setVisibleItems] = useState(new Set());
-  const observer = useRef<IntersectionObserver>();
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    observer.current = new IntersectionObserver((entries) => {
+    observerRef.current = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           setVisibleItems(prev => new Set(prev).add(entry.target.getAttribute('data-id')));
-          observer.current?.unobserve(entry.target);
+          observerRef.current?.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
-    return () => observer.current?.disconnect();
+    return () => observerRef.current?.disconnect();
   }, []);
+
+  const setItemRef = (el: HTMLDivElement | null) => {
+    if (el && !hasAnimated && !visibleItems.has(el.getAttribute('data-id'))) {
+      observerRef.current?.observe(el);
+    }
+  };
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8 md:gap-6">
@@ -128,11 +134,7 @@ const PortfolioGrid = ({ items, onCardClick, type, hasAnimated }: { items: Portf
         return (
           <div 
             key={item.id} 
-            ref={el => {
-                if (el && !hasAnimated && !visibleItems.has(String(item.id))) {
-                    observer.current?.observe(el);
-                }
-            }}
+            ref={setItemRef}
             data-id={item.id}
             style={{ animationDelay: `${index * 100}ms` }} 
             className="fill-mode-forwards"
@@ -191,13 +193,14 @@ const PortfolioInner = () => {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentSectionRef = sectionRef.current;
+    if (currentSectionRef) {
+      observer.observe(currentSectionRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentSectionRef) {
+        observer.unobserve(currentSectionRef);
       }
     };
   }, [hasAnimated]);

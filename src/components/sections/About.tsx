@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useState } from 'react';
 import SkillModal from '@/components/SkillModal';
+import { resolveImageUrl } from '@/lib/utils';
 
 export type Skill = {
   id: string;
@@ -59,18 +60,31 @@ export default function About() {
     <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid lg:grid-cols-5 gap-12 items-center">
-            <div className="lg:col-span-2 space-y-4 text-center lg:text-left">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl animate-fade-in-up [animation-delay:0.2s]">About Me</h2>
-              <div className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed animate-fade-in-up [animation-delay:0.3s] space-y-4">
-                  <p>
-                      Hello! I'm a 19-year-old sound enthusiast exploring Audio Post-production, with a strong foundation in Classical Guitar and Music.
-                  </p>
-                  <p>
-                      I am motivated to grow professionally in this field, learn new tools, and collaborate with other passionate people on future projects.
-                  </p>
-                  <p>
-                      Here is my musical journey over the past years (2025)...
-                  </p>
+            <div className="lg:col-span-2 space-y-6 text-center lg:text-left">
+              <div className="space-y-4">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">About Me</h2>
+                  <div className="flex justify-center lg:justify-start">
+                    <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary/20 shadow-lg mt-4 mb-4">
+                        <Image
+                            src={resolveImageUrl('/images/cropped_circle_image.png')}
+                            alt="Nika Abashidze"
+                            width={192}
+                            height={192}
+                            className="object-cover"
+                        />
+                    </div>
+                  </div>
+                  <div className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed space-y-4">
+                      <p>
+                          Hello! I'm a 19-year-old sound enthusiast exploring Audio Post-production, with a strong foundation in Classical Guitar and Music.
+                      </p>
+                      <p>
+                          I am motivated to grow professionally in this field, learn new tools, and collaborate with other passionate people on future projects.
+                      </p>
+                      <p>
+                          Here is my musical journey over the past years...
+                      </p>
+                  </div>
               </div>
             </div>
             <div className="lg:col-span-3">
@@ -85,7 +99,7 @@ export default function About() {
                               onClick={() => openSkillModal(skill)}
                           >
                             <div className="relative aspect-square w-full overflow-hidden bg-black/10">
-                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-contain transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
+                              {image && <Image src={resolveImageUrl(image.imageUrl)} alt={image.description} fill className="object-contain transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
                             </div>
                             <div className="p-4 bg-background">
                               <h3 className="text-lg font-bold">{skill.title}</h3>

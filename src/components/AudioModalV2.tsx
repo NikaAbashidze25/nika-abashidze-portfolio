@@ -76,9 +76,9 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-[95vw] max-w-4xl h-auto max-h-[90vh] flex flex-col p-0 gap-0">
+      <DialogContent className="w-[95vw] max-w-4xl h-auto max-h-[90vh] flex flex-col md:flex-row p-0 gap-0">
           <DialogTitle className="sr-only">{item.title}</DialogTitle>
-          <div className="w-full aspect-video bg-black flex items-center justify-center relative flex-shrink-0">
+          <div className="w-full md:w-1/2 h-64 md:h-auto bg-black flex items-center justify-center relative flex-shrink-0">
             <Image
                 src={resolveImageUrl(item.thumbnailUrl)}
                 alt={item.title}
@@ -86,13 +86,15 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
                 className="object-cover"
             />
           </div>
-          <div className="w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 sm:p-6 overflow-y-auto">
-              <h2 className="text-xl sm:text-2xl font-bold mb-2">{item.title}</h2>
-              {item.externalLink && (
-                  <a href={item.externalLink.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center mb-4">
-                      {item.externalLink.label} <ExternalLink className="ml-1 h-3 w-3" />
-                  </a>
-              )}
+          <div className="w-full md:w-1/2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 sm:p-6 flex flex-col overflow-y-auto">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold mb-2">{item.title}</h2>
+                {item.externalLink && (
+                    <a href={item.externalLink.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center mb-4">
+                        {item.externalLink.label} <ExternalLink className="ml-1 h-3 w-3" />
+                    </a>
+                )}
+              </div>
 
             <div className="my-4 sm:my-6">
                 <div className="flex items-center gap-2 sm:gap-4">
@@ -115,7 +117,8 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
                     </div>
                 </div>
             </div>
-
+            
+            <div className="overflow-y-auto">
               {item.longDescription && <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-6">{item.longDescription}</p>}
               
               {item.descriptionImage && (
@@ -135,6 +138,7 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
                       <p className="text-sm sm:text-base text-muted-foreground">{item.roleDescription}</p>
                   </div>
               )}
+            </div>
           </div>
       </DialogContent>
     </Dialog>

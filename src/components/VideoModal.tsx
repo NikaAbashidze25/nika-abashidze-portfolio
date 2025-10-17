@@ -31,18 +31,18 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
   
   const embedUrl = convertToEmbedUrl(item.url);
   const isYoutube = embedUrl && embedUrl.includes('youtube.com/embed');
-  const videoUrl = isYoutube ? `${embedUrl}${embedUrl.includes('?') ? '&' : '?'}autoplay=1` : item.url;
+  const videoUrlWithAutoplay = isYoutube ? `${embedUrl}${embedUrl.includes('?') ? '&' : '?'}autoplay=1` : item.url;
   const poster = item.thumbnailUrl;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-[95vw] max-w-4xl h-auto max-h-[90vh] flex flex-col p-0 gap-0">
+      <DialogContent className="w-[95vw] max-w-4xl h-auto max-h-[90vh] flex flex-col md:flex-row p-0 gap-0">
         <DialogTitle className="sr-only">{item.title}</DialogTitle>
-          <div className="w-full aspect-video bg-black flex items-center justify-center relative flex-shrink-0">
+          <div className="w-full md:w-1/2 h-64 md:h-auto bg-black flex items-center justify-center relative flex-shrink-0">
              {showVideo ? (
                 isYoutube ? (
                   <iframe
-                      src={videoUrl}
+                      src={videoUrlWithAutoplay}
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -51,7 +51,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
                   ></iframe>
                 ) : (
                   <video controls autoPlay className="w-full h-full object-contain" poster={resolveImageUrl(poster)}>
-                      <source src={item.url} type="video/mp4" />
+                      <source src={embedUrl || item.url} type="video/mp4" />
                       Your browser does not support the video tag.
                   </video>
                 )
@@ -69,7 +69,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
                 </div>
              )}
           </div>
-          <div className="w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 sm:p-6 overflow-y-auto">
+          <div className="w-full md:w-1/2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 sm:p-6 overflow-y-auto">
               <h2 className="text-xl sm:text-2xl font-bold mb-2">{item.title}</h2>
               {item.externalLink && (
                   <a href={item.externalLink.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center mb-4">

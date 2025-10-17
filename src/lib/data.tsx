@@ -95,13 +95,13 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 3,
-    title: 'Tango En Skai - Roland Dyens (Nika Abashidze)',
+    title: 'Tango En Skai - Roland Dyens (Komarovi Solo Concert)',
     category: 'Guitar',
     description: 'A live performance of an original intricate fingerstyle guitar piece.',
     longDescription: 'A live performance of an original intricate fingerstyle guitar piece, recorded in a single take to capture the raw emotion of the music.',
     roleDescription: 'As the sole performer and composer of this piece, my focus was on delivering a technically clean yet emotionally resonant performance. I also managed the recording and mixing process.',
     type: 'video',
-    url: 'https://www.youtube.com/embed/7lk_tFkkTT8',
+    url: 'https://youtu.be/7lk_tFkkTT8?si=ZR7W_P1LyEUwDJPD&t=22',
     thumbnailUrl: '/images/Tango.jpg',
     descriptionImage: '/images/GuitarConcertPoster.png',
   },
@@ -125,7 +125,7 @@ export const portfolioItems: PortfolioItem[] = [
     roleDescription: 'In this piece, I composed the backing track and performed the improvised lead guitar part. It\'s a demonstration of my ability to create compelling melodies and navigate complex harmonic structures in real-time.',
     type: 'video',
     url: 'https://www.youtube.com/watch?v=kU4sPPl3LBw',
-    thumbnailUrl: '/images/Weiss.png',
+    thumbnailUrl: '/images/Weiss.jpg',
   },
   {
     id: 7,
@@ -140,24 +140,14 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 8,
-    title: 'Sound Design for Sci-Fi Short',
+    title: 'Audio Post-Production Practice #3 - Dumbots - Jump Shoes',
     category: 'Linear Audio',
     description: 'Crafting futuristic sounds for an otherworldly experience.',
     longDescription: 'This project involved creating a complete sonic landscape for a short sci-fi animation. From alien creature vocalizations to the hum of advanced technology and atmospheric effects, every sound was custom-designed to build an immersive and believable world.',
     roleDescription: 'I was responsible for all sound design, foley, and the final audio mix. The challenge was to create unique sounds that felt both alien and emotionally resonant, enhancing the film\'s narrative and visual storytelling.',
     type: 'video',
-    url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    thumbnailUrl: 'https://picsum.photos/seed/sound-design-1/600/400'
+    url: 'https://www.youtube.com/watch?v=BHmFQ96LtMY',
+    thumbnailUrl: '/images/dumbots.png'
   },
-  {
-    id: 9,
-    title: 'Audio for Product Commercial',
-    category: 'Linear Audio',
-    description: 'Dynamic sound design to make a product launch impactful.',
-    longDescription: 'This commercial required crisp, impactful, and modern sound design to highlight the features of a new tech gadget. The audio needed to be punchy, clear, and perfectly synchronized with the fast-paced visuals to create an exciting product reveal.',
-    roleDescription: 'I designed all sound effects, from subtle UI clicks to whooshes and impacts, and performed the final mix to broadcast standards. The goal was to make the product feel satisfying and cutting-edge through sound.',
-    type: 'video',
-    url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    thumbnailUrl: 'https://picsum.photos/seed/sound-design-2/600/400'
-  }
+  
 ];

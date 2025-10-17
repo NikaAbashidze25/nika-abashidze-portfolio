@@ -34,30 +34,29 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
     pauseAudio, 
     getAudioElement,
     currentTime,
-    duration
+    duration,
+    setCurrentlyPlaying,
   } = useContext(AudioPlayerContext);
 
   const isCurrentTrack = currentlyPlaying?.id === item?.id;
 
   useEffect(() => {
     const audio = getAudioElement();
-    if (isOpen && item && (!isCurrentTrack || !audio)) {
-        playAudio(item);
+    if (isOpen && item && !isCurrentTrack) {
+        setCurrentlyPlaying(item);
     }
-  }, [isOpen, item, isCurrentTrack, playAudio, getAudioElement]);
+  }, [isOpen, item, isCurrentTrack, setCurrentlyPlaying, getAudioElement]);
 
 
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     const audio = getAudioElement();
-    if (!audio) return;
+    if (!audio || !currentlyPlaying) return;
 
-    if (isPlaying) {
+    if (isPlaying && isCurrentTrack) {
       pauseAudio();
     } else {
-      if(currentlyPlaying) {
-        playAudio(currentlyPlaying);
-      }
+      playAudio(currentlyPlaying);
     }
   };
 
@@ -73,6 +72,8 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
   };
 
   if (!isOpen || !item) return null;
+
+  const isModalTrackPlaying = isPlaying && isCurrentTrack;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -101,19 +102,19 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
                     <button
                         onClick={togglePlay}
                         className="p-3 bg-primary text-primary-foreground rounded-full hover:bg-primary/80 transition-colors z-10 flex-shrink-0"
-                        aria-label={isPlaying ? "Pause" : "Play"}
+                        aria-label={isModalTrackPlaying ? "Pause" : "Play"}
                         >
-                        {isPlaying ? <Pause className="h-5 w-5 sm:h-6 sm:w-6" /> : <Play className="h-5 w-5 sm:h-6 sm:w-6" />}
+                        {isModalTrackPlaying ? <Pause className="h-5 w-5 sm:h-6 sm:w-6" /> : <Play className="h-5 w-5 sm:h-6 sm:w-6" />}
                     </button>
                     <div className="w-full flex items-center gap-2">
-                        <span className="text-xs text-muted-foreground w-10 text-center">{formatTime(currentTime)}</span>
+                        <span className="text-xs text-muted-foreground w-10 text-center">{formatTime(isCurrentTrack ? currentTime : 0)}</span>
                         <div className="w-full bg-muted h-2 rounded-full cursor-pointer" onClick={handleSeek}>
                             <div 
                             className="bg-primary h-full rounded-full" 
-                            style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
+                            style={{ width: `${isCurrentTrack && duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
                             />
                         </div>
-                        <span className="text-xs text-muted-foreground w-10 text-center">{formatTime(duration)}</span>
+                        <span className="text-xs text-muted-foreground w-10 text-center">{formatTime(isCurrentTrack ? duration : 0)}</span>
                     </div>
                 </div>
             </div>

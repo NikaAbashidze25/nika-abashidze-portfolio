@@ -6,6 +6,7 @@ import { PortfolioItem } from '@/lib/data.tsx';
 
 interface AudioPlayerContextType {
   currentlyPlaying: PortfolioItem | null;
+  setCurrentlyPlaying: React.Dispatch<React.SetStateAction<PortfolioItem | null>>;
   isPlaying: boolean;
   playAudio: (item: PortfolioItem) => void;
   pauseAudio: () => void;
@@ -16,6 +17,7 @@ interface AudioPlayerContextType {
 
 export const AudioPlayerContext = createContext<AudioPlayerContextType>({
   currentlyPlaying: null,
+  setCurrentlyPlaying: () => {},
   isPlaying: false,
   playAudio: () => {},
   pauseAudio: () => {},
@@ -31,7 +33,6 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Initialize the Audio element only once on the client
   useEffect(() => {
     if (!audioRef.current) {
         audioRef.current = new Audio();
@@ -58,7 +59,6 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
         audioRef.current.addEventListener('loadedmetadata', onLoadedMetadata);
         audioRef.current.addEventListener('ended', onEnded);
         
-        // Cleanup function to remove listeners when provider unmounts
         return () => {
             if (audioRef.current) {
                 audioRef.current.removeEventListener('play', onPlay);
@@ -78,14 +78,12 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
     
     const audio = audioRef.current;
 
-    if (currentlyPlaying?.id === item.id) {
-      // If it's the same track, just play it
+    if (currentlyPlaying?.id === item.id && audio.src) {
       audio.play().catch(e => console.error("Audio play failed:", e));
     } else {
-      // If it's a new track, change the source and play
       setCurrentlyPlaying(item);
       audio.src = item.url;
-      audio.load(); // Important: load the new source
+      audio.load(); 
       audio.play().catch(e => console.error("Audio play failed:", e));
     }
   }, [currentlyPlaying]);
@@ -100,6 +98,7 @@ export const AudioPlayerProvider = ({ children }: { children: ReactNode }) => {
 
   const value = {
     currentlyPlaying,
+    setCurrentlyPlaying,
     isPlaying,
     playAudio,
     pauseAudio,

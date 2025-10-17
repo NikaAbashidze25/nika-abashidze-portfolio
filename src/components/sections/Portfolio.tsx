@@ -47,7 +47,7 @@ const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem
       <CardContent className="p-4 bg-background flex-grow flex flex-col">
         <div className="flex-grow">
           <h3 className="text-sm font-bold text-foreground truncate md:text-base">{item.title}</h3>
-          <p className="text-xs text-muted-foreground mt-1 h-10 md:text-sm">{item.description}</p>
+          <p className="text-xs text-muted-foreground mt-1 min-h-[2.5rem] md:text-sm">{item.description}</p>
         </div>
         <div className="flex items-center justify-between gap-4 mt-4">
           <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -98,7 +98,7 @@ const VideoCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem, onCa
       </div>
       <CardContent className="p-4 bg-background flex-grow">
           <h3 className="text-sm font-bold text-foreground truncate md:text-base">{item.title}</h3>
-          <p className="text-xs text-muted-foreground mt-1 h-10 md:text-sm">{item.description}</p>
+          <p className="text-xs text-muted-foreground mt-1 md:text-sm">{item.description}</p>
       </CardContent>
     </Card>
   );

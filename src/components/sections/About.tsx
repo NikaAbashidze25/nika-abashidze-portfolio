@@ -16,19 +16,19 @@ export type Skill = {
 const skills: Skill[] = [
   {
     id: 'compositions-image',
-    title: 'Musical Compositions',
+    title: 'Producing Music',
     description: 'Crafting original scores for film, games, and media that tell a story and evoke emotion.',
     longDescription: 'From sweeping orchestral arrangements to subtle electronic textures, my compositions are built to serve the narrative. I specialize in creating memorable themes and adaptive scores that respond to on-screen action, enhancing the emotional impact of any project.'
   },
   {
     id: 'guitar-image',
-    title: 'Guitar Performances',
-    description: 'Versatile session guitarist specializing in a range of styles from delicate acoustic to powerful rock.',
+    title: 'Classical Guitar',
+    description: 'More than 11 years of Experience playing the Classical Guitar (2012 - Present) ',
     longDescription: 'As a session guitarist, I offer a wide palette of tones and techniques. Whether a project needs intricate fingerstyle melodies, soulful electric solos, or heavy rock riffs, I bring a deep understanding of harmony and a commitment to finding the perfect part.'
   },
   {
     id: 'animations-audio-image',
-    title: 'Audio for Animations & Videos',
+    title: 'Audio Design for Animations & Games',
     description: 'Enhancing visual narratives with perfectly synchronized sound design and music.',
     longDescription: 'I bring animations and videos to life by creating a complete audio experience. This includes custom sound design, foley, and musical scoring that is perfectly timed to the visuals, adding a layer of professionalism and immersion.'
   },
@@ -40,9 +40,9 @@ const skills: Skill[] = [
   },
   {
     id: 'acapella-image',
-    title: 'University Capella',
-    description: 'Arranging and performing complex vocal pieces as a member of a premier university ensemble.',
-    longDescription: 'My time in my university\'s capella group honed my skills in vocal arrangement and harmony. I learned to arrange complex pieces for voices alone, a skill that has deepened my understanding of texture and counterpoint in all my compositions.'
+    title: 'KIU Capella',
+    description: '2025 - a member of my university\'s (KIU) capella choir - over the last year',
+    longDescription: 'My time in my university\'s (KIU) capella group this year (2025) definitely improved my skills in vocal arrangement. I developed relative pitch and improved my perception of harmony, which I will always try to carry into my work. For now I am more concentrated on Sound Design and capella became an amazing helper for it. I am so grateful for my fellow capella members for their support (P.S Special Thanks to Zura for the opportunity!).'
   },
 ];
 
@@ -75,7 +75,7 @@ export default function About() {
                       I am motivated to grow professionally in this field, learn new tools, and collaborate with other passionate people on future projects.
                   </p>
                   <p>
-                      Here is my musical journey over the years...
+                      Here is my musical journey over the past years (2025)...
                   </p>
               </div>
             </div>

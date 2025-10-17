@@ -41,10 +41,10 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
   const isCurrentTrack = currentlyPlaying?.id === item?.id;
 
   useEffect(() => {
-    if (isOpen && item && !isCurrentTrack) {
+    if (isOpen && item && currentlyPlaying?.id !== item.id) {
         setCurrentlyPlaying(item);
     }
-  }, [isOpen, item, isCurrentTrack, setCurrentlyPlaying]);
+  }, [isOpen, item, currentlyPlaying?.id, setCurrentlyPlaying]);
 
 
   const togglePlay = (e?: React.MouseEvent) => {
@@ -54,10 +54,6 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
     if (isPlaying && isCurrentTrack) {
       pauseAudio();
     } else {
-      // Ensure we have the correct track loaded before playing
-      if (currentlyPlaying?.id !== item.id) {
-        setCurrentlyPlaying(item);
-      }
       playAudio(item);
     }
   };
@@ -86,7 +82,7 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
                 src={resolveImageUrl(item.thumbnailUrl)}
                 alt={item.title}
                 fill
-                className="object-cover"
+                className="object-contain"
             />
           </div>
           <div className="w-full sm:w-1/2 h-1/2 sm:h-full p-4 sm:p-6 flex flex-col overflow-y-auto">
@@ -125,12 +121,12 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
               {item.longDescription && <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-6">{item.longDescription}</p>}
               
               {item.descriptionImage && (
-                <div className="relative aspect-[9/12] w-full overflow-hidden rounded-md my-4 sm:my-6">
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-md my-4 sm:my-6">
                     <Image
                         src={resolveImageUrl(item.descriptionImage)}
                         alt={item.title}
                         fill
-                        className="object-cover"
+                        className="object-contain"
                     />
                 </div>
               )}

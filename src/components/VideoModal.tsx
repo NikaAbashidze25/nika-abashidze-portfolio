@@ -61,7 +61,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
                         src={resolveImageUrl(poster)}
                         alt={item.title}
                         fill
-                        className="object-cover"
+                        className="object-contain"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/50 transition-opacity duration-300">
                         <Play className="h-12 w-12 text-white/80 group-hover:text-white transition-colors sm:h-16 sm:w-16" />
@@ -69,7 +69,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
                 </div>
              )}
           </div>
-          <div className="w-full sm:w-1/2 h-1/2 sm:h-full p-4 sm:p-6 overflow-y-auto">
+          <div className="w-full sm:w-1/2 h-1/2 sm:h-full p-4 sm:p-6 flex flex-col overflow-y-auto">
               <h2 className="text-xl sm:text-2xl font-bold mb-2">{item.title}</h2>
               {item.externalLink && (
                   <a href={item.externalLink.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center mb-4">
@@ -77,25 +77,27 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
                   </a>
               )}
 
-              {item.longDescription && <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-6">{item.longDescription}</p>}
-              
-              {item.descriptionImage && (
-                <div className="relative aspect-[9/12] w-full overflow-hidden rounded-md my-4 sm:my-6">
-                    <Image
-                        src={resolveImageUrl(item.descriptionImage)}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                    />
-                </div>
-              )}
-
-              {item.roleDescription && (
-                  <div>
-                      <h3 className="text-base sm:text-lg font-semibold mb-2">My role on it</h3>
-                      <p className="text-sm sm:text-base text-muted-foreground">{item.roleDescription}</p>
+              <div className="overflow-y-auto">
+                {item.longDescription && <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-6">{item.longDescription}</p>}
+                
+                {item.descriptionImage && (
+                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-md my-4 sm:my-6">
+                      <Image
+                          src={resolveImageUrl(item.descriptionImage)}
+                          alt={item.title}
+                          fill
+                          className="object-contain"
+                      />
                   </div>
-              )}
+                )}
+
+                {item.roleDescription && (
+                    <div>
+                        <h3 className="text-base sm:text-lg font-semibold mb-2">My role on it</h3>
+                        <p className="text-sm sm:text-base text-muted-foreground">{item.roleDescription}</p>
+                    </div>
+                )}
+              </div>
           </div>
       </DialogContent>
     </Dialog>

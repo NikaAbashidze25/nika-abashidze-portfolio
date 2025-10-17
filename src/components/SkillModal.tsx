@@ -36,13 +36,15 @@ export default function SkillModal({ isOpen, onClose, skill }: SkillModalProps) 
                     src={resolveImageUrl(image.imageUrl)}
                     alt={image.description}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                 />
             )}
           </div>
-          <div className="w-full sm:w-1/2 h-1/2 sm:h-full p-6 overflow-y-auto">
+          <div className="w-full sm:w-1/2 h-1/2 sm:h-full p-6 flex flex-col overflow-y-auto">
+            <div className="overflow-y-auto">
               <h2 className="text-xl sm:text-2xl font-bold mb-2">{skill.title}</h2>
               <p className="text-sm sm:text-base text-foreground">{skill.longDescription}</p>
+            </div>
           </div>
       </DialogContent>
     </Dialog>

@@ -28,9 +28,9 @@ export default function SkillModal({ isOpen, onClose, skill }: SkillModalProps) 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-screen h-screen max-w-full max-h-full p-0 flex flex-col sm:rounded-none">
+      <DialogContent className="w-screen h-screen max-w-full max-h-full p-0 flex flex-col sm:flex-row sm:rounded-none">
         <DialogTitle className="sr-only">{skill.title}</DialogTitle>
-          <div className="w-full h-1/2 bg-black flex items-center justify-center relative flex-shrink-0">
+          <div className="w-full sm:w-1/2 h-1/2 sm:h-full bg-black flex items-center justify-center relative flex-shrink-0">
             {image && (
                 <Image
                     src={resolveImageUrl(image.imageUrl)}
@@ -40,7 +40,7 @@ export default function SkillModal({ isOpen, onClose, skill }: SkillModalProps) 
                 />
             )}
           </div>
-          <div className="w-full h-1/2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-6 overflow-y-auto">
+          <div className="w-full sm:w-1/2 h-1/2 sm:h-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-6 overflow-y-auto">
               <h2 className="text-xl sm:text-2xl font-bold mb-2">{skill.title}</h2>
               <p className="text-sm sm:text-base text-foreground">{skill.longDescription}</p>
           </div>

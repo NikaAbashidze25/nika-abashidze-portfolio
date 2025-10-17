@@ -36,9 +36,9 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-screen h-screen max-w-full max-h-full p-0 flex flex-col sm:rounded-none">
+      <DialogContent className="w-screen h-screen max-w-full max-h-full p-0 flex flex-col sm:flex-row sm:rounded-none">
         <DialogTitle className="sr-only">{item.title}</DialogTitle>
-          <div className="w-full h-1/2 bg-black flex items-center justify-center relative flex-shrink-0">
+          <div className="w-full sm:w-1/2 h-1/2 sm:h-full bg-black flex items-center justify-center relative flex-shrink-0">
              {showVideo ? (
                 isYoutube ? (
                   <iframe
@@ -69,7 +69,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
                 </div>
              )}
           </div>
-          <div className="w-full h-1/2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 sm:p-6 overflow-y-auto">
+          <div className="w-full sm:w-1/2 h-1/2 sm:h-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 sm:p-6 overflow-y-auto">
               <h2 className="text-xl sm:text-2xl font-bold mb-2">{item.title}</h2>
               {item.externalLink && (
                   <a href={item.externalLink.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center mb-4">

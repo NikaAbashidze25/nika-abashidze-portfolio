@@ -67,7 +67,7 @@ export default function About() {
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16 items-center">
             <div className="space-y-4 lg:col-span-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl animate-fade-in-up [animation-delay:0.2s]">About Me</h2>
-              <div className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed animate-fade-in-up [animation-delay:0.3s] space-y-4">
+              <div className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed animate-fade-in-up [animation-delay:0.3s] space-y-4 mx-auto">
                   <p>
                       Hello! I'm a 19-year-old sound enthusiast exploring Audio Post-production, with a strong foundation in Classical Guitar and Music.
                   </p>
@@ -91,7 +91,7 @@ export default function About() {
                               onClick={() => openSkillModal(skill)}
                           >
                             <div className="relative aspect-square w-full overflow-hidden">
-                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-contain transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
+                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
                             </div>
                             <div className="p-4 bg-background">
                               <h3 className="text-lg font-bold">{skill.title}</h3>
@@ -112,7 +112,7 @@ export default function About() {
                               onClick={() => openSkillModal(skill)}
                           >
                             <div className="relative aspect-square w-full overflow-hidden">
-                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-contain transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
+                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
                             </div>
                             <div className="p-4 bg-background">
                               <h3 className="text-lg font-bold">{skill.title}</h3>

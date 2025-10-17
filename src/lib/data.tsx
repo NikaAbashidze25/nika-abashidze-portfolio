@@ -45,7 +45,7 @@ export const socialLinks: SocialLink[] = [
 export type PortfolioItem = {
   id: number;
   title: string;
-  category: 'Composition' | 'Guitar' | 'Linear Audio';
+  category: 'Music' | 'Guitar' | 'Linear Audio';
   description: string;
   longDescription?: string;
   roleDescription?: string;
@@ -63,7 +63,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: 1,
     title: 'Cinematic Trailer Score',
-    category: 'Composition',
+    category: 'Music',
     description: 'Orchestral and electronic elements blend to create a dramatic, immersive soundscape.',
     longDescription: 'This score was composed for a hypothetical movie trailer, designed to build tension and excitement. It features a full orchestral arrangement combined with modern electronic textures and heavy percussion to create a powerful and epic feel.',
     roleDescription: 'As the composer, I was responsible for the entire creation of the piece, from the initial melodic concepts to the final orchestration and mixing. The goal was to produce a track that could stand on its own while also supporting a strong visual narrative.',
@@ -74,7 +74,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: 4,
     title: 'Video Game Main Theme',
-    category: 'Composition',
+    category: 'Music',
     description: 'An evolving theme for an indie adventure game, incorporating adaptive audio techniques.',
     longDescription: 'The main theme for the indie title "Aetherium." The music was written to be adaptive, with different layers and intensities that can change based on gameplay, from peaceful exploration to intense combat sequences.',
     roleDescription: 'I composed and produced the main theme, working closely with the game developers to ensure the music reflected the game\'s atmosphere and narrative. This involved creating multiple arrangements and stems for the adaptive audio engine.',

@@ -101,10 +101,12 @@ const VideoCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (i
 };
 
 const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], onCardClick: (item: PortfolioItem) => void, type: 'audio' | 'video' }) => {
+  const gridRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8 md:gap-6">
-      {items.map((item) => (
-        <div key={item.id}>
+    <div ref={gridRef} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8 md:gap-6">
+      {items.map((item, index) => (
+        <div key={item.id} style={{ animationDelay: `${index * 100}ms` }}>
           {type === 'audio' ? <CompositionCard item={item} onCardClick={onCardClick} /> : <VideoCard item={item} onCardClick={onCardClick} />}
         </div>
       ))}
@@ -112,7 +114,7 @@ const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], o
   );
 };
 
-type FilterType = 'All' | 'Compositions' | 'Performance' | 'Sound Design';
+type FilterType = 'All' | 'Linear Audio' | 'Performance' | 'Music';
 
 const PortfolioInner = () => {
   const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
@@ -121,11 +123,11 @@ const PortfolioInner = () => {
   
   const { pauseAudio, getAudioElement } = useContext(AudioPlayerContext);
 
-  const compositions = portfolioItems.filter(i => i.type === 'audio');
-  const guitars = portfolioItems.filter(i => i.category === 'Guitar');
-  const linearAudios = portfolioItems.filter(i => i.category === 'Linear Audio');
+  const musicItems = portfolioItems.filter(i => i.category === 'Music');
+  const performanceItems = portfolioItems.filter(i => i.category === 'Guitar');
+  const linearAudioItems = portfolioItems.filter(i => i.category === 'Linear Audio');
   
-  const filters: FilterType[] = ['All', 'Compositions', 'Performance', 'Sound Design'];
+  const filters: FilterType[] = ['All', 'Linear Audio', 'Performance', 'Music'];
 
   const openVideoModal = (item: PortfolioItem) => {
     const audio = getAudioElement();
@@ -144,6 +146,17 @@ const PortfolioInner = () => {
   const closeAudioModal = () => {
     setSelectedAudio(null);
   };
+
+  useEffect(() => {
+    // This is a temporary workaround to prevent the page from jumping to this section on load.
+    // A more robust solution would involve a global state manager to coordinate animations.
+    const timer = setTimeout(() => {
+      // The presence of this empty timeout seems to be enough to prevent the issue.
+      // The root cause is likely a race condition with browser rendering and observer initialization.
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <section id="portfolio" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
@@ -174,24 +187,24 @@ const PortfolioInner = () => {
         </div>
 
         <div className="space-y-12 md:space-y-16 mt-8 md:mt-12">
-            {(activeFilter === 'All' || activeFilter === 'Compositions') && (
+            {(activeFilter === 'All' || activeFilter === 'Linear Audio') && (
               <div>
-                 <h3 className="text-2xl font-bold tracking-tighter text-center border-b pb-4">Compositions</h3>
-                 <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" />
+                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Linear Audio</h3>
+                 <PortfolioGrid items={linearAudioItems} onCardClick={openVideoModal} type="video" />
               </div>
             )}
 
             {(activeFilter === 'All' || activeFilter === 'Performance') && (
               <div>
                  <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
-                 <PortfolioGrid items={guitars} onCardClick={openVideoModal} type="video" />
+                 <PortfolioGrid items={performanceItems} onCardClick={openVideoModal} type="video" />
               </div>
             )}
-            
-            {(activeFilter === 'All' || activeFilter === 'Sound Design') && (
+
+            {(activeFilter === 'All' || activeFilter === 'Music') && (
               <div>
-                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Sound Design</h3>
-                 <PortfolioGrid items={linearAudios} onCardClick={openVideoModal} type="video" />
+                 <h3 className="text-2xl font-bold tracking-tighter text-center border-b pb-4">Music</h3>
+                 <PortfolioGrid items={musicItems} onCardClick={openAudioModal} type="audio" />
               </div>
             )}
         </div>

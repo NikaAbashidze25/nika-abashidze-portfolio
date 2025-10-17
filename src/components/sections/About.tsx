@@ -63,7 +63,7 @@ export default function About() {
 
   return (
     <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-background">
-      <div className="container px-4 md:px-6">
+      <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16 items-center">
             <div className="space-y-4 lg:col-span-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl animate-fade-in-up [animation-delay:0.2s]">About Me</h2>

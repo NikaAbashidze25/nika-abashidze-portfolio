@@ -106,7 +106,7 @@ const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], o
   return (
     <div ref={gridRef} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8 md:gap-6">
       {items.map((item, index) => (
-        <div key={item.id} style={{ animationDelay: `${index * 100}ms` }}>
+        <div key={item.id}>
           {type === 'audio' ? <CompositionCard item={item} onCardClick={onCardClick} /> : <VideoCard item={item} onCardClick={onCardClick} />}
         </div>
       ))}
@@ -148,12 +148,8 @@ const PortfolioInner = () => {
   };
 
   useEffect(() => {
-    // This is a temporary workaround to prevent the page from jumping to this section on load.
-    // A more robust solution would involve a global state manager to coordinate animations.
     const timer = setTimeout(() => {
-      // The presence of this empty timeout seems to be enough to prevent the issue.
-      // The root cause is likely a race condition with browser rendering and observer initialization.
-    }, 100);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -189,21 +185,21 @@ const PortfolioInner = () => {
         <div className="space-y-12 md:space-y-16 mt-8 md:mt-12">
             {(activeFilter === 'All' || activeFilter === 'Linear Audio') && (
               <div>
-                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Linear Audio</h3>
+                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4 max-w-4xl mx-auto">Linear Audio</h3>
                  <PortfolioGrid items={linearAudioItems} onCardClick={openVideoModal} type="video" />
               </div>
             )}
 
             {(activeFilter === 'All' || activeFilter === 'Performance') && (
               <div>
-                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Performance</h3>
+                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4 max-w-4xl mx-auto">Performance</h3>
                  <PortfolioGrid items={performanceItems} onCardClick={openVideoModal} type="video" />
               </div>
             )}
 
             {(activeFilter === 'All' || activeFilter === 'Music') && (
               <div>
-                 <h3 className="text-2xl font-bold tracking-tighter text-center border-b pb-4">Music</h3>
+                 <h3 className="text-2xl font-bold tracking-tighter text-center border-b pb-4 max-w-4xl mx-auto">Music</h3>
                  <PortfolioGrid items={musicItems} onCardClick={openAudioModal} type="audio" />
               </div>
             )}
@@ -236,3 +232,5 @@ export default function Portfolio() {
         <PortfolioInner />
     )
 }
+
+    

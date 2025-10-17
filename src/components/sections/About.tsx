@@ -58,8 +58,8 @@ export default function About() {
   return (
     <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid gap-10 lg:grid-cols-5 lg:gap-16 items-center">
-            <div className="space-y-4 lg:col-span-2">
+        <div className="grid gap-10 lg:grid-cols-3 lg:gap-16 items-center">
+            <div className="space-y-4 lg:col-span-1">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl animate-fade-in-up [animation-delay:0.2s]">About Me</h2>
               <div className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed animate-fade-in-up [animation-delay:0.3s] space-y-4 mx-auto">
                   <p>
@@ -73,7 +73,7 @@ export default function About() {
                   </p>
               </div>
             </div>
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-2">
               <div className="grid sm:grid-cols-2 gap-4">
                   {skills.map((skill, index) => {
                       const image = getImageForSkill(skill.id);

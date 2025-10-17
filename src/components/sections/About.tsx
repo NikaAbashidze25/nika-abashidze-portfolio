@@ -67,9 +67,17 @@ export default function About() {
         <div className="grid gap-10 lg:grid-cols-5 lg:gap-16 items-center">
             <div className="space-y-4 lg:col-span-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl animate-fade-in-up [animation-delay:0.2s]">About Me</h2>
-              <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed animate-fade-in-up [animation-delay:0.3s]">
-                I am a passionate composer, guitarist, and sound designer with a love for telling stories through audio. My work focuses on creating immersive soundscapes that elevate animations, multimedia projects, and musical pieces to new emotional heights. I also had the pleasure of being part of my university's capella group.
-              </p>
+              <div className="max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed animate-fade-in-up [animation-delay:0.3s] space-y-4">
+                  <p>
+                      Hello! I'm a 19-year-old sound enthusiast exploring Audio Post-production, with a strong foundation in Classical Guitar and Music.
+                  </p>
+                  <p>
+                      I am motivated to grow professionally in this field, learn new tools, and collaborate with other passionate people on future projects.
+                  </p>
+                  <p>
+                      Here is my musical journey over the years...
+                  </p>
+              </div>
             </div>
             <div className="lg:col-span-3">
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

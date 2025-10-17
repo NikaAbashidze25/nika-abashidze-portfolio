@@ -26,7 +26,7 @@ export default function Hero() {
           Hello, I’m Nika Abashidze
         </h1>
         <p className="mt-4 max-w-3xl text-lg text-neutral-300 sm:text-xl md:text-2xl">
-          Composer | Guitarist | Sound Designer for Animations & Media
+          Music | Guitar | Post-Production for Animations & Media
         </p>
         <Button asChild size="lg" className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90">
           <Link href="#portfolio">

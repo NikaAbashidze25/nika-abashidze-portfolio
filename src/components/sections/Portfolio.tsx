@@ -109,26 +109,23 @@ const PortfolioGrid = ({ items, onCardClick, type, hasAnimated }: { items: Portf
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    // Only initialize the observer if animations haven't run yet.
-    if (!hasAnimated) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setVisibleItems(prev => new Set(prev).add(entry.target.getAttribute('data-id')));
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
-      observerRef.current = observer;
-    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setVisibleItems(prev => new Set(prev).add(entry.target.getAttribute('data-id')));
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    observerRef.current = observer;
   
     return () => {
       observerRef.current?.disconnect();
     };
-  }, [hasAnimated]);
+  }, []);
 
   const setItemRef = (el: HTMLDivElement | null) => {
-    if (el && !hasAnimated && observerRef.current && !visibleItems.has(el.getAttribute('data-id'))) {
+    if (el && observerRef.current && !visibleItems.has(el.getAttribute('data-id'))) {
       observerRef.current?.observe(el);
     }
   };
@@ -190,30 +187,32 @@ const PortfolioInner = () => {
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-        const observer = new IntersectionObserver(
-        ([entry]) => {
-            if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true);
-            }
-        },
-        { threshold: 0.1 }
-        );
-
-        const currentSectionRef = sectionRef.current;
-        if (currentSectionRef) {
-        observer.observe(currentSectionRef);
+    const observer = new IntersectionObserver(
+    ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+        setHasAnimated(true);
         }
+    },
+    { threshold: 0.1 }
+    );
 
-        return () => {
+    const currentSectionRef = sectionRef.current;
+    
+    // Delay observer setup to prevent scroll jump on load
+    const timer = setTimeout(() => {
+        if (currentSectionRef) {
+            observer.observe(currentSectionRef);
+        }
+    }, 500);
+
+    return () => {
+        clearTimeout(timer);
         if (currentSectionRef) {
             observer.unobserve(currentSectionRef);
         }
-        };
-    }, 500); // Delay observer setup by 500ms
+    };
+}, [hasAnimated]);
 
-    return () => clearTimeout(timer);
-  }, [hasAnimated]);
 
   return (
     <section id="portfolio" ref={sectionRef} className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
@@ -293,3 +292,5 @@ export default function Portfolio() {
         <PortfolioInner />
     )
 }
+
+    

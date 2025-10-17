@@ -31,7 +31,7 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
     <Card 
       onClick={() => onCardClick(item)}
       className={cn(
-        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent cursor-pointer flex flex-col",
+        "overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent cursor-pointer flex flex-col h-full",
         isThisTrackPlaying ? "border-primary shadow-2xl shadow-primary/20" : "hover:border-primary hover:shadow-2xl hover:shadow-primary/20",
       )}
     >
@@ -46,7 +46,7 @@ const CompositionCard = ({ item, onCardClick }: { item: PortfolioItem, onCardCli
       <CardContent className="p-4 bg-background flex-grow flex flex-col">
         <div className="flex-grow">
           <h3 className="text-sm font-bold text-foreground md:text-base">{item.title}</h3>
-          <p className="text-xs text-muted-foreground mt-1 min-h-[2.5rem] md:text-sm">{item.description}</p>
+          <p className="text-xs text-muted-foreground mt-1 md:text-sm">{item.description}</p>
         </div>
         <div className="flex items-center justify-between gap-4 mt-4">
           <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -79,7 +79,7 @@ const VideoCard = ({ item, onCardClick }: { item: PortfolioItem, onCardClick: (i
   return (
     <Card 
       onClick={() => onCardClick(item)}
-      className="overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 cursor-pointer flex flex-col"
+      className="overflow-hidden transition-all duration-300 group bg-card border-2 border-transparent hover:border-primary hover:shadow-2xl hover:shadow-primary/20 cursor-pointer flex flex-col h-full"
     >
       <div className="relative aspect-video w-full overflow-hidden">
         <Image

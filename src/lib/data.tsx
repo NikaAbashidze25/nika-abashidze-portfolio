@@ -150,5 +150,30 @@ export const portfolioItems: PortfolioItem[] = [
     url: 'https://www.youtube.com/watch?v=BHmFQ96LtMY',
     thumbnailUrl: '/images/dumbots.png'
   },
-  
+  {
+    id: 9,
+    title: 'Game Audio - Video Demo',
+    category: 'Game Audio',
+    description: 'Full sound implementation for a game prototype, including adaptive audio.',
+    longDescription: 'This video demonstrates the sound design and implementation for a game level. It includes dynamic environmental sounds, character foley, and combat effects. The music is adaptive, changing intensity based on the player\'s actions.',
+    roleDescription: 'I handled all sound design, music composition, and implementation within the game engine. The goal was to create an immersive audio experience that responds dynamically to gameplay.',
+    type: 'video',
+    url: '',
+    thumbnailUrl: 'https://picsum.photos/seed/game-audio-1/600/400'
+  },
+  {
+    id: 10,
+    title: 'Game Audio - Interactive Website',
+    category: 'Game Audio',
+    description: 'An interactive web experience showcasing dynamic sound design.',
+    longDescription: 'This project is a web-based demonstration of adaptive audio concepts. Users can interact with elements on the page to trigger different soundscapes and musical layers, showing how audio can change in real-time based on user input.',
+    roleDescription: 'I designed and programmed the audio logic and created all the sound assets. This was a great exercise in combining web development with creative sound design to showcase audio middleware principles.',
+    type: 'video',
+    url: '',
+    externalLink: {
+        label: 'Visit the Interactive Site',
+        url: '#'
+    },
+    thumbnailUrl: 'https://picsum.photos/seed/game-audio-2/600/400'
+  }
 ];

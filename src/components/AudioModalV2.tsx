@@ -16,7 +16,7 @@ import { resolveImageUrl } from "@/lib/utils";
 interface AudioModalV2Props {
   isOpen: boolean;
   onClose: () => void;
-  item: PortfolioItem;
+  item: PortfolioItem | null;
 }
 
 const formatTime = (seconds: number) => {
@@ -54,6 +54,10 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
     if (isPlaying && isCurrentTrack) {
       pauseAudio();
     } else {
+      // Ensure we have the correct track loaded before playing
+      if (currentlyPlaying?.id !== item.id) {
+        setCurrentlyPlaying(item);
+      }
       playAudio(item);
     }
   };
@@ -75,7 +79,7 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-screen h-screen max-w-full max-h-full p-0 flex flex-col sm:flex-row sm:rounded-none">
+      <DialogContent className="max-w-full max-h-full w-full h-full sm:w-[calc(100%-4rem)] sm:h-[calc(100%-4rem)] flex flex-col sm:flex-row p-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <DialogTitle className="sr-only">{item.title}</DialogTitle>
           <div className="w-full sm:w-1/2 h-1/2 sm:h-full bg-black flex items-center justify-center relative flex-shrink-0">
             <Image
@@ -85,7 +89,7 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
                 className="object-cover"
             />
           </div>
-          <div className="w-full sm:w-1/2 h-1/2 sm:h-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 sm:p-6 flex flex-col overflow-y-auto">
+          <div className="w-full sm:w-1/2 h-1/2 sm:h-full p-4 sm:p-6 flex flex-col overflow-y-auto">
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold mb-2">{item.title}</h2>
                 {item.externalLink && (

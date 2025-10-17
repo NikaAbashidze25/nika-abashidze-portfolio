@@ -90,8 +90,8 @@ export default function About() {
                               style={{animationDelay: `${0.4 + index * 0.1}s`}} 
                               onClick={() => openSkillModal(skill)}
                           >
-                            <div className="relative aspect-square w-full overflow-hidden">
-                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
+                            <div className="relative aspect-square w-full overflow-hidden bg-black/10">
+                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-contain transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
                             </div>
                             <div className="p-4 bg-background">
                               <h3 className="text-lg font-bold">{skill.title}</h3>
@@ -111,8 +111,8 @@ export default function About() {
                               style={{animationDelay: `${0.7 + index * 0.1}s`}} 
                               onClick={() => openSkillModal(skill)}
                           >
-                            <div className="relative aspect-square w-full overflow-hidden">
-                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
+                            <div className="relative aspect-square w-full overflow-hidden bg-black/10">
+                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-contain transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
                             </div>
                             <div className="p-4 bg-background">
                               <h3 className="text-lg font-bold">{skill.title}</h3>

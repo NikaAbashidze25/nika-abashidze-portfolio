@@ -64,7 +64,7 @@ export default function About() {
               <div className="space-y-4">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">About Me</h2>
                   <div className="flex justify-center lg:justify-start">
-                    <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary/20 shadow-lg mt-4 mb-4">
+                    <div className="relative w-48 h-48 rounded-full overflow-hidden shadow-lg mt-4 mb-4">
                         <Image
                             src={resolveImageUrl('/images/cropped_circle_image.png')}
                             alt="Nika Abashidze"

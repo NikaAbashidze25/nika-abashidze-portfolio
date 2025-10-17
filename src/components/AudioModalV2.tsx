@@ -55,7 +55,7 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
 
     if (isPlaying && isCurrentTrack) {
       pauseAudio();
-    } else {
+    } else if (currentlyPlaying) {
       playAudio(currentlyPlaying);
     }
   };

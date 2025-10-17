@@ -30,7 +30,7 @@ export default function SkillModal({ isOpen, onClose, skill }: SkillModalProps) 
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl w-[95vw] h-auto max-h-[90vh] flex flex-col md:flex-row p-0 gap-0">
         <DialogTitle className="sr-only">{skill.title}</DialogTitle>
-          <div className="w-full md:w-1/2 h-64 md:h-full bg-black flex items-center justify-center relative flex-shrink-0">
+          <div className="w-full md:w-1/2 h-64 md:h-auto bg-black flex items-center justify-center relative flex-shrink-0">
             {image && (
                 <Image
                     src={resolveImageUrl(image.imageUrl)}

@@ -46,7 +46,7 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
-                      className="w-full h-full"
+                      className="w-full h-full aspect-video"
                       title={item.title}
                   ></iframe>
                 ) : (

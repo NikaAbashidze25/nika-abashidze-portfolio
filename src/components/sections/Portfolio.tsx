@@ -105,7 +105,7 @@ const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], o
 
   return (
     <div ref={gridRef} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8 md:gap-6">
-      {items.map((item, index) => (
+      {items.map((item) => (
         <div key={item.id}>
           {type === 'audio' ? <CompositionCard item={item} onCardClick={onCardClick} /> : <VideoCard item={item} onCardClick={onCardClick} />}
         </div>

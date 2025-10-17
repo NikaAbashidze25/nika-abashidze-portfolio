@@ -4,8 +4,8 @@ import { socialLinks } from '@/lib/data.tsx';
 export default function Footer() {
   return (
     <footer className="w-full border-t border-border/40 bg-background">
-      <div className="container flex flex-col items-center justify-center gap-4 py-10">
-        <div className="flex flex-col items-center gap-4 px-8 md:px-0">
+      <div className="container flex flex-col items-center justify-center gap-4 py-8">
+        <div className="flex flex-col items-center gap-4 px-4 md:px-0">
           <p className="text-center text-sm leading-loose text-muted-foreground">
             © {new Date().getFullYear()} Nika Abashidze. All Rights Reserved.
           </p>

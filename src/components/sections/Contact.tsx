@@ -35,7 +35,7 @@ export default function Contact() {
   return (
     <section id="contact" className="w-full py-12 md:py-24 lg:py-32 bg-secondary">
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center space-y-8 text-center">
+        <div className="flex flex-col items-center space-y-6 text-center">
           <div className="space-y-3">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Get In Touch</h2>
             <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -43,7 +43,7 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 pt-8">
+          <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-6 md:pt-8">
             <div
               onClick={() => handleCopy(email, 'Email')}
               className="group flex flex-col items-center justify-center p-6 bg-background rounded-lg shadow-md hover:shadow-primary/20 hover:scale-[1.02] transition-all duration-300 cursor-pointer"
@@ -53,7 +53,7 @@ export default function Contact() {
               </div>
               <h3 className="text-xl font-semibold text-foreground">Email</h3>
               <div className="flex items-center gap-2 text-muted-foreground group-hover:text-primary transition-colors">
-                <p>{email}</p>
+                <p className="text-sm sm:text-base">{email}</p>
                 {copied === 'Email' ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
               </div>
             </div>
@@ -74,7 +74,7 @@ export default function Contact() {
               </div>
               <h3 className="text-xl font-semibold text-foreground">Phone</h3>
               <div className="flex items-center gap-2 text-muted-foreground group-hover:text-primary transition-colors">
-                <p>{phoneNumber}</p>
+                <p className="text-sm sm:text-base">{phoneNumber}</p>
                  {copied === 'Phone' ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
               </div>
             </a>

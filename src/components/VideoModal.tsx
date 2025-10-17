@@ -30,8 +30,8 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
   if (!isOpen || !item) return null;
   
   const embedUrl = convertToEmbedUrl(item.url);
-  const videoUrl = embedUrl ? `${embedUrl}?autoplay=1` : item.url;
-  const isYoutube = videoUrl.includes('youtube.com/embed');
+  const isYoutube = embedUrl && embedUrl.includes('youtube.com/embed');
+  const videoUrl = isYoutube ? `${embedUrl}${embedUrl.includes('?') ? '&' : '?'}autoplay=1` : item.url;
   const poster = item.thumbnailUrl;
 
   return (
@@ -64,23 +64,23 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
                         className="object-cover"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/50 transition-opacity duration-300">
-                        <Play className="h-16 w-16 text-white/80 group-hover:text-white transition-colors" />
+                        <Play className="h-12 w-12 text-white/80 group-hover:text-white transition-colors sm:h-16 sm:w-16" />
                     </div>
                 </div>
              )}
           </div>
-          <div className="w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-6 overflow-y-auto">
-              <h2 className="text-2xl font-bold mb-2">{item.title}</h2>
+          <div className="w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 sm:p-6 overflow-y-auto">
+              <h2 className="text-xl sm:text-2xl font-bold mb-2">{item.title}</h2>
               {item.externalLink && (
                   <a href={item.externalLink.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center mb-4">
                       {item.externalLink.label} <ExternalLink className="ml-1 h-3 w-3" />
                   </a>
               )}
 
-              {item.longDescription && <p className="text-base text-foreground mb-6">{item.longDescription}</p>}
+              {item.longDescription && <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-6">{item.longDescription}</p>}
               
               {item.descriptionImage && (
-                <div className="relative aspect-[9/12] w-full overflow-hidden rounded-md my-6">
+                <div className="relative aspect-[9/12] w-full overflow-hidden rounded-md my-4 sm:my-6">
                     <Image
                         src={resolveImageUrl(item.descriptionImage)}
                         alt={item.title}
@@ -92,8 +92,8 @@ export default function VideoModal({ isOpen, onClose, item }: VideoModalProps) {
 
               {item.roleDescription && (
                   <div>
-                      <h3 className="text-lg font-semibold mb-2">My role on it</h3>
-                      <p className="text-base text-muted-foreground">{item.roleDescription}</p>
+                      <h3 className="text-base sm:text-lg font-semibold mb-2">My role on it</h3>
+                      <p className="text-sm sm:text-base text-muted-foreground">{item.roleDescription}</p>
                   </div>
               )}
           </div>

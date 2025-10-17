@@ -28,9 +28,9 @@ export default function SkillModal({ isOpen, onClose, skill }: SkillModalProps) 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl w-[95vw] h-[90vh] flex flex-col md:flex-row p-0 gap-0">
+      <DialogContent className="max-w-4xl w-[95vw] h-auto max-h-[90vh] flex flex-col md:flex-row p-0 gap-0">
         <DialogTitle className="sr-only">{skill.title}</DialogTitle>
-          <div className="w-full md:w-2/3 h-1/2 md:h-full bg-black flex items-center justify-center relative">
+          <div className="w-full md:w-1/2 h-64 md:h-full bg-black flex items-center justify-center relative flex-shrink-0">
             {image && (
                 <Image
                     src={resolveImageUrl(image.imageUrl)}
@@ -40,9 +40,9 @@ export default function SkillModal({ isOpen, onClose, skill }: SkillModalProps) 
                 />
             )}
           </div>
-          <div className="w-full md:w-1/3 h-1/2 md:h-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-6 overflow-y-auto">
-              <h2 className="text-2xl font-bold mb-2">{skill.title}</h2>
-              <p className="text-base text-foreground mb-6">{skill.longDescription}</p>
+          <div className="w-full md:w-1/2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-6 overflow-y-auto">
+              <h2 className="text-xl sm:text-2xl font-bold mb-2">{skill.title}</h2>
+              <p className="text-sm sm:text-base text-foreground">{skill.longDescription}</p>
           </div>
       </DialogContent>
     </Dialog>

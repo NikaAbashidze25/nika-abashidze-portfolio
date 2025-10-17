@@ -61,13 +61,13 @@ const CompositionCard = ({ item, onCardClick, isVisible }: { item: PortfolioItem
                 </button>
             )}
             <div className="flex items-end gap-1 h-4 w-full">
-              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1.2s] [animation-duration:0.8s]" : "h-1")}></span>
-              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1s]" : "h-1")}></span>
-              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.8s] [animation-duration:0.9s]" : "h-1")}></span>
-              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.6s] [animation-duration:0.7s]" : "h-1")}></span>
-              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.4s] [animation-duration:0.8s]" : "h-1")}></span>
-              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.2s] [animation-duration:0.6s]" : "h-1")}></span>
-              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0s] [animation-duration:0.9s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1.2s] [animation-duration:1.5s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-1s] [animation-duration:1.2s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.8s] [animation-duration:1.4s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.6s] [animation-duration:1s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.4s] [animation-duration:1.3s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0.2s] [animation-duration:1.1s]" : "h-1")}></span>
+              <span className={cn("w-1 bg-primary/70 transition-all", isThisTrackPlaying ? "animate-[wave] [animation-delay:-0s] [animation-duration:1.5s]" : "h-1")}></span>
             </div>
           </div>
         </div>
@@ -122,7 +122,7 @@ const PortfolioGrid = ({ items, onCardClick, type, hasAnimated }: { items: Portf
   }, []);
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8 md:gap-6">
       {items.map((item, index) => {
         const isVisible = hasAnimated || visibleItems.has(String(item.id));
         return (
@@ -214,7 +214,7 @@ const PortfolioInner = () => {
           </div>
         </div>
 
-        <div className={cn("flex justify-center space-x-2 md:space-x-4 mt-8", hasAnimated && "animate-fade-in-up [animation-delay:0.1s]")}>
+        <div className={cn("flex justify-center flex-wrap gap-2 md:gap-4 mt-8", hasAnimated && "animate-fade-in-up [animation-delay:0.1s]")}>
           {filters.map((filter) => (
             <Button
               key={filter}
@@ -230,10 +230,10 @@ const PortfolioInner = () => {
           ))}
         </div>
 
-        <div className="space-y-16 mt-12">
+        <div className="space-y-12 md:space-y-16 mt-8 md:mt-12">
             {(activeFilter === 'All' || activeFilter === 'Compositions') && (
               <div>
-                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4">Compositions</h3>
+                 <h3 className="text-2xl font-bold tracking-tighter text-center border-b pb-4">Compositions</h3>
                  <PortfolioGrid items={compositions} onCardClick={openAudioModal} type="audio" hasAnimated={hasAnimated} />
               </div>
             )}
@@ -280,5 +280,3 @@ export default function Portfolio() {
         <PortfolioInner />
     )
 }
-
-    

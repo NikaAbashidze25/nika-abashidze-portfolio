@@ -20,6 +20,7 @@ interface AudioModalV2Props {
 }
 
 const formatTime = (seconds: number) => {
+    if (isNaN(seconds) || seconds < 0) return '0:00';
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
@@ -85,22 +86,22 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
                 className="object-cover"
             />
           </div>
-          <div className="w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-6 overflow-y-auto">
-              <h2 className="text-2xl font-bold mb-2">{item.title}</h2>
+          <div className="w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 sm:p-6 overflow-y-auto">
+              <h2 className="text-xl sm:text-2xl font-bold mb-2">{item.title}</h2>
               {item.externalLink && (
                   <a href={item.externalLink.url} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center mb-4">
                       {item.externalLink.label} <ExternalLink className="ml-1 h-3 w-3" />
                   </a>
               )}
 
-            <div className="my-6">
-                <div className="flex items-center gap-4">
+            <div className="my-4 sm:my-6">
+                <div className="flex items-center gap-2 sm:gap-4">
                     <button
                         onClick={togglePlay}
                         className="p-3 bg-primary text-primary-foreground rounded-full hover:bg-primary/80 transition-colors z-10 flex-shrink-0"
                         aria-label={isPlaying ? "Pause" : "Play"}
                         >
-                        {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
+                        {isPlaying ? <Pause className="h-5 w-5 sm:h-6 sm:w-6" /> : <Play className="h-5 w-5 sm:h-6 sm:w-6" />}
                     </button>
                     <div className="w-full flex items-center gap-2">
                         <span className="text-xs text-muted-foreground w-10 text-center">{formatTime(currentTime)}</span>
@@ -115,10 +116,10 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
                 </div>
             </div>
 
-              {item.longDescription && <p className="text-base text-foreground mb-6">{item.longDescription}</p>}
+              {item.longDescription && <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-6">{item.longDescription}</p>}
               
               {item.descriptionImage && (
-                <div className="relative aspect-[9/12] w-full overflow-hidden rounded-md my-6">
+                <div className="relative aspect-[9/12] w-full overflow-hidden rounded-md my-4 sm:my-6">
                     <Image
                         src={resolveImageUrl(item.descriptionImage)}
                         alt={item.title}
@@ -130,8 +131,8 @@ export default function AudioModalV2({ isOpen, onClose, item }: AudioModalV2Prop
 
               {item.roleDescription && (
                   <div>
-                      <h3 className="text-lg font-semibold mb-2">My role on it</h3>
-                      <p className="text-base text-muted-foreground">{item.roleDescription}</p>
+                      <h3 className="text-base sm:text-lg font-semibold mb-2">My role on it</h3>
+                      <p className="text-sm sm:text-base text-muted-foreground">{item.roleDescription}</p>
                   </div>
               )}
           </div>

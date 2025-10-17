@@ -114,7 +114,7 @@ const PortfolioGrid = ({ items, onCardClick, type }: { items: PortfolioItem[], o
   );
 };
 
-type FilterType = 'All' | 'Linear Audio' | 'Performance' | 'Music';
+type FilterType = 'All' | 'Linear Audio' | 'Guitar Performance' | 'Music' | 'Game Audio';
 
 const PortfolioInner = () => {
   const [selectedVideo, setSelectedVideo] = useState<PortfolioItem | null>(null);
@@ -124,10 +124,11 @@ const PortfolioInner = () => {
   const { pauseAudio, getAudioElement } = useContext(AudioPlayerContext);
 
   const musicItems = portfolioItems.filter(i => i.category === 'Music');
-  const performanceItems = portfolioItems.filter(i => i.category === 'Guitar');
+  const performanceItems = portfolioItems.filter(i => i.category === 'Guitar Performance');
   const linearAudioItems = portfolioItems.filter(i => i.category === 'Linear Audio');
+  const gameAudioItems = portfolioItems.filter(i => i.category === 'Game Audio');
   
-  const filters: FilterType[] = ['All', 'Linear Audio', 'Performance', 'Music'];
+  const filters: FilterType[] = ['All', 'Linear Audio', 'Guitar Performance', 'Music', 'Game Audio'];
 
   const openVideoModal = (item: PortfolioItem) => {
     const audio = getAudioElement();
@@ -189,10 +190,17 @@ const PortfolioInner = () => {
                  <PortfolioGrid items={linearAudioItems} onCardClick={openVideoModal} type="video" />
               </div>
             )}
-
-            {(activeFilter === 'All' || activeFilter === 'Performance') && (
+            
+            {(activeFilter === 'All' || activeFilter === 'Game Audio') && gameAudioItems.length > 0 && (
               <div>
-                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4 max-w-4xl mx-auto">Performance</h3>
+                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4 max-w-4xl mx-auto">Game Audio</h3>
+                 <PortfolioGrid items={gameAudioItems} onCardClick={openVideoModal} type="video" />
+              </div>
+            )}
+
+            {(activeFilter === 'All' || activeFilter === 'Guitar Performance') && (
+              <div>
+                 <h3 className="text-2xl font-bold tracking-tighter text-center mt-8 border-b pb-4 max-w-4xl mx-auto">Guitar Performance</h3>
                  <PortfolioGrid items={performanceItems} onCardClick={openVideoModal} type="video" />
               </div>
             )}
@@ -232,5 +240,3 @@ export default function Portfolio() {
         <PortfolioInner />
     )
 }
-
-    

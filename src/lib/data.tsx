@@ -46,7 +46,7 @@ export const socialLinks: SocialLink[] = [
 export type PortfolioItem = {
   id: number;
   title: string;
-  category: 'Music' | 'Guitar' | 'Linear Audio';
+  category: 'Music' | 'Guitar Performance' | 'Linear Audio' | 'Game Audio';
   description: string;
   longDescription?: string;
   roleDescription?: string;
@@ -97,7 +97,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: 3,
     title: 'Tango En Skai - Roland Dyens (Komarovi Solo Concert)',
-    category: 'Guitar',
+    category: 'Guitar Performance',
     description: 'A live performance of an original intricate fingerstyle guitar piece.',
     longDescription: 'A live performance of an original intricate fingerstyle guitar piece, recorded in a single take to capture the raw emotion of the music.',
     roleDescription: 'As the sole performer and composer of this piece, my focus was on delivering a technically clean yet emotionally resonant performance. I also managed the recording and mixing process.',
@@ -120,7 +120,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: 6,
     title: 'S.L.Weiss - Fantasie',
-    category: 'Guitar',
+    category: 'Guitar Performance',
     description: 'An improvised electric guitar solo over a custom backing track.',
     longDescription: 'An improvised electric guitar solo over a custom backing track, showcasing technical proficiency and melodic creativity in a rock-fusion style.',
     roleDescription: 'In this piece, I composed the backing track and performed the improvised lead guitar part. It\'s a demonstration of my ability to create compelling melodies and navigate complex harmonic structures in real-time.',
@@ -131,7 +131,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: 7,
     title: 'Nika Abashidze - Vazha',
-    category: 'Guitar',
+    category: 'Guitar Performance',
     description: 'A captivating original guitar performance.',
     longDescription: 'A live performance of the original composition "Vazha", showcasing a blend of intricate fingerstyle and melodic phrasing.',
     roleDescription: 'Composer and performer of the piece. Responsible for the composition, arrangement, and performance.',

@@ -33,12 +33,6 @@ const skills: Skill[] = [
     longDescription: 'I bring animations and videos to life by creating a complete audio experience. This includes custom sound design, foley, and musical scoring that is perfectly timed to the visuals, adding a layer of professionalism and immersion.'
   },
   {
-    id: 'sound-design-image',
-    title: 'Sound Design & Mixing',
-    description: 'Building immersive worlds with custom sound effects, foley, and professional post-production.',
-    longDescription: 'I build sonic worlds from the ground up. My process involves recording and designing custom sound effects, performing foley, and meticulously mixing all audio elements to create a balanced and immersive soundscape that captivates the audience.'
-  },
-  {
     id: 'acapella-image',
     title: 'KIU Capella',
     description: '2025 - a member of my university\'s (KIU) capella choir - over the last year',
@@ -80,35 +74,14 @@ export default function About() {
               </div>
             </div>
             <div className="lg:col-span-3">
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {skills.slice(0, 3).map((skill, index) => {
+              <div className="grid sm:grid-cols-2 gap-4">
+                  {skills.map((skill, index) => {
                       const image = getImageForSkill(skill.id);
                       return (
                           <div 
                               key={skill.title} 
                               className="group animate-fade-in-up cursor-pointer overflow-hidden rounded-lg border-2 border-transparent transition-all duration-300 hover:border-primary hover:shadow-2xl hover:shadow-primary/20" 
                               style={{animationDelay: `${0.4 + index * 0.1}s`}} 
-                              onClick={() => openSkillModal(skill)}
-                          >
-                            <div className="relative aspect-square w-full overflow-hidden bg-black/10">
-                              {image && <Image src={image.imageUrl} alt={image.description} fill className="object-contain transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.imageHint} />}
-                            </div>
-                            <div className="p-4 bg-background">
-                              <h3 className="text-lg font-bold">{skill.title}</h3>
-                              <p className="text-sm text-muted-foreground mt-1">{skill.description}</p>
-                            </div>
-                          </div>
-                      )
-                  })}
-              </div>
-              <div className="grid sm:grid-cols-2 gap-4 mt-4">
-                  {skills.slice(3).map((skill, index) => {
-                      const image = getImageForSkill(skill.id);
-                      return (
-                          <div 
-                              key={skill.title} 
-                              className="group animate-fade-in-up cursor-pointer overflow-hidden rounded-lg border-2 border-transparent transition-all duration-300 hover:border-primary hover:shadow-2xl hover:shadow-primary/20" 
-                              style={{animationDelay: `${0.7 + index * 0.1}s`}} 
                               onClick={() => openSkillModal(skill)}
                           >
                             <div className="relative aspect-square w-full overflow-hidden bg-black/10">

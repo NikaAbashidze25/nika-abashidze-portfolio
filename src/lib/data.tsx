@@ -177,13 +177,13 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 12,
-    title: 'New Music Track 1',
+    title: 'Drum Practice Session',
     category: 'Music',
-    description: 'A new piece of music, coming soon.',
-    longDescription: 'This is a placeholder for a new music track. The audio file will be uploaded shortly.',
+    description: 'Drum focued tune with distorted bass',
+    longDescription: '',
     type: 'audio',
-    url: '',
-    thumbnailUrl: 'https://picsum.photos/seed/12/600/400'
+    url: '/audio/Drums.wav',
+    thumbnailUrl: '/images/drums.jpg'
   },
   {
     id: 13,

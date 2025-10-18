@@ -166,6 +166,16 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnailUrl: '/images/LIFE.png'
   },
   {
+    id: 11,
+    title: 'New Guitar Performance',
+    category: 'Guitar Performance',
+    description: 'A new guitar performance is coming soon.',
+    longDescription: 'This is a placeholder for a new guitar performance video. The video will be uploaded shortly.',
+    type: 'video',
+    url: '',
+    thumbnailUrl: 'https://picsum.photos/seed/11/600/400'
+  },
+  {
     id: 12,
     title: 'New Music Track 1',
     category: 'Music',

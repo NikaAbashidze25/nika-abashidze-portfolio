@@ -18,20 +18,20 @@ const skills: Skill[] = [
   {
     id: 'compositions-image',
     title: 'Producing Music',
-    description: 'Crafting original scores for film, games, and media that tell a story and evoke emotion.',
-    longDescription: 'From sweeping orchestral arrangements to subtle electronic textures, my compositions are built to serve the narrative. I specialize in creating memorable themes and adaptive scores that respond to on-screen action, enhancing the emotional impact of any project.'
+    description: 'Producing original music for animations, game, and everyday listening',
+    longDescription: 'Sofware I use - FL Studio / Reaper. Audio Interface - Scarlett Solo 4th Gen. Mostly Creating eletronic and orchestral music, their mixes and Guitar Recording..'
   },
   {
     id: 'animations-audio-image',
     title: 'Audio Design for Animations & Games',
-    description: 'Enhancing visual narratives with perfectly synchronized sound design and music.',
-    longDescription: 'I bring animations and videos to life by creating a complete audio experience. This includes custom sound design, foley, and musical scoring that is perfectly timed to the visuals, adding a layer of professionalism and immersion.'
+    description: 'Enhancing visuals with synchronized sound design and music.',
+    longDescription: 'I bring animations and videos to life by creating a complete audio experience. This includes custom sound design, foley(Learning phase) and musical scoring. I mostly use online Sound Libraries available out there'
   },
   {
     id: 'guitar-image',
     title: 'Classical Guitar',
     description: 'More than 11 years of Experience playing the Classical Guitar (2012 - Present) ',
-    longDescription: 'As a session guitarist, I offer a wide palette of tones and techniques. Whether a project needs intricate fingerstyle melodies, soulful electric solos, or heavy rock riffs, I bring a deep understanding of harmony and a commitment to finding the perfect part.'
+    longDescription: 'I began playing classical guitar when I was eight years old, and what started as curiosity, turned into my passion. I went to Virsaladze School of Arts and graduated with a musical degree (11 years), I went on various competitions, played concerts and developed my ear musically. I mostly play Classical repertoire...'
   },
   {
     id: 'acapella-image',

@@ -14,7 +14,7 @@
     },
     {
       "id": "compositions-image",
-      "description": "Sheet music spread across a wooden desk with a fountain pen.",
+      "description": "Fl Studio Screen Picture",
       "imageUrl": "/images/TronAlike.png",
       "imageHint": "sheet music"
     },
@@ -22,7 +22,7 @@
       "id": "guitar-image",
       "description": "",
       "imageUrl": "/images/ClassicalGuitar.jpg",
-      "imageHint": "guitar frets"
+      "imageHint": ""
     },
     {
       "id": "animations-audio-image",

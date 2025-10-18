@@ -166,16 +166,6 @@ export const portfolioItems: PortfolioItem[] = [
     thumbnailUrl: '/images/LIFE.png'
   },
   {
-    id: 11,
-    title: 'Game Audio - Video Demo',
-    category: 'Game Audio',
-    description: 'Placeholder for a game audio video demo.',
-    longDescription: 'This is where the detailed description for the game audio video demo will go. I will provide the YouTube link for this soon.',
-    type: 'video',
-    url: 'https://www.youtube.com',
-    thumbnailUrl: 'https://picsum.photos/seed/11/600/400'
-  },
-  {
     id: 12,
     title: 'New Music Track 1',
     category: 'Music',

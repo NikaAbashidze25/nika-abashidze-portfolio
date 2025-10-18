@@ -167,13 +167,13 @@ export const portfolioItems: PortfolioItem[] = [
   },
   {
     id: 11,
-    title: 'New Guitar Performance',
+    title: 'Heitor Villa-Lobos - Prelude No.5 (Practice Session)',
     category: 'Guitar Performance',
-    description: 'A new guitar performance is coming soon.',
-    longDescription: 'This is a placeholder for a new guitar performance video. The video will be uploaded shortly.',
+    description: 'Practice Session',
+    longDescription: 'Normal Day Practising some dynamics and techinque...',
     type: 'video',
-    url: '',
-    thumbnailUrl: 'https://picsum.photos/seed/11/600/400'
+    url: 'https://www.youtube.com/shorts/Kz5SFcbbPcs',
+    thumbnailUrl: '/images/GuitarPoster.jpg'
   },
   {
     id: 12,

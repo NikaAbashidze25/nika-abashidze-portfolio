@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { socialLinks } from '@/lib/data.tsx';
+import { socialLinks } from '@/lib/data';
 
 export default function Footer() {
   return (

@@ -20,9 +20,9 @@
     },
     {
       "id": "guitar-image",
-      "description": "",
+      "description": "A close-up of a classical guitar, focusing on the strings and soundhole.",
       "imageUrl": "/images/ClassicalGuitar.jpg",
-      "imageHint": ""
+      "imageHint": "classical guitar"
     },
     {
       "id": "animations-audio-image",
@@ -33,7 +33,7 @@
     {
       "id": "sound-design-image",
       "description": "A sound mixing console with many faders and knobs, lit in a dark room.",
-      "imageUrl": "/images/SoundDesignV2.png",
+      "imageUrl": "/images/SoundDesign.png",
       "imageHint": "mixing console"
     },
     {

@@ -4,8 +4,11 @@ import './globals.css';
 import { AudioPlayerProvider } from '@/context/AudioPlayerContext';
 
 export const metadata: Metadata = {
-  title: 'Sonic Canvas | Nika Abashidze',
+  title: 'Nika\'s Portfolio',
   description: 'The portfolio of Nika Abashidze, Composer, Guitarist, and Sound Designer for Animations & Media.',
+  icons: {
+    icon: '/images/N_icon.svg',
+  },
 };
 
 export default function RootLayout({
